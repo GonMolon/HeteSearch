@@ -25,6 +25,7 @@ public class Container<T extends  Element> {
     protected int getLastID() {
         return lastID;
     }
+
     protected ContainerIterator getIterator() {
         return new ContainerIterator(this);
     }
@@ -36,13 +37,18 @@ public class Container<T extends  Element> {
     }
 
     protected void addElement(T element, int ID) throws GraphException {
-        if (!checkNewID(ID)) {
+        if(ID < 0) {
         	throw new GraphException(GraphException.Error.ID_INVALID);
-        } else if (elements.containsKey(ID)) {
+        } else if(elements.containsKey(ID)) {
         	throw new GraphException(GraphException.Error.ID_USED);
         } else {
-            lastID = ID;
-            addElement(element);
+            if(ID >= lastID) {
+                lastID = ID;
+                addElement(element);
+            } else {
+                element.setId(ID);
+                elements.put(ID, element);
+            }
         }
     }
 
@@ -81,10 +87,6 @@ public class Container<T extends  Element> {
     private boolean checkID(int ID) {
     	return ID >= 0 && ID < lastID;
     }
-    
-    private boolean checkNewID(int ID) {
-    	return ID >= lastID;
-    }
 
     public class ContainerIterator implements Iterator {
 
@@ -104,6 +106,4 @@ public class Container<T extends  Element> {
             return iterator.next().getValue();
         }
     }
-
 }
- 
