@@ -53,7 +53,7 @@ public class Container<T extends  Element> {
     }
 
     protected void removeElement(int ID) throws GraphException {
-        if (!checkID(ID)) {
+        if(!checkID(ID)) {
         	throw new GraphException(GraphException.Error.ID_INVALID);
         } else if (elements.containsKey(ID)) {
             elements.remove(ID);
