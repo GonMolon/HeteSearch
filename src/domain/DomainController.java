@@ -1,7 +1,6 @@
-package common.domain.tests;
+package domain;
 
-import common.domain.*;
-import common.persistence.PersistenceController;
+import persistence.PersistenceController;
 
 import java.util.ArrayList;
 
