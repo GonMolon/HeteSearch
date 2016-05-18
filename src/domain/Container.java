@@ -5,9 +5,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-
 public class Container<T extends  Element> {
-	//Attributes
+    //Attributes
     private int lastID;
     private HashMap<Integer, T> elements;
 
@@ -38,9 +37,9 @@ public class Container<T extends  Element> {
 
     protected void addElement(T element, int ID) throws GraphException {
         if(ID < 0) {
-        	throw new GraphException(GraphException.Error.ID_INVALID);
+            throw new GraphException(GraphException.Error.ID_INVALID);
         } else if(elements.containsKey(ID)) {
-        	throw new GraphException(GraphException.Error.ID_USED);
+            throw new GraphException(GraphException.Error.ID_USED);
         } else {
             if(ID >= lastID) {
                 lastID = ID;
@@ -54,21 +53,21 @@ public class Container<T extends  Element> {
 
     protected void removeElement(int ID) throws GraphException {
         if(!checkID(ID)) {
-        	throw new GraphException(GraphException.Error.ID_INVALID);
+            throw new GraphException(GraphException.Error.ID_INVALID);
         } else if (elements.containsKey(ID)) {
             elements.remove(ID);
         } else {
-        	throw new GraphException(GraphException.Error.ID_NONEXISTENT);
+            throw new GraphException(GraphException.Error.ID_NONEXISTENT);
         }
     }
 
     protected T getElement(int ID) throws GraphException {
         if (!checkID(ID)) {
-        	throw new GraphException(GraphException.Error.ID_INVALID);
+            throw new GraphException(GraphException.Error.ID_INVALID);
         } else if (elements.containsKey(ID)) {
             return elements.get(ID);
         } else {
-        	throw new GraphException(GraphException.Error.ID_NONEXISTENT);
+            throw new GraphException(GraphException.Error.ID_NONEXISTENT);
         }
     }
 
@@ -85,7 +84,7 @@ public class Container<T extends  Element> {
     }
 
     private boolean checkID(int ID) {
-    	return ID >= 0 && ID < lastID;
+        return ID >= 0 && ID < lastID;
     }
 
     public class ContainerIterator implements Iterator {
@@ -107,3 +106,4 @@ public class Container<T extends  Element> {
         }
     }
 }
+
