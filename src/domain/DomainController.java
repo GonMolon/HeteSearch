@@ -1,21 +1,19 @@
 package domain;
 
-import persistence.PersistenceController;
-
 import java.util.ArrayList;
 
 public class DomainController {
 
     private Graph graph;
-    private PersistenceController persistenceController;
+    private presentation.MainView.PersistenceController persistenceController;
 
     public DomainController() {
         graph = new Graph();
-        persistenceController = new PersistenceController(graph);
+        persistenceController = new presentation.MainView.PersistenceController(graph);
     }
 
     public DomainController(String path) {
-        persistenceController = new PersistenceController(graph);
+        persistenceController = new presentation.MainView.PersistenceController(graph);
         importDB(path);
     }
 
