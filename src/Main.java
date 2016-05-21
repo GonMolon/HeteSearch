@@ -1,4 +1,4 @@
-package presentation;
+import presentation.PresentationController;
 
 public class Main {
 
@@ -7,8 +7,7 @@ public class Main {
                 new Runnable() {
                     @Override
                     public void run() {
-                        DriverPresentation driverPresentation = new DriverPresentation();
-                        driverPresentation.runPresentation();
+                        PresentationController presentationController = new PresentationController();
                     }
                 }
         );
