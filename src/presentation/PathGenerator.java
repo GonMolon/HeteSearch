@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class PathGenerator extends JPanel implements ActionListener{
 
     private PresentationController presentationController;
+    private MainView mainView;
     protected ArrayList<Integer> actualRS = new ArrayList<Integer>();
     private NodeType from = null;
     private RoundButton[] buttons = new RoundButton[5];
@@ -25,9 +26,9 @@ public class PathGenerator extends JPanel implements ActionListener{
     private static String CONFERENCE = "C";
     private static String TERM = "T";
 
-    protected PathGenerator(PresentationController presentationController) {
+    protected PathGenerator(PresentationController presentationController, MainView mainView) {
         this.presentationController = presentationController;
-
+        this.mainView = mainView;
         reset = new JButton("Reset");
         reset.setVisible(false);
         reset.addActionListener(
@@ -61,6 +62,11 @@ public class PathGenerator extends JPanel implements ActionListener{
         reset.setVisible(true);
         NodeType to = getNodeType(event.getActionCommand());
         PresentationController.PathInfo info = presentationController.getPathInfo(from, to);
+        if(info.availableRelations.size() == 0) {
+            mainView.setAddNode(true);
+        } else {
+            mainView.setAddNode(false);
+        }
         if(info.availableRelations.size() == 1) {
             actualRS.add(info.availableRelations.get(0));
             System.out.println(actualRS.get(actualRS.size()-1));

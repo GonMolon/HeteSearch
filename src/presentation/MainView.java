@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 public class MainView extends JFrame {
 
     private PresentationController presentationController;
+    private JButton addNode;
 
     protected MainView(PresentationController presentationController) {
         super("HeteSearch");
@@ -26,7 +27,16 @@ public class MainView extends JFrame {
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JPanel contentPane = (JPanel) getContentPane();
-        contentPane.add(new PathGenerator(presentationController), BorderLayout.CENTER);
+        contentPane.add(new PathGenerator(presentationController, this), BorderLayout.CENTER);
+        addNode = new JButton("Add element");
+        addNode.setVisible(false);
+        addNode.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //TODO implement this
+            }
+        });
+        contentPane.add(addNode, BorderLayout.EAST);
         createMenu();
     }
 
@@ -69,5 +79,9 @@ public class MainView extends JFrame {
         menu.add(exportGraph);
         menuBar.add(menu);
         setJMenuBar(menuBar);
+    }
+
+    public void setAddNode(boolean visible) {
+        addNode.setVisible(visible);
     }
 }
