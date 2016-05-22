@@ -34,10 +34,26 @@ public class PathGenerator extends JPanel implements ActionListener{
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        reset();
+                        setEnabledButtons(true);
                     }
                 }
         );
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent event) {
+        NodeType to = getNodeType(event.getActionCommand());
+        PresentationController.PathInfo info = presentationController.getPathInfo(from, to);
+        if(info.availableRelations.size() == 1) {
+            actualRS.add(info.availableRelations.get(0));
+        } else if(info.availableRelations.size() > 1) {
+            this.setEnabled(false);
+        }
+        setEnabledButtons(false);
+        for(int i = 0; i < info.availableNodeTypes.size(); ++i) {
+            buttons[getButtonID(info.availableNodeTypes.get(i))].setEnabled(true);
+        }
+        from = to;
     }
 
     private void addButton(int id, String name, String pos) {
@@ -48,24 +64,26 @@ public class PathGenerator extends JPanel implements ActionListener{
         buttons[id] = button;
     }
 
-    protected void reset() {
+    protected void setEnabledButtons(boolean enable) {
         actualRS = new ArrayList<Integer>();
         for(int id = 0; id < buttons.length; ++id) {
-            buttons[id].setEnabled(true);
+            buttons[id].setEnabled(enable);
         }
         from = null;
     }
 
-    @Override
-    public void actionPerformed(ActionEvent event) {
-        NodeType to = getNodeType(event.getActionCommand());
-        PresentationController.PathInfo info = presentationController.getPathInfo(from, to);
-        if(info.availableRelations.size() == 1) {
-            actualRS.add(info.availableRelations.get(0));
+    private int getButtonID(NodeType type) {
+        if(type == NodeType.LABEL) {
+            return 0;
+        } else if(type == NodeType.AUTHOR) {
+            return 1;
+        } else if(type == NodeType.PAPER) {
+            return 2;
+        } else if(type == NodeType.CONF) {
+            return 3;
         } else {
-
+            return 4;
         }
-        from = to;
     }
 
     private NodeType getNodeType(String type) {
