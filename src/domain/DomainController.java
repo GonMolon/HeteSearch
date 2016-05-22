@@ -3,6 +3,7 @@ package domain;
 import persistence.PersistenceController;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class DomainController {
 
@@ -127,5 +128,21 @@ public class DomainController {
             rs.add(graph.getRelation(relationPath.get(i)));
         }
         return new RelationStructure(typeA, rs, typeB);
+    }
+
+    public ArrayList<Integer> getAvailableRelations(NodeType from, NodeType to) {
+        ArrayList<Integer> result = new ArrayList<Integer>();
+        Container<Relation>.ContainerIterator iterator = graph.getRelationIterator();
+        while(iterator.hasNext()) {
+            Relation relation = iterator.next();
+            if((relation.getNodeTypeA() == from && relation.getNodeTypeB() == to) || (relation.getNodeTypeA() == to && relation.getNodeTypeB() == from)) {
+                result.add(relation.getId());
+            }
+        }
+        return result;
+    }
+
+    public ArrayList<NodeType> getAvailableNodeTypes(NodeType from) {
+        //TODO implement this
     }
 }

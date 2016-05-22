@@ -68,4 +68,23 @@ public class PresentationController {
     protected ArrayList<GraphSearch.Result> originDestinationSearch(NodeType typeA, int nodeFrom, ArrayList<Integer> rs, NodeType typeB, int nodeTo) {
         return domainController.originDestinationSearch(typeA, nodeFrom, rs, typeB, nodeTo);
     }
+
+    public PathInfo getPathInfo(NodeType from, NodeType to) {
+        PathInfo pathInfo = new PathInfo();
+        if(from != null) {
+            domainController.getAvailableRelations(from, to);
+        }
+        pathInfo.availableNodeTypes = domainController.getAvailableNodeTypes(to);
+        return pathInfo;
+    }
+
+    protected class PathInfo {
+        public ArrayList<Integer> availableRelations;
+        public ArrayList<NodeType> availableNodeTypes;
+
+        public PathInfo() {
+            availableRelations = new ArrayList<Integer>();
+            availableNodeTypes = new ArrayList<NodeType>();
+        }
+    }
 }
