@@ -5,27 +5,26 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MainView {
+public class MainView extends JFrame {
 
     private PresentationController presentationController;
-    private JFrame frame;
 
     protected MainView(PresentationController presentationController) {
+        super("HeteSearch");
         this.presentationController = presentationController;
-        createFrame();
+        createComponents();
     }
 
-    protected void show() {
-        frame.pack();
-        frame.setVisible(true);
+    protected void init() {
+        pack();
+        setVisible(true);
     }
 
-    private void createFrame() {
-        frame = new JFrame("HeteSearch");
-        frame.setMinimumSize(new Dimension(700,700));
-        frame.setResizable(false);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        JPanel contentPane = (JPanel) frame.getContentPane();
+    private void createComponents() {
+        setMinimumSize(new Dimension(700,700));
+        setResizable(false);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        JPanel contentPane = (JPanel) getContentPane();
         contentPane.add(new PathGenerator(presentationController));
         createMenu();
     }
@@ -68,6 +67,6 @@ public class MainView {
         menu.add(importGraph);
         menu.add(exportGraph);
         menuBar.add(menu);
-        frame.setJMenuBar(menuBar);
+        setJMenuBar(menuBar);
     }
 }
