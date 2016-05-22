@@ -144,5 +144,6 @@ public class DomainController {
 
     public ArrayList<NodeType> getAvailableNodeTypes(NodeType from) {
         //TODO implement this
+        return null;
     }
 }
