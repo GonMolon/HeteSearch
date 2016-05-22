@@ -28,34 +28,37 @@ public class PathGenerator extends JPanel implements ActionListener{
     protected PathGenerator(PresentationController presentationController) {
         this.presentationController = presentationController;
 
-        JPanel buttonsPanel = new JPanel();
-        buttonsPanel.setLayout(new BoxLayout(buttonsPanel, 0));
-        buttonsPanel.add(createButton(0, LABEL));
-        JPanel middleButtons = new JPanel();
-        middleButtons.setLayout(new BoxLayout(middleButtons, 1));
-        middleButtons.add(createButton(1, AUTHOR));
-        middleButtons.add(createButton(2, PAPER));
-        middleButtons.add(createButton(3, CONFERENCE));
-        buttonsPanel.add(middleButtons);
-        buttonsPanel.add(createButton(4, TERM));
-
-        add(buttonsPanel);
         reset = new JButton("Reset");
-        add(reset);
+        reset.setVisible(false);
         reset.addActionListener(
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
+                        reset.setVisible(false);
                         from = null;
                         setEnabledButtons(true);
                         actualRS = new ArrayList<Integer>();
                     }
                 }
         );
+
+        setLayout(new GridLayout(3, 3, 10, 10));
+        JPanel resetPanel = new JPanel();
+        resetPanel.add(reset, BorderLayout.PAGE_START);
+        add(resetPanel);
+        add(createButton(0, LABEL));
+        add(new JPanel());
+        add(createButton(1, AUTHOR));
+        add(createButton(2, PAPER));
+        add(createButton(3, CONFERENCE));
+        add(new JPanel());
+        add(createButton(4, TERM));
+        add(new JPanel());
     }
 
     @Override
     public void actionPerformed(ActionEvent event) {
+        reset.setVisible(true);
         NodeType to = getNodeType(event.getActionCommand());
         PresentationController.PathInfo info = presentationController.getPathInfo(from, to);
         if(info.availableRelations.size() == 1) {
