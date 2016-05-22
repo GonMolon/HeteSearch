@@ -17,6 +17,10 @@ public class PresentationController {
         searchView = new SearchView(this);
     }
 
+    protected void newDB() {
+        domainController.newDB();
+    }
+
     protected void importDB(String path) {
         domainController.importDB(path);
     }

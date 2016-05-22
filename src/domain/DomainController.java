@@ -12,13 +12,17 @@ public class DomainController {
     private PersistenceController persistenceController;
 
     public DomainController() {
-        graph = new Graph();
+        newDB();
         persistenceController = new PersistenceController(graph);
     }
 
     public DomainController(String path) {
         persistenceController = new PersistenceController(graph);
         importDB(path);
+    }
+
+    public void newDB() {
+        graph = new Graph();
     }
 
     public void importDB(String path) {
