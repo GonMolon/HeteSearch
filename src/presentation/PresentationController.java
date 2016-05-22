@@ -8,10 +8,13 @@ public class PresentationController {
 
     private DomainController domainController;
     private MainView mainView;
+    private SearchView searchView;
 
     public PresentationController() {
         domainController = new DomainController();
         mainView = new MainView(this);
+        mainView.show();
+        searchView = new SearchView(this);
     }
 
     protected void importDB(String path) {
