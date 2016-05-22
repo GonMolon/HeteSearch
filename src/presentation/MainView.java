@@ -21,11 +21,12 @@ public class MainView extends JFrame {
     }
 
     private void createComponents() {
+        setLayout(new BorderLayout());
         setMinimumSize(new Dimension(700,700));
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JPanel contentPane = (JPanel) getContentPane();
-        contentPane.add(new PathGenerator(presentationController));
+        contentPane.add(new PathGenerator(presentationController), BorderLayout.CENTER);
         createMenu();
     }
 

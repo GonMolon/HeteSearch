@@ -13,11 +13,8 @@ public class PresentationController {
     public PresentationController() {
         domainController = new DomainController();
         mainView = new MainView(this);
-        mainView.show();
+        mainView.init();
         searchView = new SearchView(this);
-
-
-        addRelation(NodeType.AUTHOR, NodeType.PAPER, "TEST");
     }
 
     protected void newDB() {
