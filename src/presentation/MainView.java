@@ -1,7 +1,5 @@
 package presentation;
 
-import persistence.PersistenceController;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -33,18 +31,18 @@ public class MainView {
     }
 
     private void createMenu() {
-        MenuBar menuBar = new MenuBar();
-        Menu menu = new Menu("File");
-        MenuItem newGraph = new MenuItem("New Graph");
+        JMenuBar menuBar = new JMenuBar();
+        JMenu menu = new JMenu("File");
+        JMenuItem newGraph = new JMenuItem("New Graph");
         newGraph.addActionListener(
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        //presentationController.newGraph();
+                        presentationController.newDB();
                     }
                 }
         );
-        MenuItem importGraph = new MenuItem("Import Graph");
+        JMenuItem importGraph = new JMenuItem("Import Graph");
         importGraph.addActionListener(
                 new ActionListener() {
                     @Override
@@ -55,7 +53,7 @@ public class MainView {
                     }
                 }
         );
-        MenuItem exportGraph = new MenuItem("Export Graph");
+        JMenuItem exportGraph = new JMenuItem("Export Graph");
         exportGraph.addActionListener(
                 new ActionListener() {
                     @Override
@@ -70,6 +68,6 @@ public class MainView {
         menu.add(importGraph);
         menu.add(exportGraph);
         menuBar.add(menu);
-        frame.setMenuBar(menuBar);
+        frame.setJMenuBar(menuBar);
     }
 }

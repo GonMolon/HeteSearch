@@ -46,8 +46,16 @@ public class PathGenerator extends JPanel implements ActionListener{
         PresentationController.PathInfo info = presentationController.getPathInfo(from, to);
         if(info.availableRelations.size() == 1) {
             actualRS.add(info.availableRelations.get(0));
+            System.out.println(actualRS.get(actualRS.size()-1));
         } else if(info.availableRelations.size() > 1) {
             this.setEnabled(false);
+            ArrayList<String> relationsName = new ArrayList<String>();
+            for(int i = 0; i < info.availableRelations.size(); ++i) {
+                relationsName.add(presentationController.getRelationName(info.availableRelations.get(i)));
+            }
+            RelationSelection relationSelection = new RelationSelection(info.availableRelations, relationsName);
+            actualRS.add(relationSelection.getIdChosen());
+            System.out.println(actualRS.get(actualRS.size()-1));
         }
         setEnabledButtons(false);
         for(int i = 0; i < info.availableNodeTypes.size(); ++i) {

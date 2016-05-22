@@ -15,6 +15,9 @@ public class PresentationController {
         mainView = new MainView(this);
         mainView.show();
         searchView = new SearchView(this);
+
+
+        addRelation(NodeType.AUTHOR, NodeType.PAPER, "TEST");
     }
 
     protected void newDB() {
@@ -43,6 +46,10 @@ public class PresentationController {
 
     protected void removeRelation(int id) {
         domainController.removeRelation(id);
+    }
+
+    protected String getRelationName(int id) {
+        return domainController.getRelationName(id);
     }
 
     protected void addEdge(int relationID, NodeType typeA, int nodeA, NodeType typeB, int nodeB) {
@@ -76,7 +83,7 @@ public class PresentationController {
     public PathInfo getPathInfo(NodeType from, NodeType to) {
         PathInfo pathInfo = new PathInfo();
         if(from != null) {
-            domainController.getAvailableRelations(from, to);
+            pathInfo.availableRelations = domainController.getAvailableRelations(from, to);
         }
         pathInfo.availableNodeTypes = domainController.getAvailableNodeTypes(to);
         return pathInfo;
