@@ -15,6 +15,8 @@ public class PresentationController {
         mainView = new MainView(this);
         mainView.init();
         searchView = new SearchView(this);
+
+        domainController.addRelation(NodeType.AUTHOR, NodeType.PAPER, "TEST");
     }
 
     protected void newDB() {

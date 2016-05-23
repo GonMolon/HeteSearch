@@ -20,11 +20,11 @@ public class PathGenerator extends JPanel implements ActionListener{
 
     private static float MAX_ALPHA = 0.8f;
     private static float MIN_ALPHA = 0.2f;
-    private static String LABEL = "L";
-    private static String AUTHOR = "A";
-    private static String PAPER = "P";
-    private static String CONFERENCE = "C";
-    private static String TERM = "T";
+    private static String LABEL = "Lab";
+    private static String AUTHOR = "Aut";
+    private static String PAPER = "Pap";
+    private static String CONFERENCE = "Con";
+    private static String TERM = "Ter";
 
     protected PathGenerator(PresentationController presentationController, MainView mainView) {
         this.presentationController = presentationController;
@@ -36,6 +36,7 @@ public class PathGenerator extends JPanel implements ActionListener{
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         reset.setVisible(false);
+                        mainView.setAddNodeButton(false);
                         from = null;
                         setEnabledButtons(true);
                         actualRS = new ArrayList<Integer>();
@@ -63,9 +64,9 @@ public class PathGenerator extends JPanel implements ActionListener{
         NodeType to = getNodeType(event.getActionCommand());
         PresentationController.PathInfo info = presentationController.getPathInfo(from, to);
         if(info.availableRelations.size() == 0) {
-            mainView.setAddNode(true);
+            mainView.setAddNodeButton(true);
         } else {
-            mainView.setAddNode(false);
+            mainView.setAddNodeButton(false);
         }
         if(info.availableRelations.size() == 1) {
             actualRS.add(info.availableRelations.get(0));

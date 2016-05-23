@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 public class MainView extends JFrame {
 
     private PresentationController presentationController;
-    private JButton addNode;
+    private JButton addNodeButton;
 
     protected MainView(PresentationController presentationController) {
         super("HeteSearch");
@@ -23,20 +23,20 @@ public class MainView extends JFrame {
 
     private void createComponents() {
         setLayout(new BorderLayout());
-        setMinimumSize(new Dimension(700,700));
+        setMinimumSize(new Dimension(700, 700));
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JPanel contentPane = (JPanel) getContentPane();
         contentPane.add(new PathGenerator(presentationController, this), BorderLayout.CENTER);
-        addNode = new JButton("Add element");
-        addNode.setVisible(false);
-        addNode.addActionListener(new ActionListener() {
+        addNodeButton = new JButton("Add element");
+        addNodeButton.setVisible(false);
+        addNodeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //TODO implement this
             }
         });
-        contentPane.add(addNode, BorderLayout.EAST);
+        contentPane.add(addNodeButton, BorderLayout.EAST);
         createMenu();
     }
 
@@ -81,7 +81,7 @@ public class MainView extends JFrame {
         setJMenuBar(menuBar);
     }
 
-    public void setAddNode(boolean visible) {
-        addNode.setVisible(visible);
+    public void setAddNodeButton(boolean visible) {
+        addNodeButton.setVisible(visible);
     }
 }
