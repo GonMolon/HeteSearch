@@ -57,11 +57,12 @@ public class MainView extends JFrame {
                         DataChooser dc = null;
                         try {
                             dc = new DataChooser(importGraph, false);
-                        } catch (DataChooserException e1) {
-                            e1.printStackTrace();
+                            presentationController.newDB();
+                            presentationController.importDB(dc.getDirectory());
+                            System.out.println("Done");
+                        } catch (DataChooserException exception) {
+                            exception.printStackTrace();
                         }
-                        presentationController.importDB(dc.getDirectory());
-                        System.out.println("Done");
                     }
                 }
         );
@@ -74,11 +75,11 @@ public class MainView extends JFrame {
                         DataChooser dc = null;
                         try {
                             dc = new DataChooser(exportGraph, true);
-                        } catch (DataChooserException e1) {
-                            e1.printStackTrace();
+                            presentationController.exportDB(dc.getDirectory());
+                            System.out.println("Done");
+                        } catch (DataChooserException exception) {
+                            exception.printStackTrace();
                         }
-                        presentationController.exportDB(dc.getDirectory());
-                        System.out.println("Done");
                     }
                 }
         );
