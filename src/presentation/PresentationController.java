@@ -13,7 +13,7 @@ public class PresentationController {
     public PresentationController() {
         domainController = new DomainController();
         mainView = new MainView(this);
-        mainView.init();
+        mainView.setVisible(true);
         searchView = new SearchView(this);
 
         domainController.addRelation(NodeType.AUTHOR, NodeType.PAPER, "TEST");

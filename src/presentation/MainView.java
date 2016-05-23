@@ -13,15 +13,10 @@ public class MainView extends JFrame {
     protected MainView(PresentationController presentationController) {
         super("HeteSearch");
         this.presentationController = presentationController;
-        createComponents();
+        initialize();
     }
 
-    protected void init() {
-        pack();
-        setVisible(true);
-    }
-
-    private void createComponents() {
+    private void initialize() {
         setLayout(new BorderLayout());
         setMinimumSize(new Dimension(700, 700));
         setResizable(false);
@@ -38,6 +33,7 @@ public class MainView extends JFrame {
         });
         contentPane.add(addNodeButton, BorderLayout.EAST);
         createMenu();
+        pack();
     }
 
     private void createMenu() {
