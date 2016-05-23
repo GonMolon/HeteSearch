@@ -54,7 +54,13 @@ public class MainView extends JFrame {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         System.out.println("Importing graph");
-                        presentationController.importDB("data/");
+                        DataChooser dc = null;
+                        try {
+                            dc = new DataChooser(importGraph, false);
+                        } catch (DataChooserException e1) {
+                            e1.printStackTrace();
+                        }
+                        presentationController.importDB(dc.getDirectory());
                         System.out.println("Done");
                     }
                 }
@@ -65,7 +71,13 @@ public class MainView extends JFrame {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         System.out.println("Exporting graph");
-                        presentationController.exportDB("out/");
+                        DataChooser dc = null;
+                        try {
+                            dc = new DataChooser(exportGraph, true);
+                        } catch (DataChooserException e1) {
+                            e1.printStackTrace();
+                        }
+                        presentationController.exportDB(dc.getDirectory());
                         System.out.println("Done");
                     }
                 }
