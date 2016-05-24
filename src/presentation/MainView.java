@@ -8,6 +8,8 @@ import java.awt.event.ActionListener;
 public class MainView extends JFrame {
 
     private PresentationController presentationController;
+    private JPanel panel;
+    private PathGenerator pathGenerator;
     private JButton addNodeButton;
 
     protected MainView(PresentationController presentationController) {
@@ -17,21 +19,17 @@ public class MainView extends JFrame {
     }
 
     private void initialize() {
-        setLayout(new BorderLayout());
         setMinimumSize(new Dimension(700, 700));
-        setResizable(false);
+        //setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JPanel contentPane = (JPanel) getContentPane();
-        contentPane.add(new PathGenerator(presentationController, this), BorderLayout.CENTER);
-        addNodeButton = new JButton("Add element");
-        addNodeButton.setVisible(false);
+        contentPane.add(panel);
         addNodeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //TODO implement this
             }
         });
-        contentPane.add(addNodeButton, BorderLayout.EAST);
         createMenu();
         pack();
     }
@@ -90,7 +88,11 @@ public class MainView extends JFrame {
         setJMenuBar(menuBar);
     }
 
-    public void setAddNodeButton(boolean visible) {
-        addNodeButton.setVisible(visible);
+    public void setAddNodeButton(boolean enabled) {
+        addNodeButton.setEnabled(enabled );
+    }
+
+    private void createUIComponents() {
+        pathGenerator = new PathGenerator(presentationController, this);
     }
 }

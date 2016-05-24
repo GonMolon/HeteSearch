@@ -19,6 +19,7 @@ public class RoundButton extends JButton {
         setContentAreaFilled(false);
         setOpacity(MAX_ALPHA);
         setBackground(color);
+        setFocusable(false);
         this.color = color;
     }
 

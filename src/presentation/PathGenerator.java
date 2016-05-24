@@ -22,10 +22,9 @@ public class PathGenerator extends JPanel implements ActionListener{
     private RoundButton paper;
     private RoundButton author;
     private RoundButton conference;
-    private JButton reset;
-
     private RoundButton[] buttons;
 
+    private JButton reset;
 
     private static String LABEL = "Lab";
     private static String AUTHOR = "Aut";
