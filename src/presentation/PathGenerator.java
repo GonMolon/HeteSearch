@@ -13,7 +13,7 @@ public class PathGenerator extends JPanel implements ActionListener{
     private PresentationController presentationController;
     private MainView mainView;
     protected ArrayList<Integer> actualRS = new ArrayList<Integer>();
-    private NodeType from = null;
+    protected NodeType from = null;
 
     private JPanel panel;
 
@@ -43,11 +43,6 @@ public class PathGenerator extends JPanel implements ActionListener{
         reset.setVisible(true);
         NodeType to = getNodeType(event.getActionCommand());
         PresentationController.PathInfo info = presentationController.getPathInfo(from, to);
-        if(info.availableRelations.size() == 0) {
-            mainView.setAddNodeButton(true);
-        } else {
-            mainView.setAddNodeButton(false);
-        }
         if(info.availableRelations.size() == 1) {
             actualRS.add(info.availableRelations.get(0));
             System.out.println(actualRS.get(actualRS.size()-1));
@@ -67,6 +62,7 @@ public class PathGenerator extends JPanel implements ActionListener{
             buttons[id].setEnabled(true);
         }
         from = to;
+        mainView.update();
     }
 
     private void createUIComponents() {
@@ -89,10 +85,10 @@ public class PathGenerator extends JPanel implements ActionListener{
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         reset.setVisible(false);
-                        mainView.setAddNodeButton(false);
                         from = null;
                         setEnabledButtons(true);
                         actualRS = new ArrayList<Integer>();
+                        mainView.update();
                     }
                 }
         );

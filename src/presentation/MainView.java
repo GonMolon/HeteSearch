@@ -14,6 +14,7 @@ public class MainView extends JFrame {
     private JButton searchButton;
     private RelationalSearchPanel relationalSearchPanel;
     private SimpleSearchPanel simpleSearchPanel;
+    private JPanel searchPanel;
 
     protected MainView(PresentationController presentationController) {
         super("HeteSearch");
@@ -91,8 +92,18 @@ public class MainView extends JFrame {
         setJMenuBar(menuBar);
     }
 
-    public void setAddNodeButton(boolean enabled) {
-        addNodeButton.setEnabled(enabled );
+    public void update() {
+        if(pathGenerator.from == null) {
+            addNodeButton.setEnabled(false);
+            CardLayout searchPanelLayout = (CardLayout) searchPanel.getLayout();
+            searchPanelLayout.show(searchPanel, "simple");
+        } else if(pathGenerator.actualRS.size() == 0) {
+            addNodeButton.setEnabled(true);
+            CardLayout searchPanelLayout = (CardLayout) searchPanel.getLayout();
+            searchPanelLayout.show(searchPanel, "relational");
+        } else {
+
+        }
     }
 
     private void createUIComponents() {

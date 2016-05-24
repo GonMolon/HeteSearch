@@ -65,7 +65,7 @@
               <text value="Search"/>
             </properties>
           </component>
-          <grid id="d8ac9" layout-manager="CardLayout" hgap="0" vgap="0">
+          <grid id="d8ac9" binding="searchPanel" layout-manager="CardLayout" hgap="0" vgap="0">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -74,12 +74,12 @@
             <children>
               <nested-form id="49b39" form-file="presentation/SimpleSearchPanel.form" binding="simpleSearchPanel">
                 <constraints>
-                  <card name="Card1"/>
+                  <card name="simple"/>
                 </constraints>
               </nested-form>
               <nested-form id="fc0db" form-file="presentation/RelationalSearchPanel.form" binding="relationalSearchPanel" custom-create="true">
                 <constraints>
-                  <card name="Card2"/>
+                  <card name="relational"/>
                 </constraints>
               </nested-form>
             </children>
