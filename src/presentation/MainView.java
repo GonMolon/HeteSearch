@@ -28,7 +28,8 @@ public class MainView extends JFrame {
         addNodeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO implement this
+                AddElementView addElement= new AddElementView(presentationController);
+                addElement.setVisible(true);
             }
         });
         contentPane.add(addNodeButton, BorderLayout.EAST);
