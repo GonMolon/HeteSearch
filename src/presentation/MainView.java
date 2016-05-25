@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MainView extends JFrame {
+public class MainView extends JFrame  {
 
     private PresentationController presentationController;
     private JPanel panel;
@@ -35,6 +35,8 @@ public class MainView extends JFrame {
                 view.setVisible(true);
             }
         });
+        searchButton.addActionListener(simpleSearchPanel);
+        searchButton.addActionListener(relationalSearchPanel);
         createMenu();
         pack();
     }
@@ -96,19 +98,32 @@ public class MainView extends JFrame {
     public void update() {
         if(pathGenerator.from == null) {
             addNodeButton.setEnabled(false);
+            simpleSearchPanel.setEnabled(false);
+            searchButton.setEnabled(false);
             CardLayout searchPanelLayout = (CardLayout) searchPanel.getLayout();
             searchPanelLayout.show(searchPanel, "simple");
+            relationalSearchPanel.reset();
         } else if(pathGenerator.actualRS.size() == 0) {
             addNodeButton.setEnabled(true);
+            searchButton.setEnabled(true);
+            simpleSearchPanel.setEnabled(true);
+            simpleSearchPanel.setNodeType(pathGenerator.from);
+            searchButton.setEnabled(true);
+        } else if(pathGenerator.actualRS.size() == 1) {
+            addNodeButton.setEnabled(false);
+            searchButton.setEnabled(true);
             CardLayout searchPanelLayout = (CardLayout) searchPanel.getLayout();
             searchPanelLayout.show(searchPanel, "relational");
+            relationalSearchPanel.setNodeTypeFrom(pathGenerator.from);
+            relationalSearchPanel.setNodeTypeTo(pathGenerator.to);
         } else {
-
+            relationalSearchPanel.setNodeTypeTo(pathGenerator.to);
         }
     }
 
     private void createUIComponents() {
         pathGenerator = new PathGenerator(presentationController, this);
         relationalSearchPanel = new RelationalSearchPanel(presentationController);
+        simpleSearchPanel = new SimpleSearchPanel(presentationController);
     }
 }
