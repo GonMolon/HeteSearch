@@ -43,7 +43,7 @@ public class ModifyElementView extends JDialog {
         FieldsPanel() {
             this.setSize(frameWidth, fieldsPanelHeight);
 
-            AutoClearTextField nameField = new AutoClearTextField("Name");
+            AutoClearTextField nameField = new AutoClearTextField("Insert element name");
             nameField.setSize(fieldWidht, fieldHeight);
             String[] relations = {"a", "b", "c", "d"};
             JComboBox<String> typeSelect = new JComboBox<>(relations);
