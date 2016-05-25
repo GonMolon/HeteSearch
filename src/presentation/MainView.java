@@ -31,8 +31,8 @@ public class MainView extends JFrame {
         addNodeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AddElementView addElement = new AddElementView(presentationController);
-                addElement.setVisible(true);
+                ModifyElementViewForm view = new ModifyElementViewForm(presentationController, "Testing");
+                view.setVisible(true);
             }
         });
         createMenu();
