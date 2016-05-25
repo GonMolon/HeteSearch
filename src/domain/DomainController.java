@@ -43,6 +43,15 @@ public class DomainController {
         }
     }
 
+    public String getNodeValue(NodeType type, int id) {
+        try {
+            return graph.getNode(type, id).getValue();
+        } catch (GraphException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public int addRelation(NodeType A, NodeType B, String name) {
         Relation relation = new Relation(A, B, name);
         graph.addRelation(relation);

@@ -13,12 +13,7 @@ public class AutoClearTextField extends JTextField implements FocusListener {
         super(title);
         this.title = title;
         addFocusListener(this);
-        setFocusLost();
-    }
-
-    private void focusLost() {
         setForeground(Color.GRAY);
-        setText(title);
     }
 
     @Override
@@ -32,12 +27,8 @@ public class AutoClearTextField extends JTextField implements FocusListener {
     @Override
     public void focusLost(FocusEvent e) {
         if (getText().equals("")) {
-            setFocusLost();
+            setForeground(Color.GRAY);
+            setText(title);
         }
-    }
-
-    private void setFocusLost() {
-        setForeground(Color.GRAY);
-        setText(title);
     }
 }

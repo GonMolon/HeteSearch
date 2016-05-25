@@ -14,7 +14,9 @@ public class PathGenerator extends JPanel implements ActionListener{
     private PresentationController presentationController;
     private MainView mainView;
     protected ArrayList<Integer> actualRS = new ArrayList<Integer>();
+    protected NodeType prev = null;
     protected NodeType from = null;
+    protected NodeType to = null;
 
     private JPanel panel;
 
@@ -44,8 +46,8 @@ public class PathGenerator extends JPanel implements ActionListener{
     public void actionPerformed(ActionEvent event) {
         pathLabel.setMaximumSize(new Dimension(10, 10));
         resetButton.setVisible(true);
-        NodeType to = getNodeType(event.getActionCommand());
-        PresentationController.PathInfo info = presentationController.getPathInfo(from, to);
+        NodeType next = getNodeType(event.getActionCommand());
+        PresentationController.PathInfo info = presentationController.getPathInfo(prev, next);
         if(info.availableRelations.size() == 1) {
             actualRS.add(info.availableRelations.get(0));
         } else if(info.availableRelations.size() > 1) {
@@ -53,7 +55,7 @@ public class PathGenerator extends JPanel implements ActionListener{
             for(int i = 0; i < info.availableRelations.size(); ++i) {
                 relationsName.add(presentationController.getRelationName(info.availableRelations.get(i)));
             }
-            InstanceSelectionDialog instanceSelectionDialog = new InstanceSelectionDialog(info.availableRelations, relationsName, "Pick a relation", "There's more than one relation type between " + from.toString() + " and " + to.toString() + "\nChoose which you want to use:");
+            InstanceSelectionDialog instanceSelectionDialog = new InstanceSelectionDialog(info.availableRelations, relationsName, "Pick a relation", "There's more than one relation type between " + prev.toString() + " and " + next.toString() + "\nChoose which you want to use:");
             actualRS.add(instanceSelectionDialog.getIdChosen());
         }
         setEnabledButtons(false);
@@ -63,17 +65,22 @@ public class PathGenerator extends JPanel implements ActionListener{
         }
         if(actualRS.size() > 0) {
             if(actualRS.size() == 1) {
-                pathLabel.setText(from.toString());
+                pathLabel.setText(prev.toString());
             }
-            pathLabel.setText(pathLabel.getText() + " -> (" + presentationController.getRelationName(actualRS.get(actualRS.size()-1)) + ") -> " + to.toString());
+            pathLabel.setText(pathLabel.getText() + " -> (" + presentationController.getRelationName(actualRS.get(actualRS.size()-1)) + ") -> " + next.toString());
+        } else {
+            from = next;
         }
-        from = to;
+        prev = next;
+        to = next;
         mainView.update();
     }
 
     public void reset() {
         resetButton.setVisible(false);
+        prev = null;
         from = null;
+        to = null;
         setEnabledButtons(true);
         actualRS = new ArrayList<Integer>();
         pathLabel.setText("");

@@ -40,7 +40,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <nested-form id="49b39" form-file="presentation/SimpleSearchPanel.form" binding="simpleSearchPanel">
+              <nested-form id="49b39" form-file="presentation/SimpleSearchPanel.form" binding="simpleSearchPanel" custom-create="true">
                 <constraints>
                   <card name="simple"/>
                 </constraints>
