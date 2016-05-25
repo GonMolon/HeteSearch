@@ -1,8 +1,8 @@
 package persistence;
 
-import java.util.*;
-
 import domain.*;
+
+import java.util.*;
 
 import static domain.NodeType.*;
 import static persistence.FileHandler.*;
@@ -11,24 +11,42 @@ import static persistence.FileHandler.*;
 public class PersistenceController {
 
     private String TXT_REGEX = "(.*)_(.*)";
+    private String DOUBLE_TXT_REGEX = "(.*)_(.*)_(.*)";
     private Graph graph;
 
-    private void exportNodes(String path) {
+    public PersistenceController(Graph graph) {
+        this.graph = graph;
+        try {
+            // Adding implicit Label nodes
+            graph.addNode(graph.createNode(LABEL, "Database"), 0);
+            graph.addNode(graph.createNode(LABEL, "Data Mining"), 1);
+            graph.addNode(graph.createNode(LABEL, "AI"), 2);
+            graph.addNode(graph.createNode(LABEL, "Information Retreival"), 3);
+        } catch (GraphException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void exportNode(String path, NodeType n){
+        List<String> strings = new ArrayList<>();
+        Container<Node>.ContainerIterator it = graph.getNodeIterator(n);
+        while (it.hasNext()) {
+            NodeSerializer serializer = new NodeSerializer(it.next());
+            strings.add(serializer.getData());
+        }
+        writeFile(path, strings);
+    }
+
+    public void exportNodes(String path) {
         for (NodeType n : NodeType.values()) {
             if (n != LABEL) {
-                List<String> strings = new ArrayList<>();
-                Container<Node>.ContainerIterator it = graph.getNodeIterator(n);
-                while (it.hasNext()) {
-                    NodeSerializer serializer = new NodeSerializer(it.next());
-                    strings.add(serializer.getData());
-                }
                 String filepath = path + n.toString().toLowerCase() + ".txt";
-                writeFile(filepath, strings);
+                exportNode(filepath, n);
             }
         }
     }
 
-    private void exportEdges(String path) {
+    public void exportEdges(String path) {
         Map<String, ArrayList<String>> strings = new HashMap<String, ArrayList<String>>();
 
         Iterator iter = graph.getRelationIterator();
@@ -80,7 +98,7 @@ public class PersistenceController {
 
     }
 
-    private void importNodes(String path) {
+    public void importNodes(String path) {
         for (NodeType n : NodeType.values()) {
             if (n != LABEL) {
                 String filepath = path + n.toString().toLowerCase() + ".txt";
@@ -98,51 +116,52 @@ public class PersistenceController {
         }
     }
 
-    private void importEdges(String path) {
+    public void importEdges(String path) {
         List<String> files = readDir(path);
         for (String f : files) {
-            if (f.matches(TXT_REGEX)) {
-                List<String> strings = readFile(path + f);
+            String relation_name = null;
+            Relation r = null;
+            NodeType typeA = null;
+            NodeType typeB = null;
+            if (f.matches(DOUBLE_TXT_REGEX)) {
                 String[] parts = f.split("_");
-                NodeType typeA = NodeType.valueOf(parts[0].toUpperCase());
-                NodeType typeB = NodeType.valueOf(parts[1].substring(0, parts[1].length() - 4).toUpperCase());
-                Relation r = graph.getOrCreateRelation(typeA, typeB, f.substring(0, f.length() - 4).toLowerCase());
-                for (String s : strings) {
-                    EdgeSerializer serializer;
-                    if (r.containsLabel()) {
-                        serializer = new LabelSerializer(graph, s, typeA, typeB);
-                    } else {
-                        serializer = new EdgeSerializer(graph, s, typeA, typeB);
-                    }
-                    try {
-                        graph.addEdge(r.getId(), serializer.getNode1(), serializer.getNode2());
-                    } catch (GraphException e) {
-                        e.printStackTrace();
-                    }
+                typeA = NodeType.valueOf(parts[0].toUpperCase());
+                typeB = NodeType.valueOf(parts[1].toUpperCase());
+                relation_name = parts[2].substring(0, parts[2].length() - 4);
+            } else if (f.matches(TXT_REGEX)) {
+                String[] parts = f.split("_");
+                typeA = NodeType.valueOf(parts[0].toUpperCase());
+                typeB = NodeType.valueOf(parts[1].substring(0, parts[1].length() - 4).toUpperCase());
+                relation_name = f.substring(0, f.length() - 4).toLowerCase();
+            } else {
+                continue;
+            }
+            r = graph.getOrCreateRelation(typeA, typeB, relation_name);
+            List<String> strings = readFile(path + f);
+            for (String s : strings) {
+                EdgeSerializer serializer;
+                if (r.containsLabel()) {
+                    serializer = new LabelSerializer(graph, s, typeA, typeB);
+                } else {
+                    serializer = new EdgeSerializer(graph, s, typeA, typeB);
+                }
+                try {
+                    graph.addEdge(r.getId(), serializer.getNode1(), serializer.getNode2());
+                } catch (GraphException e) {
+                    e.printStackTrace();
                 }
             }
         }
     }
 
-    public PersistenceController(Graph graph) {
-        this.graph = graph;
-        try {
-            // Adding implicit Label nodes
-            graph.addNode(graph.createNode(LABEL, "Database"), 0);
-            graph.addNode(graph.createNode(LABEL, "Data Mining"), 1);
-            graph.addNode(graph.createNode(LABEL, "AI"), 2);
-            graph.addNode(graph.createNode(LABEL, "Information Retreival"), 3);
-        } catch (GraphException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void importGraph(String path) {
+        path = handlePath(path);
         importNodes(path);
         importEdges(path);
     }
 
     public void exportGraph(String path) {
+        path = handlePath(path);
         clearDir(path);
         exportNodes(path);
         exportEdges(path);

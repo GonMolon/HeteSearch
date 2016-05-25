@@ -13,12 +13,6 @@ public class DomainController {
 
     public DomainController() {
         newDB();
-        persistenceController = new PersistenceController(graph);
-    }
-
-    public DomainController(String path) {
-        persistenceController = new PersistenceController(graph);
-        importDB(path);
     }
 
     public void newDB() {
@@ -27,10 +21,12 @@ public class DomainController {
 
     public void importDB(String path) {
         graph = new Graph();
+        persistenceController = new PersistenceController(graph);
         persistenceController.importGraph(path);
     }
 
     public void exportDB(String path) {
+        persistenceController = new PersistenceController(graph);
         persistenceController.exportGraph(path);
     }
 
