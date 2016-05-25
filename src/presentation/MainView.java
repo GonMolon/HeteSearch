@@ -96,14 +96,18 @@ public class MainView extends JFrame {
     public void update() {
         if(pathGenerator.from == null) {
             addNodeButton.setEnabled(false);
+            simpleSearchPanel.setEnabled(false);
+            searchButton.setEnabled(false);
             CardLayout searchPanelLayout = (CardLayout) searchPanel.getLayout();
             searchPanelLayout.show(searchPanel, "simple");
         } else if(pathGenerator.actualRS.size() == 0) {
             addNodeButton.setEnabled(true);
+            simpleSearchPanel.setEnabled(true);
+            searchButton.setEnabled(true);
+        } else {
+            addNodeButton.setEnabled(false);
             CardLayout searchPanelLayout = (CardLayout) searchPanel.getLayout();
             searchPanelLayout.show(searchPanel, "relational");
-        } else {
-
         }
     }
 
