@@ -1,6 +1,6 @@
 package presentation;
 
-import presentation.utilities.AutoClearTextField;
+import presentation.utilities.NodeTextField;
 
 import javax.swing.*;
 
@@ -8,8 +8,8 @@ public class RelationalSearchPanel extends JPanel {
 
     private PresentationController presentationController;
     private JPanel panel;
-    private AutoClearTextField fromText;
-    private AutoClearTextField toText;
+    private NodeTextField fromText;
+    private NodeTextField toText;
 
     public RelationalSearchPanel(PresentationController presentationController) {
         this.presentationController = presentationController;
@@ -17,7 +17,7 @@ public class RelationalSearchPanel extends JPanel {
     }
 
     public void createUIComponents() {
-        fromText = new AutoClearTextField("Type an origin    ");
-        toText = new AutoClearTextField("Type a destination ");
+        fromText = new NodeTextField("Type an origin    ");
+        toText = new NodeTextField("Type a destination ");
     }
 }
