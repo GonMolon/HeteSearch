@@ -5,34 +5,38 @@ import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
-public class AutoClearTextField extends JTextField {
+public class AutoClearTextField extends JTextField implements FocusListener {
 
     private String title;
 
     public AutoClearTextField(String title) {
         super(title);
         this.title = title;
-        this.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                AutoClearTextField textField = (AutoClearTextField) e.getComponent();
-                textField.setForeground(Color.BLACK);
-                if (textField.getText().equals(title)) {
-                    textField.setText("");
-                }
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                AutoClearTextField textField = (AutoClearTextField) e.getComponent();
-                if (textField.getText().equals("")) {
-                    textField.focusLost();
-                }
-            }
-        });
+        addFocusListener(this);
+        setFocusLost();
     }
 
     private void focusLost() {
+        setForeground(Color.GRAY);
+        setText(title);
+    }
+
+    @Override
+    public void focusGained(FocusEvent e) {
+        setForeground(Color.BLACK);
+        if (getText().equals(title)) {
+            setText("");
+        }
+    }
+
+    @Override
+    public void focusLost(FocusEvent e) {
+        if (getText().equals("")) {
+            setFocusLost();
+        }
+    }
+
+    private void setFocusLost() {
         setForeground(Color.GRAY);
         setText(title);
     }

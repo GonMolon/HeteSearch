@@ -17,7 +17,7 @@ public class RelationalSearchPanel extends JPanel {
     }
 
     public void createUIComponents() {
-        fromText = new NodeTextField("Type an origin    ");
-        toText = new NodeTextField("Type a destination ");
+        fromText = new NodeTextField(presentationController, "Type an origin    ");
+        toText = new NodeTextField(presentationController, "Type a destination");
     }
 }
