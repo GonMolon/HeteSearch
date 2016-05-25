@@ -1,6 +1,7 @@
 package presentation;
 
 import domain.NodeType;
+import presentation.utilities.InstanceSelectionDialog;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,7 +26,7 @@ public class PathGenerator extends JPanel implements ActionListener{
     private RoundButton[] buttons;
 
     private JButton resetButton;
-    private JLabel pathLabel;
+    private JTextField pathLabel;
 
     private static String LABEL = "Lab";
     private static String AUTHOR = "Aut";
@@ -41,6 +42,7 @@ public class PathGenerator extends JPanel implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent event) {
+        pathLabel.setMaximumSize(new Dimension(10, 10));
         resetButton.setVisible(true);
         NodeType to = getNodeType(event.getActionCommand());
         PresentationController.PathInfo info = presentationController.getPathInfo(from, to);
@@ -51,8 +53,8 @@ public class PathGenerator extends JPanel implements ActionListener{
             for(int i = 0; i < info.availableRelations.size(); ++i) {
                 relationsName.add(presentationController.getRelationName(info.availableRelations.get(i)));
             }
-            RelationSelection relationSelection = new RelationSelection(info.availableRelations, relationsName);
-            actualRS.add(relationSelection.getIdChosen());
+            InstanceSelectionDialog instanceSelectionDialog = new InstanceSelectionDialog(info.availableRelations, relationsName, "Pick a relation", "There's more than one relation type between " + from.toString() + " and " + to.toString() + "\nChoose which you want to use:");
+            actualRS.add(instanceSelectionDialog.getIdChosen());
         }
         setEnabledButtons(false);
         for(int i = 0; i < info.availableNodeTypes.size(); ++i) {
@@ -79,11 +81,12 @@ public class PathGenerator extends JPanel implements ActionListener{
     }
 
     private void createUIComponents() {
-        label = new RoundButton(LABEL, Color.YELLOW);
-        author = new RoundButton(AUTHOR, Color.YELLOW);
-        paper = new RoundButton(PAPER, Color.YELLOW);
-        conference = new RoundButton(CONFERENCE, Color.YELLOW);
-        term = new RoundButton(TERM, Color.YELLOW);
+        Color color = new Color(0x7DA4);
+        label = new RoundButton(LABEL, color);
+        author = new RoundButton(AUTHOR, color);
+        paper = new RoundButton(PAPER, color);
+        conference = new RoundButton(CONFERENCE, color);
+        term = new RoundButton(TERM,  color);
         buttons = new RoundButton[]{label, author, paper, conference, term};
         for(int id = 0; id < buttons.length; ++id) {
             buttons[id].addActionListener(this);

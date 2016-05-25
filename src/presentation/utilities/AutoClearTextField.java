@@ -5,9 +5,6 @@ import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
-/**
- * Created by daniconde on 24/05/2016.
- */
 public class AutoClearTextField extends JTextField {
 
     public AutoClearTextField(String title) {
