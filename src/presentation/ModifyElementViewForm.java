@@ -16,6 +16,10 @@ public class ModifyElementViewForm extends JDialog {
     public ModifyElementViewForm(PresentationController presentationController, String title) {
         super(null, title, ModalityType.APPLICATION_MODAL);
         presentationController = presentationController;
+        initialize();
+    }
+
+    void initialize() {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonAdd);
@@ -46,6 +50,7 @@ public class ModifyElementViewForm extends JDialog {
                 onCancel();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        pack();
     }
 
     private void onOK() {
