@@ -1,6 +1,6 @@
 package presentation;
 
-import presentation.utilities.AutoClearTextField;
+import presentation.utils.AutoClearTextField;
 
 import javax.swing.*;
 import java.awt.event.*;

@@ -8,7 +8,7 @@
     <properties/>
     <border type="none"/>
     <children>
-      <component id="612" class="presentation.RoundButton" binding="author" custom-create="true">
+      <component id="612" class="presentation.utils.RoundButton" binding="author" custom-create="true">
         <constraints>
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -16,7 +16,7 @@
           <foreground color="-1"/>
         </properties>
       </component>
-      <component id="fddd" class="presentation.RoundButton" binding="paper" custom-create="true">
+      <component id="fddd" class="presentation.utils.RoundButton" binding="paper" custom-create="true">
         <constraints>
           <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -24,7 +24,7 @@
           <foreground color="-1"/>
         </properties>
       </component>
-      <component id="9163b" class="presentation.RoundButton" binding="conference" custom-create="true">
+      <component id="9163b" class="presentation.utils.RoundButton" binding="conference" custom-create="true">
         <constraints>
           <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -32,7 +32,7 @@
           <foreground color="-1"/>
         </properties>
       </component>
-      <component id="5158f" class="presentation.RoundButton" binding="term" custom-create="true">
+      <component id="5158f" class="presentation.utils.RoundButton" binding="term" custom-create="true">
         <constraints>
           <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -40,7 +40,7 @@
           <foreground color="-1"/>
         </properties>
       </component>
-      <component id="5724e" class="presentation.RoundButton" binding="label" custom-create="true">
+      <component id="5724e" class="presentation.utils.RoundButton" binding="label" custom-create="true">
         <constraints>
           <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>

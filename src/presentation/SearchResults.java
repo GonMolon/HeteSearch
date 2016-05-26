@@ -2,12 +2,14 @@ package presentation;
 
 import javax.swing.*;
 
-public class SearchView {
+public class SearchResults extends JPanel {
 
     private PresentationController presentationController;
     private JFrame frame;
+    private JList list;
+    private JPanel panel;
 
-    protected SearchView(PresentationController presentationController) {
+    protected SearchResults(PresentationController presentationController) {
         this.presentationController = presentationController;
         frame = new JFrame("HeteSearch");
     }

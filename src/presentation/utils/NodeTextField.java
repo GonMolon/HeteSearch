@@ -1,4 +1,4 @@
-package presentation.utilities;
+package presentation.utils;
 
 
 import domain.GraphSearch;

@@ -1,7 +1,7 @@
 package presentation;
 
 import domain.NodeType;
-import presentation.utilities.NodeTextField;
+import presentation.utils.NodeTextField;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

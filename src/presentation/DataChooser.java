@@ -1,6 +1,6 @@
 package presentation;
 
-import domain.GraphException;
+import presentation.utils.DataChooserException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,7 +10,7 @@ public class DataChooser extends JFileChooser{
 
     String path;
 
-    public DataChooser(Component c, boolean export) throws DataChooserException{
+    public DataChooser(Component c, boolean export) throws DataChooserException {
         final JFileChooser fc = new JFileChooser();
         fc.setCurrentDirectory(getCurrentDirectory());
         fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);

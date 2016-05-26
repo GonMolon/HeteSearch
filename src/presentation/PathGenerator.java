@@ -1,7 +1,8 @@
 package presentation;
 
 import domain.NodeType;
-import presentation.utilities.InstanceSelectionDialog;
+import presentation.utils.InstanceSelectionDialog;
+import presentation.utils.RoundButton;
 
 import javax.swing.*;
 import java.awt.*;

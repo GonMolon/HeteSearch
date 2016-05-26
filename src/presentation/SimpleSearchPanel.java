@@ -2,10 +2,9 @@ package presentation;
 
 import domain.GraphSearch;
 import domain.NodeType;
-import presentation.utilities.AutoClearTextField;
+import presentation.utils.AutoClearTextField;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
