@@ -2,6 +2,7 @@ package presentation;
 
 import domain.*;
 
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 public class PresentationController {
@@ -21,6 +22,9 @@ public class PresentationController {
 
     public void newDB() {
         domainController.newDB();
+        mainView.dispose();
+        mainView = new MainView(this);
+        mainView.setVisible(true);
     }
 
     public void importDB(String path) {

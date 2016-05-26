@@ -23,8 +23,7 @@ public class MainView extends JFrame  {
     }
 
     private void initialize() {
-        setMinimumSize(new Dimension(700, 700));
-        //setResizable(false);
+        setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JPanel contentPane = (JPanel) getContentPane();
         contentPane.add(panel);
@@ -39,6 +38,10 @@ public class MainView extends JFrame  {
         searchButton.addActionListener(relationalSearchPanel);
         createMenu();
         pack();
+    }
+
+    public void setVisible(boolean b) {
+        super.setVisible(b);
     }
 
     private void createMenu() {

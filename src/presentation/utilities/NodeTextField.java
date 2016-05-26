@@ -7,7 +7,6 @@ import domain.NodeType;
 import presentation.PresentationController;
 
 import java.awt.event.FocusEvent;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class NodeTextField extends AutoClearTextField {
