@@ -1,8 +1,6 @@
 package presentation.utils;
 
-/**
- * Created by Magi on 23/05/2016.
- */
+
 public class DataChooserException extends Exception {
     private Error error;
 

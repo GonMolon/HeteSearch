@@ -17,6 +17,7 @@ public class MainView extends JFrame  {
     private RelationalSearchPanel relationalSearchPanel;
     private SimpleSearchPanel simpleSearchPanel;
     private JPanel searchPanel;
+    private SearchResults searchResults;
 
     protected MainView(PresentationController presentationController) {
         super("HeteSearch");
@@ -130,5 +131,6 @@ public class MainView extends JFrame  {
         pathGenerator = new PathGenerator(presentationController, this);
         relationalSearchPanel = new RelationalSearchPanel(presentationController);
         simpleSearchPanel = new SimpleSearchPanel(presentationController);
+        searchResults = new SearchResults();
     }
 }

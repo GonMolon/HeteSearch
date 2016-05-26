@@ -9,15 +9,14 @@ public class PresentationController {
 
     private DomainController domainController;
     private MainView mainView;
-    private SearchView searchView;
 
     public PresentationController() {
         domainController = new DomainController();
         mainView = new MainView(this);
         mainView.setVisible(true);
-        searchView = new SearchView(this);
 
         domainController.addRelation(NodeType.AUTHOR, NodeType.PAPER, "TEST");
+        importDB("/home/gonmolon/GraphForTesting/");
     }
 
     public void newDB() {

@@ -4,13 +4,10 @@ import javax.swing.*;
 
 public class SearchResults extends JPanel {
 
-    private PresentationController presentationController;
-    private JFrame frame;
-    private JList list;
     private JPanel panel;
+    private JList list;
 
-    protected SearchResults(PresentationController presentationController) {
-        this.presentationController = presentationController;
-        frame = new JFrame("HeteSearch");
+    public SearchResults() {
+
     }
 }

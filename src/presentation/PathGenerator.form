@@ -66,6 +66,7 @@
           <editable value="false"/>
           <focusable value="false"/>
           <requestFocusEnabled value="false"/>
+          <visible value="false"/>
         </properties>
       </component>
     </children>
