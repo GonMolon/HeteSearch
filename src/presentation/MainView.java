@@ -1,7 +1,5 @@
 package presentation;
 
-import presentation.utils.DataChooserException;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -30,7 +28,7 @@ public class MainView extends JPanel {
         addNodeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ModifyElementViewForm view = new ModifyElementViewForm(presentationController, "Testing");
+                ModifyElementView view = new ModifyElementView(presentationController, "Testing");
                 view.setVisible(true);
             }
         });
