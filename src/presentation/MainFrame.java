@@ -84,9 +84,4 @@ public class MainFrame extends JFrame {
         menuBar.add(menu);
         setJMenuBar(menuBar);
     }
-
-    public void dispose() {
-        graphView.finish();
-        super.dispose();
-    }
 }
