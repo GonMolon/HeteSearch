@@ -94,4 +94,9 @@ public class MainFrame extends JFrame {
         super.setVisible(visible);
         setResizable(false);
     }
+
+    public void dispose() {
+        graphView.finish();
+        super.dispose();
+    }
 }
