@@ -18,6 +18,7 @@ public class MainView extends JFrame  {
     private SimpleSearchPanel simpleSearchPanel;
     private JPanel searchPanel;
     private SearchResults searchResults;
+    private GraphView graphView;
 
     protected MainView(PresentationController presentationController) {
         super("HeteSearch");
@@ -39,8 +40,17 @@ public class MainView extends JFrame  {
         });
         searchButton.addActionListener(simpleSearchPanel);
         searchButton.addActionListener(relationalSearchPanel);
+        searchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                graphView.test();
+                pack();
+                repaint();
+            }
+        });
         createMenu();
         pack();
+        repaint();
     }
 
     public void setVisible(boolean b) {
@@ -132,5 +142,6 @@ public class MainView extends JFrame  {
         relationalSearchPanel = new RelationalSearchPanel(presentationController);
         simpleSearchPanel = new SimpleSearchPanel(presentationController);
         searchResults = new SearchResults();
+        graphView = new GraphView();
     }
 }

@@ -112,6 +112,10 @@ public class PathGenerator extends JPanel implements ActionListener{
                     }
                 }
         );
+
+        JButton button = new JButton("test");
+        button.setPreferredSize(new Dimension(100, 100));
+        add(button, BorderLayout.EAST);
     }
 
     private void setEnabledButtons(boolean enable) {
