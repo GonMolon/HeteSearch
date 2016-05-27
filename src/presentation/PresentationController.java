@@ -15,7 +15,7 @@ public class PresentationController {
         mainFrame = new MainFrame(this);
         mainFrame.setVisible(true);
         domainController.addRelation(NodeType.AUTHOR, NodeType.PAPER, "TEST");
-        importDB("/home/gonmolon/GraphForTesting/");
+        //importDB("/home/gonmolon/GraphForTesting/");
     }
 
     public void newDB() {
