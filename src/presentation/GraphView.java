@@ -19,7 +19,7 @@ public class GraphView {
         graph.addNode("AB");
         graph.addNode("B");
         graph.addNode("C");
-        viewer = new Viewer(graph, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
+        viewer = new Viewer(graph, Viewer.ThreadingModel.GRAPH_IN_GUI_THREAD);
         viewer.enableAutoLayout();
         panel = viewer.addDefaultView(false);
     }
@@ -30,6 +30,7 @@ public class GraphView {
 
     public void finish() {
         panel.setVisible(false);
+        viewer.close();
         viewer.close();
     }
 }
