@@ -7,28 +7,23 @@ import org.graphstream.ui.swingViewer.ViewPanel;
 import org.graphstream.ui.view.Viewer;
 
 import javax.swing.*;
-import java.awt.*;
 
-public class GraphView extends JPanel {
+public class GraphView {
 
     private Graph graph;
+    private Viewer viewer;
+    private ViewPanel panel;
 
     public GraphView() {
-        setBackground(Color.BLACK);
-        test();
+        graph = new SingleGraph("Graph");
+        graph.addNode("A");
+        graph.addNode("B");
+        viewer = new Viewer(graph, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
+        viewer.enableAutoLayout();
+        panel = viewer.addDefaultView(false);
     }
 
-    public void test() {
-        graph = new SingleGraph("Test");
-        graph.addNode("A" );
-        graph.addNode("B" );
-        graph.addNode("C" );
-        graph.addEdge("AB", "A", "B");
-        graph.addEdge("BC", "B", "C");
-        graph.addEdge("CA", "C", "A");
-        Viewer viewer = new Viewer(graph, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
-        ViewPanel view = viewer.addDefaultView(false);
-        view.setVisible(true);
-        add(view);
+    public JPanel getPanel() {
+        return panel;
     }
 }

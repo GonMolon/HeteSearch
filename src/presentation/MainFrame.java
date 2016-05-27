@@ -30,20 +30,8 @@ public class MainFrame extends JFrame {
         graphView = new GraphView();
         JPanel contentPane = (JPanel) getContentPane();
         contentPane.add(mainView, BorderLayout.WEST);
-        Graph graph = new SingleGraph("Test");
-        graph.addNode("A" );
-        graph.addNode("B" );
-        graph.addNode("C" );
-        graph.addEdge("AB", "A", "B");
-        graph.addEdge("BC", "B", "C");
-        graph.addEdge("CA", "C", "A");
-        Viewer viewer = new Viewer(graph, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
-        ViewPanel view = viewer.addDefaultView(false);
-        view.setVisible(true);
-        contentPane.add(view);
+        contentPane.add(graphView.getPanel(), BorderLayout.CENTER);
         pack();
-        //contentPane.add(graphView, BorderLayout.CENTER);
-        //pack();
         createMenu();
         repaint();
     }
