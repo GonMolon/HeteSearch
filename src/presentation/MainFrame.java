@@ -24,7 +24,8 @@ public class MainFrame extends JFrame {
     }
 
     private void initialize() {
-        setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
+        //setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
+        setPreferredSize(new Dimension(1000, 10000));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainView = new MainView(presentationController);
         graphView = new GraphView();
@@ -33,7 +34,6 @@ public class MainFrame extends JFrame {
         contentPane.add(graphView.getPanel(), BorderLayout.CENTER);
         pack();
         createMenu();
-        repaint();
     }
 
     private void createMenu() {
@@ -72,9 +72,8 @@ public class MainFrame extends JFrame {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         System.out.println("Exporting graph");
-                        DataChooser dc = null;
                         try {
-                            dc = new DataChooser(exportGraph, true);
+                            DataChooser dc = new DataChooser(exportGraph, true);
                             presentationController.exportDB(dc.getDirectory());
                             System.out.println("Done");
                         } catch (DataChooserException exception) {
@@ -92,7 +91,7 @@ public class MainFrame extends JFrame {
 
     public void setVisible(boolean visible) {
         super.setVisible(visible);
-        setResizable(false);
+        //setResizable(false);
     }
 
     public void dispose() {
