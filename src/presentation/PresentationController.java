@@ -1,6 +1,7 @@
 package presentation;
 
 import domain.*;
+import scala.Int;
 
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
@@ -51,6 +52,10 @@ public class PresentationController {
 
     public void removeRelation(int id) {
         domainController.removeRelation(id);
+    }
+
+    public ArrayList<Integer> getRelations(NodeType type) {
+        return domainController.getRelations(type);
     }
 
     public String getRelationName(int id) {

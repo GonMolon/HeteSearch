@@ -1,6 +1,6 @@
 package presentation;
 
-
+import domain.NodeType;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.implementations.SingleGraph;
 import org.graphstream.ui.swingViewer.ViewPanel;
@@ -8,31 +8,31 @@ import org.graphstream.ui.view.Viewer;
 
 import javax.swing.*;
 
-public class GraphView {
+public class GraphPath {
 
     private Graph graph;
     private Viewer viewer;
     private ViewPanel panel;
-    private PresentationController presentationController;
 
-    public GraphView(PresentationController presentationController) {
-        this.presentationController = presentationController;
-        graph = new SingleGraph("GraphView");
+    public GraphPath() {
+        graph = new SingleGraph("Path");
         graph.setAutoCreate(true);
         graph.setStrict(false);
-        graph.addEdge("AB", "A", "B");
-        graph.addEdge("CD", "C", "D");
+        reset();
         viewer = new Viewer(graph, Viewer.ThreadingModel.GRAPH_IN_GUI_THREAD);
         viewer.enableAutoLayout();
         panel = viewer.addDefaultView(false);
         panel.setVisible(false);
     }
 
-    public JPanel getPanel() {
-        return panel;
+    public void reset() {
+        NodeType[] types = NodeType.values();
+        for(int i = 0; i < types.length; ++i) {
+            graph.addNode(types[i].toString());
+        }
     }
 
-    public void refresh() {
-
+    public JPanel getPanel() {
+        return panel;
     }
 }

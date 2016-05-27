@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 public class MainView extends JPanel {
 
     private PresentationController presentationController;
+    private MainFrame mainFrame;
     private JPanel panel;
     private PathGenerator pathGenerator;
     private JButton addNodeButton;
@@ -17,9 +18,10 @@ public class MainView extends JPanel {
     private JPanel searchPanel;
     private SearchResults searchResults;
 
-    protected MainView(PresentationController presentationController) {
+    protected MainView(PresentationController presentationController, MainFrame mainFrame) {
         super();
         this.presentationController = presentationController;
+        this.mainFrame = mainFrame;
         initialize();
     }
 
@@ -37,6 +39,7 @@ public class MainView extends JPanel {
         searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                mainFrame.setGraphCard("GraphView");
             }
         });
     }

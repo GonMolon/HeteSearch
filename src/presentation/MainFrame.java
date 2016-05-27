@@ -11,7 +11,10 @@ public class MainFrame extends JFrame {
 
     private PresentationController presentationController;
     private MainView mainView;
+    private CardLayout graphsLayout;
+    private JPanel graphs;
     private GraphView graphView;
+    private GraphPath graphPath;
 
     protected MainFrame(PresentationController presentationController) {
         super("HeteSearch");
@@ -23,11 +26,17 @@ public class MainFrame extends JFrame {
         setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
         setMinimumSize(new Dimension(1300, 800));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mainView = new MainView(presentationController);
-        graphView = new GraphView();
+        mainView = new MainView(presentationController, this);
+        graphView = new GraphView(presentationController);
+        graphPath = new GraphPath();
         JPanel contentPane = (JPanel) getContentPane();
         contentPane.add(mainView, BorderLayout.WEST);
-        contentPane.add(graphView.getPanel(), BorderLayout.CENTER);
+        graphsLayout = new CardLayout();
+        graphs = new JPanel(graphsLayout);
+        graphs.add(graphPath.getPanel(), "Path");
+        graphs.add(graphView.getPanel(), "GraphView");
+        graphsLayout.show(graphs, "Path");
+        contentPane.add(graphs);
         pack();
         createMenu();
     }
@@ -83,5 +92,13 @@ public class MainFrame extends JFrame {
         menu.add(exportGraph);
         menuBar.add(menu);
         setJMenuBar(menuBar);
+    }
+
+    public void refreshGraphView() {
+        graphView.refresh();
+    }
+
+    public void setGraphCard(String graphCard) {
+        graphsLayout.show(graphs, graphCard);
     }
 }
