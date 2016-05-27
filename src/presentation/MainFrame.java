@@ -1,9 +1,5 @@
 package presentation;
 
-import org.graphstream.graph.Graph;
-import org.graphstream.graph.implementations.SingleGraph;
-import org.graphstream.ui.swingViewer.ViewPanel;
-import org.graphstream.ui.view.Viewer;
 import presentation.utils.DataChooserException;
 
 import javax.swing.*;
@@ -24,8 +20,8 @@ public class MainFrame extends JFrame {
     }
 
     private void initialize() {
-        //setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
-        setPreferredSize(new Dimension(1000, 10000));
+        setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
+        setMinimumSize(new Dimension(1300, 800));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainView = new MainView(presentationController);
         graphView = new GraphView();
@@ -87,15 +83,5 @@ public class MainFrame extends JFrame {
         menu.add(exportGraph);
         menuBar.add(menu);
         setJMenuBar(menuBar);
-    }
-
-    public void setVisible(boolean visible) {
-        super.setVisible(visible);
-        //setResizable(false);
-    }
-
-    public void dispose() {
-        graphView.finish();
-        super.dispose();
     }
 }

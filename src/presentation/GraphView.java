@@ -27,10 +27,4 @@ public class GraphView {
     public JPanel getPanel() {
         return panel;
     }
-
-    public void finish() {
-        panel.setVisible(false);
-        viewer.close();
-        viewer.close();
-    }
 }
