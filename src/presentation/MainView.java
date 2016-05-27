@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MainView extends JFrame  {
+public class MainView extends JPanel {
 
     private PresentationController presentationController;
     private JPanel panel;
@@ -18,19 +18,15 @@ public class MainView extends JFrame  {
     private SimpleSearchPanel simpleSearchPanel;
     private JPanel searchPanel;
     private SearchResults searchResults;
-    private GraphView graphView;
 
     protected MainView(PresentationController presentationController) {
-        super("HeteSearch");
+        super();
         this.presentationController = presentationController;
         initialize();
     }
 
     private void initialize() {
-        setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        JPanel contentPane = (JPanel) getContentPane();
-        contentPane.add(panel);
+        add(panel, BorderLayout.CENTER);
         addNodeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -43,72 +39,8 @@ public class MainView extends JFrame  {
         searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                graphView.test();
-                pack();
-                repaint();
             }
         });
-        createMenu();
-        pack();
-        repaint();
-    }
-
-    public void setVisible(boolean b) {
-        super.setVisible(b);
-    }
-
-    private void createMenu() {
-        JMenuBar menuBar = new JMenuBar();
-        JMenu menu = new JMenu("File");
-        JMenuItem newGraph = new JMenuItem("New Graph");
-        newGraph.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        presentationController.newDB();
-                    }
-                }
-        );
-        JMenuItem importGraph = new JMenuItem("Import Graph");
-        importGraph.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        System.out.println("Importing graph");
-                        DataChooser dc = null;
-                        try {
-                            dc = new DataChooser(importGraph, false);
-                            presentationController.newDB();
-                            presentationController.importDB(dc.getDirectory());
-                            System.out.println("Done");
-                        } catch (DataChooserException exception) {
-                            exception.printStackTrace();
-                        }
-                    }
-                }
-        );
-        JMenuItem exportGraph = new JMenuItem("Export Graph");
-        exportGraph.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        System.out.println("Exporting graph");
-                        DataChooser dc = null;
-                        try {
-                            dc = new DataChooser(exportGraph, true);
-                            presentationController.exportDB(dc.getDirectory());
-                            System.out.println("Done");
-                        } catch (DataChooserException exception) {
-                            exception.printStackTrace();
-                        }
-                    }
-                }
-        );
-        menu.add(newGraph);
-        menu.add(importGraph);
-        menu.add(exportGraph);
-        menuBar.add(menu);
-        setJMenuBar(menuBar);
     }
 
     public void update() {
@@ -142,6 +74,5 @@ public class MainView extends JFrame  {
         relationalSearchPanel = new RelationalSearchPanel(presentationController);
         simpleSearchPanel = new SimpleSearchPanel(presentationController);
         searchResults = new SearchResults();
-        graphView = new GraphView();
     }
 }

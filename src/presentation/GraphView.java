@@ -15,8 +15,7 @@ public class GraphView extends JPanel {
 
     public GraphView() {
         setBackground(Color.BLACK);
-        setMaximumSize(new Dimension(100, 100));
-        //add(new JButton("HELLOUUUUUUUUUUUUUUUUUU"), BorderLayout.WEST);
+        test();
     }
 
     public void test() {

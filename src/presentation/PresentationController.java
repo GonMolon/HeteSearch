@@ -8,22 +8,21 @@ import java.util.ArrayList;
 public class PresentationController {
 
     private DomainController domainController;
-    private MainView mainView;
+    private MainFrame mainFrame;
 
     public PresentationController() {
         domainController = new DomainController();
-        mainView = new MainView(this);
-        mainView.setVisible(true);
-
+        mainFrame = new MainFrame(this);
+        mainFrame.setVisible(true);
         domainController.addRelation(NodeType.AUTHOR, NodeType.PAPER, "TEST");
         importDB("/home/gonmolon/GraphForTesting/");
     }
 
     public void newDB() {
         domainController.newDB();
-        mainView.dispose();
-        mainView = new MainView(this);
-        mainView.setVisible(true);
+        mainFrame.dispose();
+        mainFrame = new MainFrame(this);
+        mainFrame.setVisible(true);
     }
 
     public void importDB(String path) {
