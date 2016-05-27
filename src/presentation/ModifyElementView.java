@@ -3,17 +3,23 @@ package presentation;
 import presentation.utils.AutoClearTextField;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 
-public class ModifyElementViewForm extends JDialog {
+public class ModifyElementView extends JDialog {
+    private final int minimumHeight = 400;
+    private final int minimumWidth = 300;
+
     private PresentationController presentationController;
     private JPanel contentPane;
-    private JButton buttonAdd;
+    private JButton buttonOk;
     private JButton buttonCancel;
-    private AutoClearTextField fieldName;
     private JComboBox selectType;
+    private JButton buttonAddRelation;
+    private JButton buttonRemoveRelation;
+    private AutoClearTextField fieldName;
 
-    public ModifyElementViewForm(PresentationController presentationController, String title) {
+    public ModifyElementView(PresentationController presentationController, String title) {
         super(null, title, ModalityType.APPLICATION_MODAL);
         presentationController = presentationController;
         initialize();
@@ -22,9 +28,10 @@ public class ModifyElementViewForm extends JDialog {
     void initialize() {
         setContentPane(contentPane);
         setModal(true);
-        getRootPane().setDefaultButton(buttonAdd);
+        getRootPane().setDefaultButton(buttonOk);
+        setMinimumSize(new Dimension(minimumWidth, minimumHeight));
 
-        buttonAdd.addActionListener(new ActionListener() {
+        buttonOk.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onOK();
             }
@@ -50,7 +57,6 @@ public class ModifyElementViewForm extends JDialog {
                 onCancel();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-        pack();
     }
 
     private void onOK() {
@@ -64,6 +70,6 @@ public class ModifyElementViewForm extends JDialog {
     }
 
     private void createUIComponents() {
-        fieldName = new AutoClearTextField("Type element name");
+        fieldName = new AutoClearTextField("Test");
     }
 }
