@@ -1,7 +1,9 @@
 package presentation;
 
+import domain.Element;
 import domain.NodeType;
 import presentation.utils.AutoClearTextField;
+import presentation.utils.NodeTextField;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,9 +31,10 @@ public class ElementInfoView extends JDialog {
     protected JButton buttonCancel;
     protected JComboBox<NodeType> selectType;
     protected JComboBox<String> selectRelationType;
-    protected JList<String> listRelations;
-    protected DefaultListModel<String> currentModel;
-    protected ArrayList<DefaultListModel<String>> listModels;
+    private NodeTextField fieldOtherNodeName;
+    protected JList<ElementInfoView.Element> listRelations;
+    protected DefaultListModel<ElementInfoView.Element> currentModel;
+    protected ArrayList<DefaultListModel<ElementInfoView.Element>> listModels;
 
     protected ElementInfoView(PresentationController presentationController, Component parentComponent) {
         super(null, "Modify element", ModalityType.APPLICATION_MODAL);
@@ -112,6 +115,7 @@ public class ElementInfoView extends JDialog {
 
     private void createUIComponents() {
         fieldName = new AutoClearTextField("Insert element name");
+        fieldOtherNodeName = new NodeTextField(presentationController, "Insert other node name", NodeType.AUTHOR);
     }
 
     private void onSelectType() {
@@ -121,7 +125,7 @@ public class ElementInfoView extends JDialog {
         relationTypeIds = presentationController.getRelations(type);
         String[] relationNames = new String[relationTypeIds.size()];
         for (int i = 0; i < relationTypeIds.size(); ++i) {
-            listModels.add(new DefaultListModel());
+            listModels.add(new DefaultListModel<>());
             String relationName = presentationController.getRelationName(relationTypeIds.get(i));
             relationNames[i] = relationName;
         }
@@ -137,7 +141,7 @@ public class ElementInfoView extends JDialog {
 
 
     private void onAdd() {
-        currentModel.addElement("Node name");
+        currentModel.addElement(new Element(422, NodeType.AUTHOR, "Carlos Ruiz"));
     }
 
     private void onDelete() {
@@ -170,20 +174,20 @@ public class ElementInfoView extends JDialog {
 
     }
 
-    private class RelationType {
-        private int relationId;
+    private class Element {
+        public int id;
+        public NodeType type;
+        public String value;
 
-        RelationType(int relationId) {
-            this.relationId = relationId;
-        }
-
-        public int getId() {
-            return relationId;
+        Element(int elementId, NodeType elementType, String value) {
+            this.id = elementId;
+            this.type = type;
+            this.value = value;
         }
 
         @Override
         public String toString() {
-            return presentationController.getRelationName(relationId);
+            return value;
         }
     }
 }
