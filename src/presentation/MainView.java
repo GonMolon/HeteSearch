@@ -83,7 +83,7 @@ public class MainView extends JPanel {
     }
 
     private void createUIComponents() {
-        pathGenerator = new PathGenerator(presentationController, this);
+        pathGenerator = new PathGenerator(presentationController, this, mainFrame.graphPath);
         relationalSearchPanel = new RelationalSearchPanel(presentationController);
         simpleSearchPanel = new SimpleSearchPanel(presentationController);
         searchResults = new SearchResults();

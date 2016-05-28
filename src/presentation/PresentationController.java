@@ -34,8 +34,8 @@ public class PresentationController {
         domainController.exportDB(path);
     }
 
-    public void addNode(NodeType type, String value) {
-        domainController.addNode(type, value);
+    public int addNode(NodeType type, String value) {
+        return domainController.addNode(type, value);
     }
 
     public void removeNode(NodeType type, int id) {

@@ -14,7 +14,7 @@ public class MainFrame extends JFrame {
     private CardLayout graphsLayout;
     private JPanel graphs;
     private GraphView graphView;
-    private GraphPath graphPath;
+    public GraphPath graphPath;
 
     protected MainFrame(PresentationController presentationController) {
         super("HeteSearch");
@@ -26,9 +26,9 @@ public class MainFrame extends JFrame {
         setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
         setMinimumSize(new Dimension(1300, 800));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mainView = new MainView(presentationController, this);
         graphView = new GraphView(presentationController);
         graphPath = new GraphPath();
+        mainView = new MainView(presentationController, this);
         JPanel contentPane = (JPanel) getContentPane();
         contentPane.add(mainView, BorderLayout.WEST);
         graphsLayout = new CardLayout();

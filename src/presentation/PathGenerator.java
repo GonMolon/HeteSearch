@@ -1,6 +1,7 @@
 package presentation;
 
 import domain.NodeType;
+import org.graphstream.graph.Graph;
 import presentation.utils.InstanceSelectionDialog;
 import presentation.utils.RoundButton;
 
@@ -14,6 +15,8 @@ public class PathGenerator extends JPanel implements ActionListener{
 
     private PresentationController presentationController;
     private MainView mainView;
+    private GraphPath graphPath;
+
     protected ArrayList<Integer> actualRS = new ArrayList<Integer>();
     protected NodeType prev = null;
     protected NodeType from = null;
@@ -37,9 +40,10 @@ public class PathGenerator extends JPanel implements ActionListener{
     private static String CONFERENCE = "Con";
     private static String TERM = "Ter";
 
-    protected PathGenerator(PresentationController presentationController, MainView mainView) {
+    protected PathGenerator(PresentationController presentationController, MainView mainView, GraphPath graphPath) {
         this.presentationController = presentationController;
         this.mainView = mainView;
+        this.graphPath = graphPath;
         add(panel);
     }
 
@@ -65,6 +69,7 @@ public class PathGenerator extends JPanel implements ActionListener{
             buttons[id].setEnabled(true);
         }
         if(actualRS.size() > 0) {
+            graphPath.addRelation(prev, next, actualRS.get(actualRS.size()-1));
             if(actualRS.size() == 1) {
                 pathLabel.setText(prev.toString());
             }
@@ -86,6 +91,7 @@ public class PathGenerator extends JPanel implements ActionListener{
         actualRS = new ArrayList<Integer>();
         pathLabel.setText("");
         mainView.update();
+        graphPath.reset();
     }
 
     private void createUIComponents() {

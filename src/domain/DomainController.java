@@ -30,9 +30,10 @@ public class DomainController {
         persistenceController.exportGraph(path);
     }
 
-    public void addNode(NodeType type, String value) {
+    public int addNode(NodeType type, String value) {
         Node node = graph.createNode(type, value);
         graph.addNode(node);
+        return node.getId();
     }
 
     public void removeNode(NodeType type, int id) {
