@@ -78,7 +78,11 @@ public class PresentationController {
     }
 
     public NodeType getNodeTypeTo(int relationId, NodeType from) {
-        return domainController.getNodeTypeTo(relationId, from);
+        NodeType[] types = getNodeTypesFromRelation(relationId);
+        if (types[0] == from) {
+            return types[1];
+        }
+        /*else*/return types[0];
     }
 
     public NodeType[] getNodeTypesFromRelation(int relationID) {
