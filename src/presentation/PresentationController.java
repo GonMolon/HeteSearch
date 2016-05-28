@@ -1,9 +1,8 @@
 package presentation;
 
-import domain.*;
-import scala.Int;
+import domain.DomainController;
+import domain.NodeType;
 
-import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 public class PresentationController {
@@ -17,8 +16,8 @@ public class PresentationController {
         mainFrame = new MainFrame(this);
         mainFrame.setVisible(true);
         domainController.addRelation(NodeType.AUTHOR, NodeType.PAPER, "TEST");
+        //importDB("/home/gonmolon/GraphForTesting/");
 
-        importDB("D:/Projects/JavaProjects/PROP/data");
     }
 
     public void newDB() {
@@ -26,10 +25,12 @@ public class PresentationController {
         mainFrame.dispose();
         mainFrame = new MainFrame(this);
         mainFrame.setVisible(true);
+        mainFrame.refreshGraphView();
     }
 
     public void importDB(String path) {
         domainController.importDB(path);
+        mainFrame.refreshGraphView();
     }
 
     public void exportDB(String path) {
@@ -42,6 +43,10 @@ public class PresentationController {
 
     public void removeNode(NodeType type, int id) {
         domainController.removeNode(type, id);
+    }
+
+    public int[] getNodes(NodeType type) {
+        return domainController.getNodes(type);
     }
 
     public String getNodeValue(NodeType type, int id) {
@@ -60,6 +65,10 @@ public class PresentationController {
         domainController.removeRelation(id);
     }
 
+    public ArrayList<Integer> getRelations() {
+        return domainController.getRelations();
+    }
+
     public ArrayList<Integer> getRelations(NodeType type) {
         return domainController.getRelations(type);
     }
@@ -72,6 +81,10 @@ public class PresentationController {
         return domainController.getNodeTypeTo(relationId, from);
     }
 
+    public NodeType[] getNodeTypesFromRelation(int relationID) {
+        return domainController.getNodeTypesFromRelation(relationID);
+    }
+
     public void addEdge(int relationID, NodeType typeA, int nodeA, NodeType typeB, int nodeB) {
         domainController.addEdge(relationID, typeA, nodeA, typeB, nodeB);
     }
@@ -80,8 +93,8 @@ public class PresentationController {
         domainController.removeEdge(relationID, typeA, nodeA, typeB, nodeB);
     }
 
-    public ArrayList<Integer> getEdges(int relationID, int nodeId, NodeType nodeType) {
-        return domainController.getEdges(relationID, nodeId, nodeType);
+    public ArrayList<Integer> getEdges(int relationID, NodeType type, int nodeID) {
+        return domainController.getEdges(relationID, type, nodeID);
     }
 
     public ArrayList<Integer> simpleSearch(NodeType type, String filter) {

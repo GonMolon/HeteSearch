@@ -25,7 +25,7 @@ public class ModifyElementView extends ElementInfoView {
             int relationTypeId = relationTypeIds.get(i);
             DefaultListModel<ElementInfoView.Element> model = listModels.get(i);
             NodeType toType = presentationController.getNodeTypeTo(relationTypeId, type);
-            ArrayList<Integer> connectedIds = presentationController.getEdges(relationTypeId, nodeId, type);
+            ArrayList<Integer> connectedIds = presentationController.getEdges(relationTypeId, type, nodeId);
             for (int id : connectedIds) {
                 String eValue = presentationController.getNodeValue(toType, id);
                 Element e = new Element(id, toType, eValue);

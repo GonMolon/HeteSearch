@@ -5,9 +5,18 @@ import org.graphstream.graph.Edge;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.MultiGraph;
+import org.graphstream.ui.graphicGraph.GraphicGraph;
+import org.graphstream.ui.swingViewer.ViewPanel;
+import org.graphstream.ui.view.View;
 import org.graphstream.ui.view.Viewer;
+import org.graphstream.ui.view.util.MouseManager;
 
+import javax.smartcardio.Card;
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 public class GraphPath {
 
@@ -27,6 +36,26 @@ public class GraphPath {
         graph.setStrict(false);
         viewer = new Viewer(graph, Viewer.ThreadingModel.GRAPH_IN_GUI_THREAD);
         panel = viewer.addDefaultView(false);
+        ((ViewPanel)panel).setMouseManager(new MouseManager(){
+            @Override
+            public void mouseClicked(MouseEvent e) {}
+            @Override
+            public void mousePressed(MouseEvent e) {}
+            @Override
+            public void mouseReleased(MouseEvent e) {}
+            @Override
+            public void mouseEntered(MouseEvent e) {}
+            @Override
+            public void mouseExited(MouseEvent e) {}
+            @Override
+            public void mouseDragged(MouseEvent e) {}
+            @Override
+            public void mouseMoved(MouseEvent e) {}
+            @Override
+            public void init(GraphicGraph graph, View view) {}
+            @Override
+            public void release() {}
+        });
         reset();
     }
 
@@ -49,8 +78,6 @@ public class GraphPath {
                 + "     padding: 40px; "
                 + "}"
         );
-        graph.addAttribute("ui.quality");
-        graph.addAttribute("ui.antialias");
         lastIdRelation = 0;
         lastIdNode = 0;
         lastX = 0;
@@ -80,5 +107,9 @@ public class GraphPath {
         node.addAttribute("ui.label", next.toString());
         node.setAttribute("xy", lastX*X_GAP, lastX%2 == 1 ? -Y_GAP : 0);
         ++lastX;
+    }
+
+    public void show() {
+        ((CardLayout)panel.getParent().getLayout()).show(panel.getParent(), "Path");
     }
 }

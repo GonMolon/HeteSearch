@@ -13,7 +13,7 @@ public class MainFrame extends JFrame {
     private MainView mainView;
     private CardLayout graphsLayout;
     private JPanel graphs;
-    private GraphView graphView;
+    public GraphView graphView;
     public GraphPath graphPath;
 
     protected MainFrame(PresentationController presentationController) {
@@ -35,7 +35,7 @@ public class MainFrame extends JFrame {
         graphs = new JPanel(graphsLayout);
         graphs.add(graphPath.getPanel(), "Path");
         graphs.add(graphView.getPanel(), "GraphView");
-        graphsLayout.show(graphs, "Path");
+        graphsLayout.show(graphs, "GraphView");
         contentPane.add(graphs);
         pack();
         createMenu();
