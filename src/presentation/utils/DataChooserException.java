@@ -12,7 +12,9 @@ public class DataChooserException extends Exception {
     public void printStackTrace(){
         if(error == Error.DIRECTORY_INVALID)
             System.out.println("Invalid directory");
+        if(error == Error.NOT_SELECTED)
+            System.out.println("Directory not selected");
     }
 
-    public enum Error {DIRECTORY_INVALID}
+    public enum Error {DIRECTORY_INVALID, NOT_SELECTED}
 }
