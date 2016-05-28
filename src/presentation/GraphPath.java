@@ -76,14 +76,11 @@ public class GraphPath {
     private void addNode(NodeType next) {
         Node node = graph.addNode(String.valueOf(++lastIdNode));
         node.addAttribute("ui.label", next.toString());
-        int x = lastX%COLUMNS;
-        if((lastX/COLUMNS) % 2 == 1) {
-            x = COLUMNS-1-x;
+        int y = 0;
+        if(lastX%2 == 1) {
+            y = -100;
         }
-        node.setAttribute("xy", x, lastY);
-        if(lastX%COLUMNS == COLUMNS-1 && (x == COLUMNS-1 || x == 0)) {
-            lastY -= 0.4f;
-        }
+        node.setAttribute("xy", lastX*GAP, y);
         ++lastX;
     }
 }
