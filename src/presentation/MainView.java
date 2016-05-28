@@ -10,18 +10,22 @@ import java.awt.event.ActionListener;
 public class MainView extends JPanel {
 
     private PresentationController presentationController;
+    private MainFrame mainFrame;
     private JPanel panel;
     private PathGenerator pathGenerator;
-    private JButton addNodeButton;
     private JButton searchButton;
     private RelationalSearchPanel relationalSearchPanel;
     private SimpleSearchPanel simpleSearchPanel;
     private JPanel searchPanel;
+    private JButton addNodeButton;
+    private JButton addRelationButton;
+    private JButton removeRelationButton;
     private SearchResults searchResults;
 
-    protected MainView(PresentationController presentationController) {
+    protected MainView(PresentationController presentationController, MainFrame mainFrame) {
         super();
         this.presentationController = presentationController;
+        this.mainFrame = mainFrame;
         initialize();
     }
 
@@ -34,18 +38,26 @@ public class MainView extends JPanel {
                 view.setVisible(true);
             }
         });
-        searchButton.addActionListener(simpleSearchPanel);
-        searchButton.addActionListener(relationalSearchPanel);
-        searchButton.addActionListener(new ActionListener() {
+        addRelationButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //TODO implement this
             }
         });
+        removeRelationButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //TODO implement this
+            }
+        });
+        searchButton.addActionListener(simpleSearchPanel);
+        searchButton.addActionListener(relationalSearchPanel);
     }
 
     public void update() {
         if(pathGenerator.from == null) {
             addNodeButton.setEnabled(false);
+            addRelationButton.setEnabled(false);
             simpleSearchPanel.setEnabled(false);
             searchButton.setEnabled(false);
             CardLayout searchPanelLayout = (CardLayout) searchPanel.getLayout();
@@ -53,24 +65,27 @@ public class MainView extends JPanel {
             relationalSearchPanel.reset();
         } else if(pathGenerator.actualRS.size() == 0) {
             addNodeButton.setEnabled(true);
+            addRelationButton.setEnabled(false);
             searchButton.setEnabled(true);
             simpleSearchPanel.setEnabled(true);
             simpleSearchPanel.setNodeType(pathGenerator.from);
             searchButton.setEnabled(true);
         } else if(pathGenerator.actualRS.size() == 1) {
             addNodeButton.setEnabled(false);
+            addRelationButton.setEnabled(true);
             searchButton.setEnabled(true);
             CardLayout searchPanelLayout = (CardLayout) searchPanel.getLayout();
             searchPanelLayout.show(searchPanel, "relational");
             relationalSearchPanel.setNodeTypeFrom(pathGenerator.from);
             relationalSearchPanel.setNodeTypeTo(pathGenerator.to);
         } else {
+            addRelationButton.setEnabled(false);
             relationalSearchPanel.setNodeTypeTo(pathGenerator.to);
         }
     }
 
     private void createUIComponents() {
-        pathGenerator = new PathGenerator(presentationController, this);
+        pathGenerator = new PathGenerator(presentationController, this, mainFrame.graphPath);
         relationalSearchPanel = new RelationalSearchPanel(presentationController);
         simpleSearchPanel = new SimpleSearchPanel(presentationController);
         searchResults = new SearchResults();

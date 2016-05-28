@@ -30,9 +30,10 @@ public class DomainController {
         persistenceController.exportGraph(path);
     }
 
-    public void addNode(NodeType type, String value) {
+    public int addNode(NodeType type, String value) {
         Node node = graph.createNode(type, value);
         graph.addNode(node);
+        return node.getId();
     }
 
     public void removeNode(NodeType type, int id) {
@@ -176,5 +177,17 @@ public class DomainController {
             }
         }
         return new ArrayList<NodeType>(availableNodeTypes);
+    }
+
+    public ArrayList<Integer> getRelations(NodeType type) {
+        ArrayList<Integer> result = new ArrayList<Integer>();
+        Container<Relation>.ContainerIterator iterator = graph.getRelationIterator();
+        while(iterator.hasNext()) {
+            Relation relation = iterator.next();
+            if(relation.getNodeTypeA() == type || relation.getNodeTypeB() == type) {
+                result.add(relation.getId());
+            }
+        }
+        return result;
     }
 }

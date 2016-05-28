@@ -1,6 +1,7 @@
 package presentation;
 
 import domain.*;
+import scala.Int;
 
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
@@ -33,8 +34,8 @@ public class PresentationController {
         domainController.exportDB(path);
     }
 
-    public void addNode(NodeType type, String value) {
-        domainController.addNode(type, value);
+    public int addNode(NodeType type, String value) {
+        return domainController.addNode(type, value);
     }
 
     public void removeNode(NodeType type, int id) {
@@ -51,6 +52,10 @@ public class PresentationController {
 
     public void removeRelation(int id) {
         domainController.removeRelation(id);
+    }
+
+    public ArrayList<Integer> getRelations(NodeType type) {
+        return domainController.getRelations(type);
     }
 
     public String getRelationName(int id) {
