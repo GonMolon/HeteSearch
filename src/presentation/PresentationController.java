@@ -48,6 +48,10 @@ public class PresentationController {
         return domainController.getNodeValue(type, id);
     }
 
+    public void setNodeValue(NodeType type, int id, String value) {
+        domainController.setNodeValue(type, id, value);
+    }
+
     public int addRelation(NodeType A, NodeType B, String name) {
         return domainController.addRelation(A, B, name);
     }
@@ -76,8 +80,8 @@ public class PresentationController {
         domainController.removeEdge(relationID, typeA, nodeA, typeB, nodeB);
     }
 
-    public ArrayList<Node> getEdges(int relationID, Node node) {
-        return domainController.getEdges(relationID, node);
+    public ArrayList<Integer> getEdges(int relationID, int nodeId, NodeType nodeType) {
+        return domainController.getEdges(relationID, nodeId, nodeType);
     }
 
     public ArrayList<Integer> simpleSearch(NodeType type, String filter) {

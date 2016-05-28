@@ -53,6 +53,14 @@ public class DomainController {
         }
     }
 
+    public void setNodeValue(NodeType type, int id, String value) {
+        try {
+            graph.getNode(type, id).setValue(value);
+        } catch (GraphException e) {
+            e.printStackTrace();
+        }
+    }
+
     public int addRelation(NodeType A, NodeType B, String name) {
         Relation relation = new Relation(A, B, name);
         graph.addRelation(relation);
@@ -105,9 +113,14 @@ public class DomainController {
         }
     }
 
-    public ArrayList<Node> getEdges(int relationID, Node node) {
+    public ArrayList<Integer> getEdges(int relationID, int nodeId, NodeType nodeType) {
         try {
-            return graph.getEdges(relationID, node);
+            ArrayList<Node> connectedNodes = graph.getEdges(relationID, graph.getNode(nodeType, nodeId));
+            ArrayList<Integer> connectedIds = new ArrayList<>();
+            for (Node connectedNode : connectedNodes) {
+                connectedIds.add(connectedNode.id);
+            }
+            return connectedIds;
         } catch (GraphException e) {
             e.printStackTrace();
             return null;
