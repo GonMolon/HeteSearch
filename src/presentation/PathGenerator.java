@@ -32,7 +32,6 @@ public class PathGenerator extends JPanel implements ActionListener{
     private RoundButton[] buttons;
 
     private JButton resetButton;
-    private JTextField pathLabel;
 
     private static String LABEL = "Lab";
     private static String AUTHOR = "Aut";
@@ -49,7 +48,6 @@ public class PathGenerator extends JPanel implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent event) {
-        pathLabel.setMaximumSize(new Dimension(10, 10));
         resetButton.setVisible(true);
         NodeType next = getNodeType(event.getActionCommand());
         PresentationController.PathInfo info = presentationController.getPathInfo(prev, next);
@@ -69,11 +67,12 @@ public class PathGenerator extends JPanel implements ActionListener{
             buttons[id].setEnabled(true);
         }
         if(actualRS.size() > 0) {
-            graphPath.addRelation(prev, next, actualRS.get(actualRS.size()-1));
+            String relationName = presentationController.getRelationName(actualRS.get(actualRS.size()-1));
             if(actualRS.size() == 1) {
-                pathLabel.setText(prev.toString());
+                graphPath.addFirstRelation(prev, next, relationName);
+            } else {
+                graphPath.addRelation(next, relationName);
             }
-            pathLabel.setText(pathLabel.getText() + " -> (" + presentationController.getRelationName(actualRS.get(actualRS.size()-1)) + ") -> " + next.toString());
         } else {
             from = next;
         }
@@ -89,13 +88,12 @@ public class PathGenerator extends JPanel implements ActionListener{
         to = null;
         setEnabledButtons(true);
         actualRS = new ArrayList<Integer>();
-        pathLabel.setText("");
         mainView.update();
         graphPath.reset();
     }
 
     private void createUIComponents() {
-        Color color = new Color(0x7DA4);
+        Color color = new Color(0x007DA4);
         label = new RoundButton(LABEL, color);
         author = new RoundButton(AUTHOR, color);
         paper = new RoundButton(PAPER, color);

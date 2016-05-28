@@ -12,10 +12,12 @@ public class PresentationController {
     private MainFrame mainFrame;
 
     public PresentationController() {
+        System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
         domainController = new DomainController();
         mainFrame = new MainFrame(this);
         mainFrame.setVisible(true);
         domainController.addRelation(NodeType.AUTHOR, NodeType.PAPER, "TEST");
+
         //importDB("/home/gonmolon/GraphForTesting/");
     }
 
