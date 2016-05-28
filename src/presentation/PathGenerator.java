@@ -73,6 +73,7 @@ public class PathGenerator extends JPanel implements ActionListener{
             } else {
                 graphPath.addRelation(next, relationName);
             }
+            graphPath.show();
         } else {
             from = next;
         }

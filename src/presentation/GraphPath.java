@@ -7,7 +7,9 @@ import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.MultiGraph;
 import org.graphstream.ui.view.Viewer;
 
+import javax.smartcardio.Card;
 import javax.swing.*;
+import java.awt.*;
 
 public class GraphPath {
 
@@ -80,5 +82,9 @@ public class GraphPath {
         node.addAttribute("ui.label", next.toString());
         node.setAttribute("xy", lastX*X_GAP, lastX%2 == 1 ? -Y_GAP : 0);
         ++lastX;
+    }
+
+    public void show() {
+        ((CardLayout)panel.getParent().getLayout()).show(panel.getParent(), "Path");
     }
 }
