@@ -1,8 +1,6 @@
 package presentation;
 
-import domain.Element;
 import domain.NodeType;
-import domain.Relation;
 import presentation.utils.AutoClearTextField;
 import presentation.utils.NodeTextField;
 
@@ -12,8 +10,8 @@ import java.awt.event.*;
 import java.util.ArrayList;
 
 abstract public class ElementInfoView extends JDialog {
-    private final int minimumHeight = 500;
-    private final int minimumWidth = 650;
+    static private final int minimumHeight = 500;
+    static private final int minimumWidth = 650;
 
     protected int nodeId;
     protected NodeType type;
@@ -119,11 +117,6 @@ abstract public class ElementInfoView extends JDialog {
         }
     }
 
-    private void createUIComponents() {
-        fieldName = new AutoClearTextField("Insert element name");
-        fieldOtherNodeName = new NodeTextField(presentationController, "Insert related element name", NodeType.AUTHOR);
-    }
-
     private void onSelectType() {
         type = (NodeType) selectType.getSelectedItem();
         actions = new ArrayList<>();
@@ -147,7 +140,6 @@ abstract public class ElementInfoView extends JDialog {
         listRelations.setModel(currentModel);
     }
 
-
     private void onAdd() {
         int elementId = fieldOtherNodeName.id;
         if (elementId != -1) {
@@ -160,6 +152,8 @@ abstract public class ElementInfoView extends JDialog {
             }
         }
     }
+
+
     private boolean inCurrentModel(Element e) {
         boolean in = false;
         for (int i = 0; i < currentModel.size() && !in; ++i) {
@@ -167,7 +161,6 @@ abstract public class ElementInfoView extends JDialog {
         }
         return in;
     }
-
     private void onDelete() {
         int selectedIndex = listRelations.getSelectedIndex();
         while (selectedIndex != -1) {
@@ -178,13 +171,18 @@ abstract public class ElementInfoView extends JDialog {
         }
     }
 
-
     protected void onOK() {
         dispose();
     }
 
+
     protected void onCancel() {
         dispose();
+    }
+
+    private void createUIComponents() {
+        fieldName = new AutoClearTextField("Insert element name");
+        fieldOtherNodeName = new NodeTextField(presentationController, "Insert related element name", NodeType.AUTHOR);
     }
 
     private class RelationAction {

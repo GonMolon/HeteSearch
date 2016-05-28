@@ -41,7 +41,8 @@ public class MainView extends JPanel {
         addRelationButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO implement this
+                ModifyRelationTypesView view = new ModifyRelationTypesView(presentationController, getRootPane());
+                view.setVisible(true);
             }
         });
         removeRelationButton.addActionListener(new ActionListener() {

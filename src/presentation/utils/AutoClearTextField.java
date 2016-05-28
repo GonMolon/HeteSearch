@@ -30,7 +30,7 @@ public class AutoClearTextField extends JTextField implements FocusListener {
 
     @Override
     public void focusLost(FocusEvent e) {
-        if (getText().equals("")) {
+        if (getText().equals("") || getText().equals(title)) {
             setForeground(Color.GRAY);
             setText(title);
         }
