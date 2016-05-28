@@ -18,7 +18,7 @@ public class PresentationController {
         mainFrame.setVisible(true);
         domainController.addRelation(NodeType.AUTHOR, NodeType.PAPER, "TEST");
 
-        //importDB("/home/gonmolon/GraphForTesting/");
+        importDB("D:/Projects/JavaProjects/PROP/data");
     }
 
     public void newDB() {
@@ -62,6 +62,10 @@ public class PresentationController {
 
     public String getRelationName(int id) {
         return domainController.getRelationName(id);
+    }
+
+    public NodeType getNodeTypeTo(int relationId, NodeType from) {
+        return domainController.getNodeTypeTo(relationId, from);
     }
 
     public void addEdge(int relationID, NodeType typeA, int nodeA, NodeType typeB, int nodeB) {

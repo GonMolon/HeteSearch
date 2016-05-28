@@ -76,6 +76,19 @@ public class DomainController {
         }
     }
 
+    public NodeType getNodeTypeTo(int relationId, NodeType from) {
+        try {
+            Relation relation = graph.getRelation(relationId);
+            if (relation.getNodeTypeA() == from) {
+                return relation.getNodeTypeB();
+            }
+            /*else*/ return relation.getNodeTypeA();
+        } catch (GraphException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public void addEdge(int relationID, NodeType typeA, int nodeA, NodeType typeB, int nodeB) {
         try {
             graph.addEdge(relationID, typeA, nodeA, typeB, nodeB);

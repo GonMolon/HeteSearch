@@ -34,7 +34,7 @@ public class MainView extends JPanel {
         addNodeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ElementInfoView view = new ElementInfoView(presentationController, getRootPane());
+                AddElementView view = new AddElementView(presentationController, getRootPane());
                 view.setVisible(true);
             }
         });

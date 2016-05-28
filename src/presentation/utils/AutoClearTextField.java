@@ -16,6 +16,10 @@ public class AutoClearTextField extends JTextField implements FocusListener {
         setForeground(Color.GRAY);
     }
 
+    public String getTitle() {
+        return title;
+    }
+
     @Override
     public void focusGained(FocusEvent e) {
         setForeground(Color.BLACK);
