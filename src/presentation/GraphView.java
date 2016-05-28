@@ -38,19 +38,19 @@ public class GraphView {
         graph.clear();
         graph.setAttribute("stylesheet",
                 "node { "
-                        + "     shape: rounded-box; "
-                        + "     padding: 5px; "
-                        + "     fill-color: rgba(0,125,164,100); "
-                        + "     stroke-mode: plain; "
-                        + "     size-mode: fit; "
-                        + "     text-size: 16px; "
-                        + "} "
-                        + "edge { "
-                        + "     text-size: 14px; "
-                        + "} "
-                        + "graph { "
-                        + "     padding: 40px; "
-                        + "}"
+                + "     shape: rounded-box; "
+                + "     padding: 5px; "
+                + "     fill-color: rgba(0,125,164,100); "
+                + "     stroke-mode: plain; "
+                + "     size-mode: fit; "
+                + "     text-size: 16px; "
+                + "} "
+                + "edge { "
+                + "     text-size: 14px; "
+                + "} "
+                + "graph { "
+                + "     padding: 40px; "
+                + "}"
         );
         lastEdgeID = 0;
         graph.addAttribute("ui.quality");
@@ -66,16 +66,11 @@ public class GraphView {
             }
         }
         for(Node from : graph.getNodeSet()) {
-            NodeType type = from.getAttribute("nodetype");
+            NodeType typeFrom = from.getAttribute("nodetype");
             int nodeID = from.getAttribute("originalID");
-            for(int relationID : presentationController.getRelations(type)) {
-                for(int nodeTo : presentationController.getEdges(relationID, type, nodeID)) {
-                    NodeType[] types = presentationController.getNodeTypesFromRelation(relationID);
-                    NodeType typeTo = types[0];
-                    if(type == typeTo) {
-                        typeTo = types[1];
-                    }
-                    Node to = graph.getNode(String.valueOf(typeTo.toString() + "_" + nodeTo));
+            for(int relationID : presentationController.getRelations(typeFrom)) {
+                for(int nodeTo : presentationController.getEdges(relationID, typeFrom, nodeID)) {
+                    Node to = graph.getNode(String.valueOf(presentationController.getNodeTypeTo(relationID, typeFrom).toString() + "_" + nodeTo));
                     if(to != null) {
                         addEdge(from, to, relationID);
                     }
@@ -102,6 +97,7 @@ public class GraphView {
         }
         Edge edge = graph.addEdge(String.valueOf(++lastEdgeID), from.getId(), to.getId());
         edge.addAttribute("relationID", relationID);
+        edge.addAttribute("ui.label", presentationController.getRelationName(relationID));
         return true;
     }
 

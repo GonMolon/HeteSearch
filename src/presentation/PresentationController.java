@@ -78,15 +78,12 @@ public class PresentationController {
     }
 
     public NodeType getNodeTypeTo(int relationId, NodeType from) {
-        NodeType[] types = getNodeTypesFromRelation(relationId);
+        NodeType[] types = domainController.getNodeTypesFromRelation(relationId);
         if (types[0] == from) {
             return types[1];
+        } else {
+            return types[0];
         }
-        /*else*/return types[0];
-    }
-
-    public NodeType[] getNodeTypesFromRelation(int relationID) {
-        return domainController.getNodeTypesFromRelation(relationID);
     }
 
     public void addEdge(int relationID, NodeType typeA, int nodeA, NodeType typeB, int nodeB) {

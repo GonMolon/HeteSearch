@@ -48,6 +48,7 @@ public class DataChooser extends JFileChooser{
             }
         if(!correct_directory) throw new DataChooserException(DataChooserException.Error.DIRECTORY_INVALID);
     }
+
     public String getDirectory(){
         return path.toString()+"/";
     }
