@@ -32,7 +32,6 @@ public class PathGenerator extends JPanel implements ActionListener{
     private RoundButton[] buttons;
 
     private JButton resetButton;
-    private JTextField pathLabel;
 
     private static String LABEL = "Lab";
     private static String AUTHOR = "Aut";
@@ -49,7 +48,6 @@ public class PathGenerator extends JPanel implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent event) {
-        pathLabel.setMaximumSize(new Dimension(10, 10));
         resetButton.setVisible(true);
         NodeType next = getNodeType(event.getActionCommand());
         PresentationController.PathInfo info = presentationController.getPathInfo(prev, next);
@@ -90,7 +88,6 @@ public class PathGenerator extends JPanel implements ActionListener{
         to = null;
         setEnabledButtons(true);
         actualRS = new ArrayList<Integer>();
-        pathLabel.setText("");
         mainView.update();
         graphPath.reset();
     }

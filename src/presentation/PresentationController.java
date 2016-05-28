@@ -12,6 +12,7 @@ public class PresentationController {
     private MainFrame mainFrame;
 
     public PresentationController() {
+        System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
         domainController = new DomainController();
         mainFrame = new MainFrame(this);
         mainFrame.setVisible(true);
