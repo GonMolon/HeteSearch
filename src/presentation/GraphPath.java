@@ -25,6 +25,7 @@ public class GraphPath {
         graph = new MultiGraph("Path");
         graph.setAutoCreate(true);
         graph.setStrict(false);
+        System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
         viewer = new Viewer(graph, Viewer.ThreadingModel.GRAPH_IN_GUI_THREAD);
         panel = viewer.addDefaultView(false);
         lastIdRelation = 0;
