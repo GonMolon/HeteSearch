@@ -1,8 +1,10 @@
 package presentation;
 
-public class AddElementView extends ModifyElementView {
+import domain.NodeType;
+
+public class AddElementView extends ElementInfoView {
 
     public AddElementView(PresentationController presentationController) {
-        super(presentationController, "Add element");
+        super(presentationController, null);
     }
 }

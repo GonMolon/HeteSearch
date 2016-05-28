@@ -1,5 +1,7 @@
 package presentation;
 
+import domain.NodeType;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -28,7 +30,7 @@ public class MainView extends JPanel {
         addNodeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ModifyElementView view = new ModifyElementView(presentationController, "Testing");
+                ElementInfoView view = new ElementInfoView(presentationController, getRootPane());
                 view.setVisible(true);
             }
         });
