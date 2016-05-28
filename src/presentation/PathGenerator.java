@@ -96,7 +96,7 @@ public class PathGenerator extends JPanel implements ActionListener{
     }
 
     private void createUIComponents() {
-        Color color = new Color(0x7DA4);
+        Color color = new Color(0x007DA4);
         label = new RoundButton(LABEL, color);
         author = new RoundButton(AUTHOR, color);
         paper = new RoundButton(PAPER, color);

@@ -26,6 +26,19 @@ public class GraphPath {
         graph.setAutoCreate(true);
         graph.setStrict(false);
         System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
+        graph.setAttribute("stylesheet",
+                "node { "
+                + "     shape: rounded-box; "
+                + "     padding: 10px; "
+                + "     fill-color: rgba(0,125,164,100); "
+                + "     stroke-mode: plain; "
+                + "     size-mode: fit; "
+                + "} "
+                + "edge { "
+                + "     shape: freeplane; "
+                + "}");
+        graph.addAttribute("ui.quality");
+        graph.addAttribute("ui.antialias");
         viewer = new Viewer(graph, Viewer.ThreadingModel.GRAPH_IN_GUI_THREAD);
         panel = viewer.addDefaultView(false);
         lastIdRelation = 0;
@@ -63,7 +76,6 @@ public class GraphPath {
     private void addNode(NodeType next) {
         Node node = graph.addNode(String.valueOf(++lastIdNode));
         node.addAttribute("ui.label", next.toString());
-        node.addAttribute("ui.style", "fill-color: rgb(0, 100, 255); size: 30px, 30px;");
         int x = lastX%COLUMNS;
         if((lastX/COLUMNS) % 2 == 1) {
             x = COLUMNS-1-x;
