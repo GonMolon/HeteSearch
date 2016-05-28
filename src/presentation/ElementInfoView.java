@@ -12,8 +12,8 @@ import java.awt.event.*;
 import java.util.ArrayList;
 
 abstract public class ElementInfoView extends JDialog {
-    private final int minimumHeight = 400;
-    private final int minimumWidth = 300;
+    private final int minimumHeight = 500;
+    private final int minimumWidth = 650;
 
     protected int nodeId;
     protected NodeType type;
@@ -50,7 +50,6 @@ abstract public class ElementInfoView extends JDialog {
         getRootPane().setDefaultButton(buttonOk);
         setMinimumSize(new Dimension(minimumWidth, minimumHeight));
         setLocationRelativeTo(parentComponent);
-        setLocation(getLocation().x - minimumWidth/2, getLocation().y - minimumHeight/2);
 
         listRelations.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         listModels = new ArrayList<>();
@@ -122,7 +121,7 @@ abstract public class ElementInfoView extends JDialog {
 
     private void createUIComponents() {
         fieldName = new AutoClearTextField("Insert element name");
-        fieldOtherNodeName = new NodeTextField(presentationController, "Insert other node name", NodeType.AUTHOR);
+        fieldOtherNodeName = new NodeTextField(presentationController, "Insert related element name", NodeType.AUTHOR);
     }
 
     private void onSelectType() {
@@ -144,7 +143,6 @@ abstract public class ElementInfoView extends JDialog {
     private void onSelectRelationType() {
         relationTypeId = relationTypeIds.get(selectRelationType.getSelectedIndex());
         fieldOtherNodeName.setNodeType(presentationController.getNodeTypeTo(relationTypeId, type));
-        System.out.println("Looking for nodes of type " + presentationController.getNodeTypeTo(relationTypeId, type));
         currentModel = listModels.get(selectRelationType.getSelectedIndex());
         listRelations.setModel(currentModel);
     }
@@ -156,10 +154,18 @@ abstract public class ElementInfoView extends JDialog {
             NodeType elementType = presentationController.getNodeTypeTo(relationTypeId, type);
             String elementValue = presentationController.getNodeValue(elementType, elementId);
             Element e = new Element(elementId, elementType, elementValue);
-            currentModel.addElement(e);
-            actions.add(new RelationAction(RelationAction.ADD, elementId, elementType, relationTypeId));
-            System.out.println("Added element " + e.value + " " + e.id + " " + e.type);
+            if (!inCurrentModel(e)) {
+                currentModel.addElement(e);
+                actions.add(new RelationAction(RelationAction.ADD, elementId, elementType, relationTypeId));
+            }
         }
+    }
+    private boolean inCurrentModel(Element e) {
+        boolean in = false;
+        for (int i = 0; i < currentModel.size() && !in; ++i) {
+            in = (e.id == currentModel.get(i).id);
+        }
+        return in;
     }
 
     private void onDelete() {
@@ -169,7 +175,6 @@ abstract public class ElementInfoView extends JDialog {
                 actions.add(new RelationAction(RelationAction.DELETE, e.id, e.type, relationTypeId));
                 currentModel.removeElementAt(selectedIndex);
                 selectedIndex = listRelations.getSelectedIndex();
-                System.out.println("Deleted element " + e.value + " " + e.id + " " + e.type);
         }
     }
 
