@@ -44,6 +44,17 @@ public class DomainController {
         }
     }
 
+    public int[] getNodes(NodeType type) {
+        int[] nodesID = new int[graph.getSize(type)];
+        Container<Node>.ContainerIterator iterator = graph.getNodeIterator(type);
+        int i = 0;
+        while(iterator.hasNext()) {
+            Node node = iterator.next();
+            nodesID[i++] = node.getId();
+        }
+        return nodesID;
+    }
+
     public String getNodeValue(NodeType type, int id) {
         try {
             return graph.getNode(type, id).getValue();
@@ -65,6 +76,28 @@ public class DomainController {
         } catch (GraphException e) {
             e.printStackTrace();
         }
+    }
+
+    public ArrayList<Integer> getRelations() {
+        ArrayList<Integer> result = new ArrayList<Integer>();
+        Container<Relation>.ContainerIterator iterator = graph.getRelationIterator();
+        while(iterator.hasNext()) {
+            Relation relation = iterator.next();
+            result.add(relation.getId());
+        }
+        return result;
+    }
+
+    public ArrayList<Integer> getRelations(NodeType type) {
+        ArrayList<Integer> result = new ArrayList<Integer>();
+        Container<Relation>.ContainerIterator iterator = graph.getRelationIterator();
+        while(iterator.hasNext()) {
+            Relation relation = iterator.next();
+            if(relation.getNodeTypeA() == type || relation.getNodeTypeB() == type) {
+                result.add(relation.getId());
+            }
+        }
+        return result;
     }
 
     public String getRelationName(int id) {
@@ -92,9 +125,9 @@ public class DomainController {
         }
     }
 
-    public ArrayList<Node> getEdges(int relationID, Node node) {
+    public ArrayList<Integer> getEdges(int relationID, NodeType type, int nodeID) {
         try {
-            return graph.getEdges(relationID, node);
+            return graph.getNode(type, nodeID).getEdges(relationID);
         } catch (GraphException e) {
             e.printStackTrace();
             return null;
@@ -191,15 +224,13 @@ public class DomainController {
         return new ArrayList<NodeType>(availableNodeTypes);
     }
 
-    public ArrayList<Integer> getRelations(NodeType type) {
-        ArrayList<Integer> result = new ArrayList<Integer>();
-        Container<Relation>.ContainerIterator iterator = graph.getRelationIterator();
-        while(iterator.hasNext()) {
-            Relation relation = iterator.next();
-            if(relation.getNodeTypeA() == type || relation.getNodeTypeB() == type) {
-                result.add(relation.getId());
-            }
+    public NodeType[] getNodeTypesFromRelation(int relationID) {
+        try {
+            Relation relation = graph.getRelation(relationID);
+            return new NodeType[]{relation.getNodeTypeA(), relation.getNodeTypeB()};
+        } catch (GraphException e) {
+            e.printStackTrace();
+            return null;
         }
-        return result;
     }
 }

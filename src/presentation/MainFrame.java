@@ -13,7 +13,7 @@ public class MainFrame extends JFrame {
     private MainView mainView;
     private CardLayout graphsLayout;
     private JPanel graphs;
-    private GraphView graphView;
+    public GraphView graphView;
     public GraphPath graphPath;
 
     protected MainFrame(PresentationController presentationController) {

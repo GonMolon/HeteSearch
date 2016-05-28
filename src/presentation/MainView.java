@@ -62,12 +62,14 @@ public class MainView extends JPanel {
             CardLayout searchPanelLayout = (CardLayout) searchPanel.getLayout();
             searchPanelLayout.show(searchPanel, "simple");
             relationalSearchPanel.reset();
+            mainFrame.graphView.show();
         } else if(pathGenerator.actualRS.size() == 0) {
             addNodeButton.setEnabled(true);
             searchButton.setEnabled(true);
             simpleSearchPanel.setEnabled(true);
             simpleSearchPanel.setNodeType(pathGenerator.from);
             searchButton.setEnabled(true);
+            mainFrame.graphPath.show();
         } else if(pathGenerator.actualRS.size() == 1) {
             addNodeButton.setEnabled(false);
             searchButton.setEnabled(true);
@@ -75,8 +77,10 @@ public class MainView extends JPanel {
             searchPanelLayout.show(searchPanel, "relational");
             relationalSearchPanel.setNodeTypeFrom(pathGenerator.from);
             relationalSearchPanel.setNodeTypeTo(pathGenerator.to);
+            mainFrame.graphPath.show();
         } else {
             relationalSearchPanel.setNodeTypeTo(pathGenerator.to);
+            mainFrame.graphPath.show();
         }
     }
 
