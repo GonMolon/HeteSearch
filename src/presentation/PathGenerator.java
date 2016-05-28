@@ -69,11 +69,12 @@ public class PathGenerator extends JPanel implements ActionListener{
             buttons[id].setEnabled(true);
         }
         if(actualRS.size() > 0) {
-            graphPath.addRelation(prev, next, actualRS.get(actualRS.size()-1));
+            String relationName = presentationController.getRelationName(actualRS.get(actualRS.size()-1));
             if(actualRS.size() == 1) {
-                pathLabel.setText(prev.toString());
+                graphPath.addFirstRelation(prev, next, relationName);
+            } else {
+                graphPath.addRelation(next, relationName);
             }
-            pathLabel.setText(pathLabel.getText() + " -> (" + presentationController.getRelationName(actualRS.get(actualRS.size()-1)) + ") -> " + next.toString());
         } else {
             from = next;
         }

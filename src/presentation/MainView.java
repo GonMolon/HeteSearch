@@ -55,7 +55,6 @@ public class MainView extends JPanel {
     public void update() {
         if(pathGenerator.from == null) {
             addNodeButton.setEnabled(false);
-            addRelationButton.setEnabled(false);
             simpleSearchPanel.setEnabled(false);
             searchButton.setEnabled(false);
             CardLayout searchPanelLayout = (CardLayout) searchPanel.getLayout();
@@ -63,21 +62,18 @@ public class MainView extends JPanel {
             relationalSearchPanel.reset();
         } else if(pathGenerator.actualRS.size() == 0) {
             addNodeButton.setEnabled(true);
-            addRelationButton.setEnabled(false);
             searchButton.setEnabled(true);
             simpleSearchPanel.setEnabled(true);
             simpleSearchPanel.setNodeType(pathGenerator.from);
             searchButton.setEnabled(true);
         } else if(pathGenerator.actualRS.size() == 1) {
             addNodeButton.setEnabled(false);
-            addRelationButton.setEnabled(true);
             searchButton.setEnabled(true);
             CardLayout searchPanelLayout = (CardLayout) searchPanel.getLayout();
             searchPanelLayout.show(searchPanel, "relational");
             relationalSearchPanel.setNodeTypeFrom(pathGenerator.from);
             relationalSearchPanel.setNodeTypeTo(pathGenerator.to);
         } else {
-            addRelationButton.setEnabled(false);
             relationalSearchPanel.setNodeTypeTo(pathGenerator.to);
         }
     }
