@@ -43,6 +43,7 @@ public class GraphPath {
                 + "} "
                 + "edge { "
                 + "     shape: freeplane; "
+                + "     text-size: 14px; "
                 + "} "
                 + "graph { "
                 + "     padding: 40px; "

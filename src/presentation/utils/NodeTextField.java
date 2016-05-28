@@ -21,6 +21,11 @@ public class NodeTextField extends AutoClearTextField {
         id = -1;
     }
 
+    public NodeTextField(PresentationController presentationController, String title, NodeType nodeType) {
+        this(presentationController, title);
+        this.nodeType = nodeType;
+    }
+
     public void reset() {
         id = -1;
         setText("");
