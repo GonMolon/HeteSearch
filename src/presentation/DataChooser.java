@@ -5,7 +5,6 @@ import presentation.utils.DataChooserException;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
-import java.util.ArrayList;
 
 public class DataChooser extends JFileChooser{
 
@@ -22,7 +21,7 @@ public class DataChooser extends JFileChooser{
         fc.setAcceptAllFileFilterUsed(false);
         fc.setDialogTitle("Select directory");
         int result;
-        File folder = new File("null");
+        File folder;
         if(export) result = fc.showSaveDialog(c);
         else result = fc.showOpenDialog(c);
         if(result == JFileChooser.APPROVE_OPTION){
@@ -36,16 +35,17 @@ public class DataChooser extends JFileChooser{
         correct_directory = true;
         String[] files = folder.list();
         int i = 0;
-        while(i < 10 && correct_directory){
-            found = false;
-            for (int j = 0; j < files.length && !found; ++j) {
-                if (files[j].equals(default_files[i])){
-                    found = true;
+        if(!export)
+            while(i < 10 && correct_directory){
+                found = false;
+                for (int j = 0; j < files.length && !found; ++j) {
+                    if (files[j].equals(default_files[i])){
+                        found = true;
+                    }
                 }
+                if(!found) correct_directory = false;
+                ++i;
             }
-            if(!found) correct_directory = false;
-            ++i;
-        }
         if(!correct_directory) throw new DataChooserException(DataChooserException.Error.DIRECTORY_INVALID);
     }
     public String getDirectory(){
