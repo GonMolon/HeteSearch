@@ -101,44 +101,56 @@ public class DomainController {
         }
     }
 
-    public ArrayList<GraphSearch.Result> simpleSearch(NodeType type, String filter) {
+    public ArrayList<Integer> simpleSearch(NodeType type, String filter) {
         SimpleSearch simpleSearch = new SimpleSearch(graph, type, filter);
         simpleSearch.search();
-        return simpleSearch.getResults();
+        ArrayList<Integer> results = new ArrayList<Integer>();
+        for(GraphSearch.Result result : simpleSearch.getResults()) {
+            results.add(result.from.getId());
+        }
+        return results;
     }
 
-    public ArrayList<GraphSearch.Result> freeSearch(NodeType typeA, ArrayList<Integer> relationStructure, NodeType typeB) {
+    public ArrayList<Number[]> freeSearch(NodeType typeA, ArrayList<Integer> relationStructure, NodeType typeB) {
         try {
             FreeSearch freeSearch = new FreeSearch(graph, generateRelationStructure(typeA, relationStructure, typeB));
             freeSearch.search();
-            return freeSearch.getResults();
+            ArrayList<Number[]> results = new ArrayList<Number[]>();
+            for(GraphSearch.Result result : freeSearch.getResults()) {
+                results.add(new Number[]{result.from.getId(), result.to.getId(), result.hetesim});
+            }
+            return results;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    public ArrayList<GraphSearch.Result> originSearch(NodeType typeA, int nodeFrom, ArrayList<Integer> rs, NodeType typeB) {
+    public ArrayList<Number[]> originSearch(NodeType typeA, int nodeFrom, ArrayList<Integer> rs, NodeType typeB) {
         try {
             RelationStructure relationStructure = generateRelationStructure(typeA, rs, typeB);
             OriginSearch originSearch = new OriginSearch(graph, relationStructure, graph.getNode(typeA, nodeFrom));
             originSearch.search();
-            return originSearch.getResults();
+            ArrayList<Number[]> results = new ArrayList<Number[]>();
+            for(GraphSearch.Result result : originSearch.getResults()) {
+                results.add(new Number[]{result.to.getId(), result.hetesim});
+            }
+            return results;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    public ArrayList<GraphSearch.Result> originDestinationSearch(NodeType typeA, int nodeFrom, ArrayList<Integer> rs, NodeType typeB, int nodeTo) {
+    public double originDestinationSearch(NodeType typeA, int nodeFrom, ArrayList<Integer> rs, NodeType typeB, int nodeTo) {
         try {
             RelationStructure relationStructure = generateRelationStructure(typeA, rs, typeB);
             OriginDestinationSearch originDestinationSearch = new OriginDestinationSearch(graph, relationStructure, graph.getNode(typeA, nodeFrom), graph.getNode(typeB, nodeTo));
             originDestinationSearch.search();
-            return originDestinationSearch.getResults();
+            return originDestinationSearch.getResults().get(0).hetesim;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return -1;
         }
     }
 

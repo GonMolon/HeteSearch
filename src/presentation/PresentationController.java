@@ -76,19 +76,19 @@ public class PresentationController {
         return domainController.getEdges(relationID, node);
     }
 
-    public ArrayList<GraphSearch.Result> simpleSearch(NodeType type, String filter) {
+    public ArrayList<Integer> simpleSearch(NodeType type, String filter) {
         return domainController.simpleSearch(type, filter);
     }
 
-    public ArrayList<GraphSearch.Result> freeSearch(NodeType typeA, ArrayList<Integer> relationStructure, NodeType typeB) {
+    public ArrayList<Number[]> freeSearch(NodeType typeA, ArrayList<Integer> relationStructure, NodeType typeB) {
         return domainController.freeSearch(typeA, relationStructure, typeB);
     }
 
-    public ArrayList<GraphSearch.Result> originSearch(NodeType typeA, int nodeFrom, ArrayList<Integer> rs, NodeType typeB) {
+    public ArrayList<Number[]> originSearch(NodeType typeA, int nodeFrom, ArrayList<Integer> rs, NodeType typeB) {
         return domainController.originSearch(typeA, nodeFrom, rs, typeB);
     }
 
-    public ArrayList<GraphSearch.Result> originDestinationSearch(NodeType typeA, int nodeFrom, ArrayList<Integer> rs, NodeType typeB, int nodeTo) {
+    public double originDestinationSearch(NodeType typeA, int nodeFrom, ArrayList<Integer> rs, NodeType typeB, int nodeTo) {
         return domainController.originDestinationSearch(typeA, nodeFrom, rs, typeB, nodeTo);
     }
 

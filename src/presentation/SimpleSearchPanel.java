@@ -1,6 +1,5 @@
 package presentation;
 
-import domain.GraphSearch;
 import domain.NodeType;
 import presentation.utils.AutoClearTextField;
 
@@ -33,9 +32,9 @@ public class SimpleSearchPanel extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        ArrayList<GraphSearch.Result> results = presentationController.simpleSearch(nodeType, filterText.getText());
+        ArrayList<Integer> results = presentationController.simpleSearch(nodeType, filterText.getText());
         for(int i = 0; i < results.size(); ++i) {
-            System.out.println(results.get(i).from.getValue());
+            System.out.println(results.get(i));
         }
     }
 
