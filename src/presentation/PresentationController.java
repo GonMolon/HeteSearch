@@ -16,7 +16,6 @@ public class PresentationController {
         mainFrame = new MainFrame(this);
         mainFrame.setVisible(true);
         domainController.addRelation(NodeType.AUTHOR, NodeType.PAPER, "TEST");
-        importDB("/home/gonmolon/GraphForTesting/");
     }
 
     public void newDB() {
@@ -24,12 +23,12 @@ public class PresentationController {
         mainFrame.dispose();
         mainFrame = new MainFrame(this);
         mainFrame.setVisible(true);
-        mainFrame.refreshGraphView();
+        mainFrame.graphView.refresh();
     }
 
     public void importDB(String path) {
         domainController.importDB(path);
-        mainFrame.refreshGraphView();
+        mainFrame.graphView.refresh();
     }
 
     public void exportDB(String path) {
@@ -37,7 +36,9 @@ public class PresentationController {
     }
 
     public int addNode(NodeType type, String value) {
-        return domainController.addNode(type, value);
+        int id = domainController.addNode(type, value);
+        mainFrame.graphView.refresh();
+        return id;
     }
 
     public void removeNode(NodeType type, int id) {

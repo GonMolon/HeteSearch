@@ -93,12 +93,7 @@ public class MainFrame extends JFrame {
         setJMenuBar(menuBar);
     }
 
-    public void refreshGraphView() {
-        graphView.refresh();
-        pack();
-    }
-
-    public void setGraphCard(String graphCard) {
-        graphsLayout.show(graphs, graphCard);
+    public void resetPathGenerator() {
+        mainView.resetPathGenerator();
     }
 }

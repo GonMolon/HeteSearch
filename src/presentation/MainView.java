@@ -19,7 +19,6 @@ public class MainView extends JPanel {
     private JPanel searchPanel;
     private JButton addNodeButton;
     private JButton addRelationButton;
-    private JButton removeRelationButton;
     private SearchResults searchResults;
 
     protected MainView(PresentationController presentationController, MainFrame mainFrame) {
@@ -34,7 +33,7 @@ public class MainView extends JPanel {
         addNodeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AddElementView view = new AddElementView(presentationController, getRootPane());
+                AddElementView view = new AddElementView(presentationController, getRootPane(), pathGenerator.from);
                 view.setVisible(true);
             }
         });
@@ -43,12 +42,6 @@ public class MainView extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 ModifyRelationTypesView view = new ModifyRelationTypesView(presentationController, getRootPane());
                 view.setVisible(true);
-            }
-        });
-        removeRelationButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //TODO implement this
             }
         });
         searchButton.addActionListener(simpleSearchPanel);
@@ -70,7 +63,7 @@ public class MainView extends JPanel {
             simpleSearchPanel.setEnabled(true);
             simpleSearchPanel.setNodeType(pathGenerator.from);
             searchButton.setEnabled(true);
-            mainFrame.graphPath.show();
+            mainFrame.graphView.showGraph();
         } else if(pathGenerator.actualRS.size() == 1) {
             addNodeButton.setEnabled(false);
             searchButton.setEnabled(true);
@@ -90,5 +83,9 @@ public class MainView extends JPanel {
         relationalSearchPanel = new RelationalSearchPanel(presentationController);
         simpleSearchPanel = new SimpleSearchPanel(presentationController);
         searchResults = new SearchResults();
+    }
+
+    public void resetPathGenerator() {
+        pathGenerator.reset();
     }
 }

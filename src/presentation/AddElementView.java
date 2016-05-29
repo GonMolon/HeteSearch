@@ -25,6 +25,13 @@ public class AddElementView extends ElementInfoView {
             super.createNode();
             super.updateNodeRelations();
             super.onOK();
+            presentationController.mainFrame.resetPathGenerator();
         }
+    }
+
+    @Override
+    protected void onCancel() {
+        super.onCancel();
+        presentationController.mainFrame.resetPathGenerator();
     }
 }

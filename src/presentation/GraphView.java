@@ -29,6 +29,7 @@ public class GraphView extends JPanel implements ViewerListener {
     private PresentationController presentationController;
     private int lastEdgeID;
     private HashMap<Integer, Color> relationColors;
+    private boolean fullGraph;
     private static int MAX_NODES = 300;
 
     public GraphView(PresentationController presentationController) {
@@ -105,7 +106,9 @@ public class GraphView extends JPanel implements ViewerListener {
         lastEdgeID = 0;
         graph.addAttribute("ui.quality");
         graph.addAttribute("ui.antialias");
-        if(generateGraph()) {
+        camera.resetView();
+        fullGraph = generateGraph();
+        if(fullGraph) {
             if(presentationController.getSize() > 0) {
                 ((CardLayout)getLayout()).show(this, "graph");
             } else {
@@ -211,11 +214,12 @@ public class GraphView extends JPanel implements ViewerListener {
             setEdgeLabel(lastNode, false, node);
         }
         setEdgeLabel(node, true, null);
-        double[] pos = org.graphstream.algorithm.Toolkit.nodePosition(node);
-        camera.setViewCenter(pos[0], pos[1], pos[2]);
         long actClick = System.currentTimeMillis();
         if(actClick-lastClick < 400) {
+            double[] pos = org.graphstream.algorithm.Toolkit.nodePosition(node);
+            camera.setViewCenter(pos[0], pos[1], pos[2]);
             ModifyElementView modifyElementView = new ModifyElementView(presentationController, presentationController.mainFrame, node.getAttribute("originalID"), node.getAttribute("nodetype"));
+            modifyElementView.setVisible(true);
             modifyElementView.onOK();
         }
         lastClick = actClick;
