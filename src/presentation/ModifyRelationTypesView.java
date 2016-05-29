@@ -161,6 +161,7 @@ public class ModifyRelationTypesView extends JDialog {
             a.execute();
         }
         dispose();
+        presentationController.mainFrame.resetPathGenerator();
     }
 
     private void onCancel() {
@@ -212,6 +213,5 @@ public class ModifyRelationTypesView extends JDialog {
                 presentationController.removeRelation(relationType.id);
             }
         }
-
     }
 }

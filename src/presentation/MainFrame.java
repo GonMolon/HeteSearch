@@ -29,13 +29,13 @@ public class MainFrame extends JFrame {
         graphView = new GraphView(presentationController);
         graphPath = new GraphPath();
         mainView = new MainView(presentationController, this);
-        JPanel contentPane = (JPanel) getContentPane();
-        contentPane.add(mainView, BorderLayout.WEST);
         graphsLayout = new CardLayout();
         graphs = new JPanel(graphsLayout);
         graphs.add(graphPath.getPanel(), "Path");
         graphs.add(graphView, "GraphView");
         graphsLayout.show(graphs, "GraphView");
+        JPanel contentPane = (JPanel) getContentPane();
+        contentPane.add(mainView, BorderLayout.WEST);
         contentPane.add(graphs, BorderLayout.CENTER);
         pack();
         createMenu();
