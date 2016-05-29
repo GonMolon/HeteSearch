@@ -155,12 +155,13 @@ public class DomainController {
         }
     }
 
-    public ArrayList<Integer> simpleSearch(NodeType type, String filter) {
+    public Integer[] simpleSearch(NodeType type, String filter) {
         SimpleSearch simpleSearch = new SimpleSearch(graph, type, filter);
         simpleSearch.search();
-        ArrayList<Integer> results = new ArrayList<Integer>();
+        Integer[] results = new Integer[simpleSearch.getResults().size()];
+        int i = 0;
         for(GraphSearch.Result result : simpleSearch.getResults()) {
-            results.add(result.from.getId());
+            results[i++] = result.from.getId();
         }
         return results;
     }

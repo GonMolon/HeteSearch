@@ -3,9 +3,12 @@ package presentation.utils;
 
 import domain.NodeType;
 import presentation.PresentationController;
+import scala.Int;
 
 import java.awt.event.FocusEvent;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class NodeTextField extends AutoClearTextField {
 
@@ -31,20 +34,22 @@ public class NodeTextField extends AutoClearTextField {
     }
 
     public void focusLost(FocusEvent e) {
-        ArrayList<Integer> results = presentationController.simpleSearch(nodeType, getText());
-        if(results.size() == 0 || getText().length() == 0) {
+        Integer[] results = presentationController.simpleSearch(nodeType, getText());
+        if(results.length == 0 || getText().length() == 0) {
             id = -1;
             setText("");
             super.focusLost(e);
-        } else if(results.size() == 1) {
-            id = results.get(0);
+        } else if(results.length == 1) {
+            id = results[0];
             setText(presentationController.getNodeValue(nodeType, id));
         } else {
+            ArrayList<Integer> ids = new ArrayList<Integer>();
             ArrayList<String> names = new ArrayList<String>();
-            for(int i = 0; i < results.size(); ++i) {
-                names.add(presentationController.getNodeValue(nodeType, results.get(i)));
+            for(int i = 0; i < results.length; ++i) {
+                ids.add(results[i]);
+                names.add(presentationController.getNodeValue(nodeType, results[i]));
             }
-            InstanceSelectionDialog instanceSelectionDialog = new InstanceSelectionDialog(results, names, "Pick an element", "You need to specify the node.\nPick the one you want:");
+            InstanceSelectionDialog instanceSelectionDialog = new InstanceSelectionDialog(ids, names, "Pick an element", "You need to specify the node.\nPick the one you want:");
             id = instanceSelectionDialog.getIdChosen();
             setText(presentationController.getNodeValue(nodeType, id));
         }
@@ -52,7 +57,7 @@ public class NodeTextField extends AutoClearTextField {
 
     public void setNodeType(NodeType nodeType) {
         this.nodeType = nodeType;
-        if(presentationController.simpleSearch(nodeType, getText()).size() != 1) {
+        if(presentationController.simpleSearch(nodeType, getText()).length != 1) {
             reset();
         }
     }

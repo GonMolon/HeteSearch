@@ -10,13 +10,15 @@ import java.util.ArrayList;
 
 public class SimpleSearchPanel extends JPanel implements ActionListener {
 
+    private PresentationController presentationController;
+    private SearchResults searchResults;
     private JPanel panel;
     private AutoClearTextField filterText;
     private NodeType nodeType;
-    private PresentationController presentationController;
 
-    public SimpleSearchPanel(PresentationController presentationController) {
+    public SimpleSearchPanel(PresentationController presentationController, PathGenerator pathGenerator, SearchResults searchResults) {
         this.presentationController = presentationController;
+        this.searchResults = searchResults;
         add(panel);
         setEnabled(false);
     }
@@ -32,10 +34,7 @@ public class SimpleSearchPanel extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        ArrayList<Integer> results = presentationController.simpleSearch(nodeType, filterText.getText());
-        for(int i = 0; i < results.size(); ++i) {
-            System.out.println(results.get(i));
-        }
+        searchResults.setResults(presentationController.simpleSearch(nodeType, filterText.getText()));
     }
 
     public void setNodeType(NodeType nodeType) {

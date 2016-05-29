@@ -74,12 +74,12 @@ public class GraphView extends JPanel implements ViewerListener {
         setBackground(Color.WHITE);
         add(panel, "graph");
         add(new JLabel(
-                        "<html><h3 style=\"text-align: center;\">The graph is too big</h3>\n<p style=\"text-align: center;\">It won't be shown entirely unless it decreases.<br>However, If you do a search and select a result, the result's related nodes will be shown</p></html>",
-                        SwingConstants.CENTER),
+                "<html><h3 style=\"text-align: center;\">The graph is too big</h3>\n<p style=\"text-align: center;\">It won't be shown entirely unless it decreases.<br>However, If you do a search and select a result, the result's related nodes will be shown</p></html>",
+                SwingConstants.CENTER),
                 "big");
         add(new JLabel(
-                        "<html><h3 style=\"text-align: center;\">The graph is empty</h3>\n<p style=\"text-align: center;\">Add some elements to see data or import an existing graph</p></html>",
-                        SwingConstants.CENTER),
+                "<html><h3 style=\"text-align: center;\">The graph is empty</h3>\n<p style=\"text-align: center;\">Add some elements to see data or import an existing graph</p></html>",
+                SwingConstants.CENTER),
                 "empty");
         refresh();
     }

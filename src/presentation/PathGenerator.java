@@ -50,20 +50,22 @@ public class PathGenerator extends JPanel implements ActionListener{
     public void actionPerformed(ActionEvent event) {
         resetButton.setVisible(true);
         NodeType next = getNodeType(event.getActionCommand());
-        PresentationController.PathInfo info = presentationController.getPathInfo(prev, next);
-        if(info.availableRelations.size() == 1) {
-            actualRS.add(info.availableRelations.get(0));
-        } else if(info.availableRelations.size() > 1) {
+        ArrayList[] pathInfo = presentationController.getPathInfo(prev, next);
+        ArrayList<Integer> availableRelations = pathInfo[0];
+        ArrayList<NodeType> availableNodeTypes = pathInfo[1];
+        if(availableRelations.size() == 1) {
+            actualRS.add(availableRelations.get(0));
+        } else if(availableRelations.size() > 1) {
             ArrayList<String> relationsName = new ArrayList<String>();
-            for(int i = 0; i < info.availableRelations.size(); ++i) {
-                relationsName.add(presentationController.getRelationName(info.availableRelations.get(i)));
+            for(int i = 0; i < availableRelations.size(); ++i) {
+                relationsName.add(presentationController.getRelationName(availableRelations.get(i)));
             }
-            InstanceSelectionDialog instanceSelectionDialog = new InstanceSelectionDialog(info.availableRelations, relationsName, "Pick a relation", "There's more than one relation type between " + prev.toString() + " and " + next.toString() + "\nChoose which you want to use:");
+            InstanceSelectionDialog instanceSelectionDialog = new InstanceSelectionDialog(availableRelations, relationsName, "Pick a relation", "There's more than one relation type between " + prev.toString() + " and " + next.toString() + "\nChoose which you want to use:");
             actualRS.add(instanceSelectionDialog.getIdChosen());
         }
         setEnabledButtons(false);
-        for(int i = 0; i < info.availableNodeTypes.size(); ++i) {
-            int id = getButtonID(info.availableNodeTypes.get(i));
+        for(int i = 0; i < availableNodeTypes.size(); ++i) {
+            int id = getButtonID(availableNodeTypes.get(i));
             buttons[id].setEnabled(true);
         }
         if(actualRS.size() > 0) {

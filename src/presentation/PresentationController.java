@@ -98,7 +98,7 @@ public class PresentationController {
         return domainController.getEdges(relationID, type, nodeID);
     }
 
-    public ArrayList<Integer> simpleSearch(NodeType type, String filter) {
+    public Integer[] simpleSearch(NodeType type, String filter) {
         return domainController.simpleSearch(type, filter);
     }
 
@@ -114,12 +114,14 @@ public class PresentationController {
         return domainController.originDestinationSearch(typeA, nodeFrom, rs, typeB, nodeTo);
     }
 
-    public PathInfo getPathInfo(NodeType from, NodeType to) {
-        PathInfo pathInfo = new PathInfo();
+    public ArrayList[] getPathInfo(NodeType from, NodeType to) {
+        ArrayList[] pathInfo = new ArrayList[2];
         if(from != null) {
-            pathInfo.availableRelations = domainController.getAvailableRelations(from, to);
+            pathInfo[0] = domainController.getAvailableRelations(from, to);
+        } else {
+            pathInfo[0] = new ArrayList();
         }
-        pathInfo.availableNodeTypes = domainController.getAvailableNodeTypes(to);
+        pathInfo[1] = domainController.getAvailableNodeTypes(to);
         return pathInfo;
     }
 
@@ -129,15 +131,5 @@ public class PresentationController {
             size += domainController.getSize(type);
         }
         return size;
-    }
-
-    public class PathInfo {
-        public ArrayList<Integer> availableRelations;
-        public ArrayList<NodeType> availableNodeTypes;
-
-        public PathInfo() {
-            availableRelations = new ArrayList<Integer>();
-            availableNodeTypes = new ArrayList<NodeType>();
-        }
     }
 }

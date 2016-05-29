@@ -1,7 +1,5 @@
 package presentation;
 
-import domain.NodeType;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -80,9 +78,9 @@ public class MainView extends JPanel {
 
     private void createUIComponents() {
         pathGenerator = new PathGenerator(presentationController, this, mainFrame.graphPath);
-        relationalSearchPanel = new RelationalSearchPanel(presentationController);
-        simpleSearchPanel = new SimpleSearchPanel(presentationController);
-        searchResults = new SearchResults();
+        searchResults = new SearchResults(presentationController, pathGenerator);
+        relationalSearchPanel = new RelationalSearchPanel(presentationController, pathGenerator, searchResults);
+        simpleSearchPanel = new SimpleSearchPanel(presentationController, pathGenerator, searchResults);
     }
 
     public void resetPathGenerator() {
