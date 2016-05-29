@@ -30,7 +30,7 @@ public class GraphView extends JPanel implements ViewerListener {
     private int lastEdgeID;
     private HashMap<Integer, Color> relationColors;
     private boolean fullGraph;
-    private static int MAX_NODES = 300;
+    private static int MAX_NODES = 500;
 
     public GraphView(PresentationController presentationController) {
         super(new CardLayout());
@@ -41,16 +41,6 @@ public class GraphView extends JPanel implements ViewerListener {
         viewer = new Viewer(graph, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
         viewer.enableAutoLayout();
         panel = viewer.addDefaultView(false);
-        setBackground(Color.WHITE);
-        add(panel, "graph");
-        add(new JLabel(
-                "<html><h3 style=\"text-align: center;\">The graph is too big</h3>\n<p style=\"text-align: center;\">It won't be shown entirely unless it decreases.<br>However, If you do a search and select a result, the result's related nodes will be shown</p></html>",
-                SwingConstants.CENTER),
-                "big");
-        add(new JLabel(
-                "<html><h3 style=\"text-align: center;\">The graph is empty</h3>\n<p style=\"text-align: center;\">Add some elements to see data or import an existing graph</p></html>",
-                SwingConstants.CENTER),
-                "empty");
         panel.setMouseManager(new CustomMouseManager());
         panel.addMouseWheelListener(new MouseWheelListener() {
             @Override
@@ -81,6 +71,16 @@ public class GraphView extends JPanel implements ViewerListener {
                 }
         ).start();
         generateRelationColors();
+        setBackground(Color.WHITE);
+        add(panel, "graph");
+        add(new JLabel(
+                        "<html><h3 style=\"text-align: center;\">The graph is too big</h3>\n<p style=\"text-align: center;\">It won't be shown entirely unless it decreases.<br>However, If you do a search and select a result, the result's related nodes will be shown</p></html>",
+                        SwingConstants.CENTER),
+                "big");
+        add(new JLabel(
+                        "<html><h3 style=\"text-align: center;\">The graph is empty</h3>\n<p style=\"text-align: center;\">Add some elements to see data or import an existing graph</p></html>",
+                        SwingConstants.CENTER),
+                "empty");
         refresh();
     }
 

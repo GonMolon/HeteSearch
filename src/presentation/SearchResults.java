@@ -7,7 +7,8 @@ public class SearchResults extends JPanel {
 
     private JList list;
 
-    public SearchResults() {
+    private SearchResults() {
+        super();
         list = new JList();
         add(list, BorderLayout.CENTER);
     }
