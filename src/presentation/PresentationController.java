@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class PresentationController {
 
     private DomainController domainController;
-    private MainFrame mainFrame;
+    public MainFrame mainFrame;
 
     public PresentationController() {
         System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
@@ -16,7 +16,7 @@ public class PresentationController {
         mainFrame = new MainFrame(this);
         mainFrame.setVisible(true);
         domainController.addRelation(NodeType.AUTHOR, NodeType.PAPER, "TEST");
-        //importDB("/home/gonmolon/GraphForTesting/");
+        importDB("/home/gonmolon/GraphForTesting/");
     }
 
     public void newDB() {
@@ -120,6 +120,14 @@ public class PresentationController {
         }
         pathInfo.availableNodeTypes = domainController.getAvailableNodeTypes(to);
         return pathInfo;
+    }
+
+    public int getSize() {
+        int size = 0;
+        for(NodeType type : NodeType.values()) {
+            size += domainController.getSize(type);
+        }
+        return size;
     }
 
     public class PathInfo {

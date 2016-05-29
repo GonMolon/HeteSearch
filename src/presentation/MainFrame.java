@@ -34,9 +34,9 @@ public class MainFrame extends JFrame {
         graphsLayout = new CardLayout();
         graphs = new JPanel(graphsLayout);
         graphs.add(graphPath.getPanel(), "Path");
-        graphs.add(graphView.getPanel(), "GraphView");
+        graphs.add(graphView, "GraphView");
         graphsLayout.show(graphs, "GraphView");
-        contentPane.add(graphs);
+        contentPane.add(graphs, BorderLayout.CENTER);
         pack();
         createMenu();
     }
@@ -94,7 +94,8 @@ public class MainFrame extends JFrame {
     }
 
     public void refreshGraphView() {
-        graphView.refresh(false);
+        graphView.refresh();
+        pack();
     }
 
     public void setGraphCard(String graphCard) {

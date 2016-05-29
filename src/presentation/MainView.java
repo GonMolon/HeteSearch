@@ -63,7 +63,7 @@ public class MainView extends JPanel {
             CardLayout searchPanelLayout = (CardLayout) searchPanel.getLayout();
             searchPanelLayout.show(searchPanel, "simple");
             relationalSearchPanel.reset();
-            mainFrame.graphView.show();
+            mainFrame.graphView.showGraph();
         } else if(pathGenerator.actualRS.size() == 0) {
             addNodeButton.setEnabled(true);
             searchButton.setEnabled(true);

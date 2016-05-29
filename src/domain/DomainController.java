@@ -254,4 +254,8 @@ public class DomainController {
             return null;
         }
     }
+
+    public int getSize(NodeType type) {
+        return graph.getSize(type);
+    }
 }
