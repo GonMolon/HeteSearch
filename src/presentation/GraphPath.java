@@ -11,18 +11,15 @@ import org.graphstream.ui.view.View;
 import org.graphstream.ui.view.Viewer;
 import org.graphstream.ui.view.util.MouseManager;
 
-import javax.smartcardio.Card;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 
 public class GraphPath {
 
     private Graph graph;
     private Viewer viewer;
-    private JPanel panel;
+    private ViewPanel panel;
     private int lastIdNode;
     private int lastIdRelation;
     private int lastX;
@@ -36,7 +33,7 @@ public class GraphPath {
         graph.setStrict(false);
         viewer = new Viewer(graph, Viewer.ThreadingModel.GRAPH_IN_GUI_THREAD);
         panel = viewer.addDefaultView(false);
-        ((ViewPanel)panel).setMouseManager(new MouseManager(){
+        panel.setMouseManager(new MouseManager(){
             @Override
             public void mouseClicked(MouseEvent e) {}
             @Override

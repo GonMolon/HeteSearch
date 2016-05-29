@@ -11,6 +11,7 @@ import org.graphstream.ui.view.Viewer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.HashMap;
 
 public class GraphView {
 
@@ -19,6 +20,7 @@ public class GraphView {
     private ViewPanel panel;
     private PresentationController presentationController;
     private int lastEdgeID;
+    private HashMap<Integer, Color> relationColors;
     private static int MAX_NODES = 300;
 
     public GraphView(PresentationController presentationController) {
@@ -29,12 +31,14 @@ public class GraphView {
         viewer = new Viewer(graph, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
         viewer.enableAutoLayout();
         panel = viewer.addDefaultView(false);
-        panel.setEnabled(false);
-        refresh();
+        generateRelationColors();
+        //panel.getCamera().setViewCenter(0, 0, 0);
+        //panel.getCamera().setViewPercent(0.01);
+        refresh(false);
     }
 
 
-    public void refresh() {
+    public void refresh(boolean fullGraph) {
         graph.clear();
         graph.setAttribute("stylesheet",
                 "node { "
@@ -57,11 +61,11 @@ public class GraphView {
         graph.addAttribute("ui.antialias");
         for(NodeType type : NodeType.values()) {
             int[] ids = presentationController.getNodes(type);
-            for(int i = 0; i < Math.min(ids.length, MAX_NODES); ++i) {
+            for(int i = 0; i < ids.length && (fullGraph || i <= MAX_NODES); ++i) {
                 Node node = graph.addNode(type.toString() + "_" + String.valueOf(ids[i]));
                 node.addAttribute("nodetype", type);
                 node.addAttribute("originalID", ids[i]);
-                node.addAttribute("ui.style", "fill-color: " + getColor(type) + ";");
+                node.addAttribute("ui.style", "fill-color: " + getNodeColor(type) + ";");
                 node.addAttribute("ui.label", presentationController.getNodeValue(type, ids[i]));
             }
         }
@@ -98,10 +102,12 @@ public class GraphView {
         Edge edge = graph.addEdge(String.valueOf(++lastEdgeID), from.getId(), to.getId());
         edge.addAttribute("relationID", relationID);
         edge.addAttribute("ui.label", presentationController.getRelationName(relationID));
+        Color color = relationColors.get(relationID);
+        edge.addAttribute("ui.style", "fill-color: rgb(" + String.valueOf(color.getRed()) + ", " + String.valueOf(color.getGreen()) + ", " + String.valueOf(color.getBlue()) + ");");
         return true;
     }
 
-    private String getColor(NodeType type) {
+    private String getNodeColor(NodeType type) {
         if(type == NodeType.AUTHOR) {
             return "red";
         } else if(type == NodeType.PAPER) {
@@ -112,6 +118,13 @@ public class GraphView {
             return "green";
         } else {
             return "cyan";
+        }
+    }
+
+    private void generateRelationColors() {
+        relationColors = new HashMap<Integer, Color>();
+        for(int relationID : presentationController.getRelations()) {
+            relationColors.put(relationID, new Color((int)(255*Math.random()), (int)(255*Math.random()), (int)(255*Math.random())));
         }
     }
 }

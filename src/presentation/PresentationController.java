@@ -17,7 +17,6 @@ public class PresentationController {
         mainFrame.setVisible(true);
         domainController.addRelation(NodeType.AUTHOR, NodeType.PAPER, "TEST");
         //importDB("/home/gonmolon/GraphForTesting/");
-
     }
 
     public void newDB() {

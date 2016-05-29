@@ -36,7 +36,7 @@ public class DataChooser extends JFileChooser{
         String[] files = folder.list();
         int i = 0;
         if(!export)
-            while(i < 10 && correct_directory){
+            while(i < default_files.length && correct_directory){
                 found = false;
                 for (int j = 0; j < files.length && !found; ++j) {
                     if (files[j].equals(default_files[i])){

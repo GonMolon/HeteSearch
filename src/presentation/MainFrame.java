@@ -59,9 +59,8 @@ public class MainFrame extends JFrame {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         System.out.println("Importing graph");
-                        DataChooser dc = null;
                         try {
-                            dc = new DataChooser(importGraph, false);
+                            DataChooser dc = new DataChooser(importGraph, false);
                             presentationController.newDB();
                             presentationController.importDB(dc.getDirectory());
                             System.out.println("Done");
@@ -95,7 +94,7 @@ public class MainFrame extends JFrame {
     }
 
     public void refreshGraphView() {
-        graphView.refresh();
+        graphView.refresh(false);
     }
 
     public void setGraphCard(String graphCard) {
