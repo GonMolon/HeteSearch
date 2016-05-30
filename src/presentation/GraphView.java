@@ -326,6 +326,9 @@ public class GraphView extends JPanel implements ViewerListener {
                 }
             }
         }
+        if(enabled && lastNode != null) {
+            setEdgeLabel(lastNode, false, node);
+        }
     }
 
     private void setNodeLabel(Node node, String label) {
@@ -342,9 +345,6 @@ public class GraphView extends JPanel implements ViewerListener {
     @Override
     public void buttonPushed(String id) {
         Node node = graph.getNode(id);
-        if(lastNode != null && lastNode != node) {
-            setEdgeLabel(lastNode, false, node);
-        }
         setEdgeLabel(node, true, null);
         long actClick = System.currentTimeMillis();
         if(actClick-lastClick < 400) {

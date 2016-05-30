@@ -63,6 +63,10 @@ public class PresentationController {
         mainFrame.graphView.setNodeValue(type, id, value);
     }
 
+    public boolean nodeExists(NodeType type, int id) {
+        return domainController.nodeExists(type, id);
+    }
+
     public int addRelation(NodeType A, NodeType B, String name) {
         int id = domainController.addRelation(A, B, name);
         mainFrame.graphView.refresh();

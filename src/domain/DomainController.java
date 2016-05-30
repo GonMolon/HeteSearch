@@ -73,6 +73,15 @@ public class DomainController {
         }
     }
 
+    public boolean nodeExists(NodeType type, int id) {
+        try {
+            Node node = graph.getNode(type, id);
+            return true;
+        } catch (GraphException e) {
+            return false;
+        }
+    }
+
     public int addRelation(NodeType A, NodeType B, String name) {
         Relation relation = new Relation(A, B, name);
         graph.addRelation(relation);

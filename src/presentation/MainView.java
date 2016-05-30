@@ -1,5 +1,7 @@
 package presentation;
 
+import domain.NodeType;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -89,10 +91,15 @@ public class MainView extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 SearchResultsPanel searchResultsPanel = (SearchResultsPanel)e.getSource();
-                mainFrame.graphView.generateGraph(searchResultsPanel.getSelectedType(), searchResultsPanel.getSelectedId());
-                if(e.getActionCommand() == "2") {
-                    ModifyElementView modifyElementView = new ModifyElementView(presentationController, presentationController.mainFrame, searchResultsPanel.getSelectedId(), searchResultsPanel.getSelectedType());
-                    modifyElementView.setVisible(true);
+                NodeType type = searchResultsPanel.getSelectedType();
+                int id = searchResultsPanel.getSelectedId();
+                if(presentationController.nodeExists(type, id)) {
+                    if(e.getActionCommand().equals("1")) {
+                        mainFrame.graphView.generateGraph(type, id);
+                    } else if(e.getActionCommand().equals("2")) {
+                        ModifyElementView modifyElementView = new ModifyElementView(presentationController, presentationController.mainFrame, id, type);
+                        modifyElementView.setVisible(true);
+                    }
                 }
             }
         });
