@@ -10,12 +10,14 @@ public class AddElementView extends ElementInfoView {
 
     public AddElementView(PresentationController presentationController, Component parentComponent) {
         super(presentationController, parentComponent, title);
+        buttonDeleteElement.setVisible(false);
     }
 
     public AddElementView(PresentationController presentationController, Component parentComponent, NodeType nodeType) {
-        super(presentationController, parentComponent, title);
+        this(presentationController, parentComponent);
         selectType.setSelectedIndex(nodeType.ordinal());
         selectType.setEnabled(false);
+        onSelectType();
     }
 
     @Override

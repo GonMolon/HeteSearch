@@ -28,6 +28,7 @@ abstract public class ElementInfoView extends JDialog {
     protected JButton buttonDeleteRelation;
     protected JButton buttonOk;
     protected JButton buttonCancel;
+    protected JButton buttonDeleteElement;
     protected JComboBox<NodeType> selectType;
     protected JComboBox<String> selectRelationType;
     protected NodeTextField fieldOtherNodeName;
@@ -90,6 +91,10 @@ abstract public class ElementInfoView extends JDialog {
             }
         });
 
+        buttonDeleteElement.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { onDeleteElement(); }
+        });
+
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -117,7 +122,7 @@ abstract public class ElementInfoView extends JDialog {
         }
     }
 
-    private void onSelectType() {
+    protected void onSelectType() {
         type = (NodeType) selectType.getSelectedItem();
         actions = new ArrayList<>();
         relationTypeIds = presentationController.getRelations(type);
@@ -180,6 +185,11 @@ abstract public class ElementInfoView extends JDialog {
         dispose();
     }
 
+    protected void onDeleteElement() {
+        presentationController.removeNode(type, nodeId);
+        dispose();
+    }
+
     private void createUIComponents() {
         fieldName = new AutoClearTextField("Insert element name");
         fieldOtherNodeName = new NodeTextField(presentationController, "Insert related element name", NodeType.AUTHOR);
@@ -200,7 +210,6 @@ abstract public class ElementInfoView extends JDialog {
             this.typeB = typeB;
             this.relationType = relationType;
         }
-
     }
 
     protected class Element {
