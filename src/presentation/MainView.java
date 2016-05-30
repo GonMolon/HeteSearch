@@ -38,7 +38,12 @@ public class MainView extends JPanel {
         addRelationButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ModifyRelationTypesView view = new ModifyRelationTypesView(presentationController, getRootPane());
+                ModifyRelationTypesView view;
+                if(pathGenerator.from != null && pathGenerator.to != null) {
+                    view = new ModifyRelationTypesView(presentationController, getRootPane(), pathGenerator.from, pathGenerator.to);
+                } else {
+                    view = new ModifyRelationTypesView(presentationController, getRootPane());
+                }
                 view.setVisible(true);
             }
         });
