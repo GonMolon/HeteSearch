@@ -102,7 +102,7 @@ public class SearchResultsPanel extends JPanel{
             Result r = listModel.getElementAt(selectedIndex);
             selectedId = r.id;
             selectedType = r.isMaster() ? from : to;
-            ActionEvent e = new ActionEvent((this, ActionEvent.ACTION_PERFORMED, nClicks.toString());
+            ActionEvent e = new ActionEvent(this, ActionEvent.ACTION_PERFORMED, nClicks.toString());
             for (ActionListener l : listeners) {
                 l.actionPerformed(e);
             }
