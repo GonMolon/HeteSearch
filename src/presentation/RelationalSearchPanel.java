@@ -36,13 +36,14 @@ public class RelationalSearchPanel extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(fromText.id == -1 && toText.id == -1) {
-            searchResults.setResults(presentationController.freeSearch(pathGenerator.from, pathGenerator.actualRS, pathGenerator.to));
-        } else if(fromText.id != -1 && toText.id == -1) {
-            ArrayList<Number[]> results = presentationController.originSearch(pathGenerator.from, fromText.id, pathGenerator.actualRS, pathGenerator.to);
-            searchResults.setResults(results);
-        } else if(fromText.id != -1 && toText.id != -1) {
-            searchResults.setResults(fromText.id, toText.id, presentationController.originDestinationSearch(pathGenerator.from, fromText.id, pathGenerator.actualRS, pathGenerator.to, fromText.id));
+        if(pathGenerator.actualRS.size() >= 1) {
+            if(fromText.id == -1 && toText.id == -1) {
+                searchResults.setResults(presentationController.freeSearch(pathGenerator.from, pathGenerator.actualRS, pathGenerator.to));
+            } else if(fromText.id != -1 && toText.id == -1) {
+                searchResults.setResults(presentationController.originSearch(pathGenerator.from, fromText.id, pathGenerator.actualRS, pathGenerator.to));
+            } else if(fromText.id != -1 && toText.id != -1) {
+                searchResults.setResults(presentationController.originDestinationSearch(pathGenerator.from, fromText.id, pathGenerator.actualRS, pathGenerator.to, fromText.id));
+            }
         }
     }
 

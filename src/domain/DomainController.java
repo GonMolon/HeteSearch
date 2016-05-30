@@ -197,15 +197,15 @@ public class DomainController {
         }
     }
 
-    public double originDestinationSearch(NodeType typeA, int nodeFrom, ArrayList<Integer> rs, NodeType typeB, int nodeTo) {
+    public Number[] originDestinationSearch(NodeType typeA, int nodeFrom, ArrayList<Integer> rs, NodeType typeB, int nodeTo) {
         try {
             RelationStructure relationStructure = generateRelationStructure(typeA, rs, typeB);
             OriginDestinationSearch originDestinationSearch = new OriginDestinationSearch(graph, relationStructure, graph.getNode(typeA, nodeFrom), graph.getNode(typeB, nodeTo));
             originDestinationSearch.search();
-            return originDestinationSearch.getResults().get(0).hetesim;
+            return new Number[]{nodeFrom, nodeTo, originDestinationSearch.getResults().get(0).hetesim};
         } catch (Exception e) {
             e.printStackTrace();
-            return -1;
+            return null;
         }
     }
 
