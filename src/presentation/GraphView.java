@@ -313,7 +313,6 @@ public class GraphView extends JPanel implements ViewerListener {
             generateGraph(node, 2);
             ModifyElementView modifyElementView = new ModifyElementView(presentationController, presentationController.mainFrame, node.getAttribute("originalID"), node.getAttribute("nodetype"));
             modifyElementView.setVisible(true);
-            modifyElementView.onOK();
         }
         lastClick = actClick;
         lastNode = node;
