@@ -2,7 +2,6 @@ package presentation;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.font.NumericShaper;
 import java.util.ArrayList;
 
 public class SearchResults extends JTable {

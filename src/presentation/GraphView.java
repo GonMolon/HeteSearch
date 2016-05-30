@@ -30,6 +30,7 @@ public class GraphView extends JPanel implements ViewerListener {
     private int lastEdgeID;
     private HashMap<Integer, Color> relationColors;
     private boolean fullGraph;
+    private boolean graphVisible;
     private static int MAX_NODES = 500;
 
     public GraphView(PresentationController presentationController) {
@@ -107,16 +108,22 @@ public class GraphView extends JPanel implements ViewerListener {
         graph.addAttribute("ui.quality");
         graph.addAttribute("ui.antialias");
         camera.resetView();
+        fullGraph = true;
+        graphVisible = true;
         fullGraph = generateGraph();
         if(fullGraph) {
             if(presentationController.getSize() > 0) {
                 ((CardLayout)getLayout()).show(this, "graph");
+                graphVisible = true;
             } else {
                 ((CardLayout)getLayout()).show(this, "empty");
+                graphVisible = false;
             }
         } else {
             ((CardLayout)getLayout()).show(this, "big");
+            graphVisible = false;
         }
+        lastNode = null;
     }
 
     private boolean generateGraph() {
@@ -126,44 +133,124 @@ public class GraphView extends JPanel implements ViewerListener {
         for(NodeType type : NodeType.values()) {
             int[] ids = presentationController.getNodes(type);
             for(int i = 0; i < ids.length; ++i) {
-                Node node = graph.addNode(type.toString() + "_" + String.valueOf(ids[i]));
-                node.addAttribute("nodetype", type);
-                node.addAttribute("originalID", ids[i]);
-                node.addAttribute("ui.style", "fill-color: " + getNodeColor(type) + ";");
-                String label = presentationController.getNodeValue(type, ids[i]);
-                if(label.length() > 15) {
-                    label = label.substring(0, 15);
-                    label = label.concat("...");
-                }
-                node.addAttribute("ui.label", label);
+                addNode(type, ids[i]);
             }
         }
         for(Node from : graph.getNodeSet()) {
-            NodeType typeFrom = from.getAttribute("nodetype");
-            int nodeID = from.getAttribute("originalID");
-            for(int relationID : presentationController.getRelations(typeFrom)) {
-                for(int nodeTo : presentationController.getEdges(relationID, typeFrom, nodeID)) {
-                    addEdge(from, graph.getNode(String.valueOf(presentationController.getNodeTypeTo(relationID, typeFrom).toString() + "_" + nodeTo)), relationID);
-                }
-            }
+            addEdges(from);
         }
-        lastNode = null;
         return true;
     }
 
-    private boolean addEdge(Node from, Node to, int relationID) {
-        for(Edge edge : from.getEachEdge()) {
-            if(edge.getOpposite(from) == to) {
-                if((int) edge.getAttribute("relationID") == relationID) {
-                    return false;
+    private void generateGraph(Node node, int levels) {
+        if(!fullGraph) {
+            graphVisible = true;
+            //TODO implement this
+        }
+        double[] pos = org.graphstream.algorithm.Toolkit.nodePosition(node);
+        camera.setViewCenter(pos[0], pos[1], pos[2]);
+    }
+
+    public void generateGraph(NodeType type, int id, int levels) {
+        generateGraph(graph.getNode(type.toString() + "_" + String.valueOf(id)), levels);
+    }
+
+    private boolean setEdge(Node from, Node to, int relationID, boolean addition) {
+        if(to != null) {
+            for(Edge edge : from.getEachEdge()) {
+                if(edge.getOpposite(from) == to) {
+                    if((int) edge.getAttribute("relationID") == relationID) {
+                        if(addition) {
+                            return false;
+                        } else {
+                            graph.removeEdge(edge);
+                            return true;
+                        }
+                    }
                 }
             }
+            if(!addition) {
+                return false;
+            } else {
+                Edge edge = graph.addEdge(String.valueOf(++lastEdgeID), from.getId(), to.getId());
+                edge.addAttribute("relationID", relationID);
+                Color color = relationColors.get(relationID);
+                edge.addAttribute("ui.style", "fill-color: rgb(" + String.valueOf(color.getRed()) + ", " + String.valueOf(color.getGreen()) + ", " + String.valueOf(color.getBlue()) + ");");
+                return true;
+            }
+        } else {
+            return false;
         }
-        Edge edge = graph.addEdge(String.valueOf(++lastEdgeID), from.getId(), to.getId());
-        edge.addAttribute("relationID", relationID);
-        Color color = relationColors.get(relationID);
-        edge.addAttribute("ui.style", "fill-color: rgb(" + String.valueOf(color.getRed()) + ", " + String.valueOf(color.getGreen()) + ", " + String.valueOf(color.getBlue()) + ");");
-        return true;
+    }
+
+    private void setEdge(int relationID, NodeType typeA, int nodeA, NodeType typeB, int nodeB, boolean addition) {
+        if(graphVisible) {
+            Node from = graph.getNode(typeA.toString() + "_" + String.valueOf(nodeA));
+            if(from == null) {
+                from = graph.getNode(typeB.toString() + "_" + String.valueOf(nodeB));
+                typeB = typeA;
+                nodeB = nodeA;
+            }
+            if(from != null) {
+                setEdge(from, graph.getNode(typeB.toString() + "_" + String.valueOf(nodeB)), relationID, addition);
+            }
+        }
+    }
+
+    public void addEdge(int relationID, NodeType typeA, int nodeA, NodeType typeB, int nodeB) {
+        setEdge(relationID, typeA, nodeA, typeB, nodeB, true);
+    }
+
+    public void removeEdge(int relationID, NodeType typeA, int nodeA, NodeType typeB, int nodeB) {
+        setEdge(relationID, typeA, nodeA, typeB, nodeB, false);
+    }
+
+    private void addEdges(Node from) {
+        NodeType typeFrom = from.getAttribute("nodetype");
+        int nodeID = from.getAttribute("originalID");
+        for(int relationID : presentationController.getRelations(typeFrom)) {
+            for(int nodeTo : presentationController.getEdges(relationID, typeFrom, nodeID)) {
+                setEdge(from, graph.getNode(presentationController.getNodeTypeTo(relationID, typeFrom).toString() + "_" + String.valueOf(nodeTo)), relationID, true);
+            }
+        }
+    }
+
+    public void addNode(NodeType type, int id) {
+        if(presentationController.getSize() == 1) {
+            fullGraph = true;
+            graphVisible = true;
+            ((CardLayout)getLayout()).show(this, "graph");
+        }
+        if(graphVisible) {
+            Node node = graph.addNode(type.toString() + "_" + String.valueOf(id));
+            node.addAttribute("nodetype", type);
+            node.addAttribute("originalID", id);
+            node.addAttribute("ui.style", "fill-color: " + getNodeColor(type) + ";");
+            setNodeLabel(node, presentationController.getNodeValue(type, id));
+        }
+    }
+
+    public void removeNode(NodeType type, int id) {
+        if(graphVisible) {
+            Node node = graph.getNode(type.toString() + "_" + String.valueOf(id));
+            if(node != null) {
+                graph.removeNode(node);
+            }
+            if(presentationController.getSize() == 0) {
+                fullGraph = false;
+                graphVisible = false;
+                ((CardLayout)getLayout()).show(this, "empty");
+            }
+        }
+    }
+
+    public void setNodeValue(NodeType type, int id, String value) {
+        if(graphVisible) {
+            Node node = graph.getNode(type.toString() + "_" + String.valueOf(id));
+            if(node != null) {
+                setNodeLabel(node, value);
+            }
+        }
     }
 
     public void showGraph() {
@@ -203,12 +290,19 @@ public class GraphView extends JPanel implements ViewerListener {
         }
     }
 
+    private void setNodeLabel(Node node, String label) {
+        if(label.length() > 15) {
+            label = label.substring(0, 15);
+            label = label.concat("...");
+        }
+        node.addAttribute("ui.label", label);
+    }
+
     private long lastClick = 0;
     private Node lastNode = null;
 
     @Override
     public void buttonPushed(String id) {
-        System.out.println("Node clicked with id: " + id);
         Node node = graph.getNode(id);
         if(lastNode != null && lastNode != node) {
             setEdgeLabel(lastNode, false, node);
@@ -216,8 +310,7 @@ public class GraphView extends JPanel implements ViewerListener {
         setEdgeLabel(node, true, null);
         long actClick = System.currentTimeMillis();
         if(actClick-lastClick < 400) {
-            double[] pos = org.graphstream.algorithm.Toolkit.nodePosition(node);
-            camera.setViewCenter(pos[0], pos[1], pos[2]);
+            generateGraph(node, 2);
             ModifyElementView modifyElementView = new ModifyElementView(presentationController, presentationController.mainFrame, node.getAttribute("originalID"), node.getAttribute("nodetype"));
             modifyElementView.setVisible(true);
             modifyElementView.onOK();

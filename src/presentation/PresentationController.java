@@ -15,7 +15,7 @@ public class PresentationController {
         domainController = new DomainController();
         mainFrame = new MainFrame(this);
         mainFrame.setVisible(true);
-        domainController.addRelation(NodeType.AUTHOR, NodeType.PAPER, "TEST");
+        //domainController.addRelation(NodeType.AUTHOR, NodeType.PAPER, "TEST");
     }
 
     public void newDB() {
@@ -27,6 +27,10 @@ public class PresentationController {
     }
 
     public void importDB(String path) {
+        domainController.newDB();
+        mainFrame.dispose();
+        mainFrame = new MainFrame(this);
+        mainFrame.setVisible(true);
         domainController.importDB(path);
         mainFrame.graphView.refresh();
     }
@@ -37,12 +41,13 @@ public class PresentationController {
 
     public int addNode(NodeType type, String value) {
         int id = domainController.addNode(type, value);
-        mainFrame.graphView.refresh();
+        mainFrame.graphView.addNode(type, id);
         return id;
     }
 
     public void removeNode(NodeType type, int id) {
         domainController.removeNode(type, id);
+        mainFrame.graphView.removeNode(type, id);
     }
 
     public int[] getNodes(NodeType type) {
@@ -55,14 +60,18 @@ public class PresentationController {
 
     public void setNodeValue(NodeType type, int id, String value) {
         domainController.setNodeValue(type, id, value);
+        mainFrame.graphView.setNodeValue(type, id, value);
     }
 
     public int addRelation(NodeType A, NodeType B, String name) {
-        return domainController.addRelation(A, B, name);
+        int id = domainController.addRelation(A, B, name);
+        mainFrame.graphView.refresh();
+        return id;
     }
 
     public void removeRelation(int id) {
         domainController.removeRelation(id);
+        mainFrame.graphView.refresh();
     }
 
     public ArrayList<Integer> getRelations() {
@@ -88,10 +97,12 @@ public class PresentationController {
 
     public void addEdge(int relationID, NodeType typeA, int nodeA, NodeType typeB, int nodeB) {
         domainController.addEdge(relationID, typeA, nodeA, typeB, nodeB);
+        mainFrame.graphView.addEdge(relationID, typeA, nodeA, typeB, nodeB);
     }
 
     public void removeEdge(int relationID, NodeType typeA, int nodeA, NodeType typeB, int nodeB) {
         domainController.removeEdge(relationID, typeA, nodeA, typeB, nodeB);
+        mainFrame.graphView.removeEdge(relationID, typeA, nodeA, typeB, nodeB);
     }
 
     public ArrayList<Integer> getEdges(int relationID, NodeType type, int nodeID) {
