@@ -89,7 +89,7 @@ public class SearchResultsPanel extends JPanel{
         list.setCellRenderer(new ResultRenderer());
 
         JScrollPane scrollPane = new JScrollPane(list);
-        setLayout(new GridLayout(1, 0));
+        setLayout(new GridLayout(1, 1));
         add(scrollPane);
         setVisible(true);
 

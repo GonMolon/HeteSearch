@@ -152,7 +152,7 @@ abstract public class ElementInfoView extends JDialog {
             NodeType elementType = presentationController.getNodeTypeTo(relationTypeId, type);
             String elementValue = presentationController.getNodeValue(elementType, elementId);
             Element e = new Element(elementId, elementType, elementValue);
-            if (!inCurrentModel(e)) {
+            if ((elementId != nodeId || elementType != type) && !inCurrentModel(e)) {
                 currentModel.addElement(e);
                 actions.add(new RelationAction(RelationAction.ADD, elementId, elementType, relationTypeId));
             }
