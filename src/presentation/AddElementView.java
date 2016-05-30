@@ -11,6 +11,7 @@ public class AddElementView extends ElementInfoView {
     public AddElementView(PresentationController presentationController, Component parentComponent) {
         super(presentationController, parentComponent, title);
         buttonDeleteElement.setVisible(false);
+        nodeId = -1;
     }
 
     public AddElementView(PresentationController presentationController, Component parentComponent, NodeType nodeType) {

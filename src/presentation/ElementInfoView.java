@@ -115,7 +115,6 @@ abstract public class ElementInfoView extends JDialog {
     protected void updateNodeRelations() {
         for (RelationAction a : actions) {
             if (a.action == RelationAction.ADD) {
-                System.out.println(a.relationType + " " + type + " " + nodeId + " " + a.typeB + " " + + a.nodeB);
                 presentationController.addEdge(a.relationType, type, nodeId, a.typeB, a.nodeB);
             }
             else /*if (a.action == RelationAction.DELETE)*/{
@@ -152,13 +151,10 @@ abstract public class ElementInfoView extends JDialog {
         if (elementId != -1) {
             NodeType elementType = presentationController.getNodeTypeTo(relationTypeId, type);
             String elementValue = presentationController.getNodeValue(elementType, elementId);
-            System.out.println(elementId + " " + elementType);
-            System.out.println(nodeId + " " + type);
             Element e = new Element(elementId, elementType, elementValue);
             if ((elementId != nodeId || elementType != type) && !inCurrentModel(e)) {
                 currentModel.addElement(e);
                 actions.add(new RelationAction(RelationAction.ADD, elementId, elementType, relationTypeId));
-                System.out.println("Add");
             }
         }
     }
