@@ -6,21 +6,20 @@ import presentation.utils.NodeTextField;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 public class RelationalSearchPanel extends JPanel implements ActionListener {
 
     private PresentationController presentationController;
     private PathGenerator pathGenerator;
-    private SearchResults searchResults;
+    private SearchResultsPanel searchResultsPanel;
     private JPanel panel;
     private NodeTextField fromText;
     private NodeTextField toText;
 
-    public RelationalSearchPanel(PresentationController presentationController, PathGenerator pathGenerator, SearchResults searchResults) {
+    public RelationalSearchPanel(PresentationController presentationController, PathGenerator pathGenerator, SearchResultsPanel searchResultsPanel) {
         this.presentationController = presentationController;
         this.pathGenerator = pathGenerator;
-        this.searchResults = searchResults;
+        this.searchResultsPanel = searchResultsPanel;
         add(panel);
     }
 
@@ -38,11 +37,11 @@ public class RelationalSearchPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(pathGenerator.actualRS.size() >= 1) {
             if(fromText.id == -1 && toText.id == -1) {
-                searchResults.setResults(presentationController.freeSearch(pathGenerator.from, pathGenerator.actualRS, pathGenerator.to));
+                searchResultsPanel.setResults(presentationController.freeSearch(pathGenerator.from, pathGenerator.actualRS, pathGenerator.to), pathGenerator.from, pathGenerator.to);
             } else if(fromText.id != -1 && toText.id == -1) {
-                searchResults.setResults(presentationController.originSearch(pathGenerator.from, fromText.id, pathGenerator.actualRS, pathGenerator.to));
+                searchResultsPanel.setResults(presentationController.originSearch(pathGenerator.from, fromText.id, pathGenerator.actualRS, pathGenerator.to), pathGenerator.from, pathGenerator.to);
             } else if(fromText.id != -1 && toText.id != -1) {
-                searchResults.setResults(presentationController.originDestinationSearch(pathGenerator.from, fromText.id, pathGenerator.actualRS, pathGenerator.to, fromText.id));
+                searchResultsPanel.setResults(presentationController.originDestinationSearch(pathGenerator.from, fromText.id, pathGenerator.actualRS, pathGenerator.to, fromText.id), pathGenerator.from, pathGenerator.to);
             }
         }
     }

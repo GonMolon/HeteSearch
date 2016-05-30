@@ -17,7 +17,7 @@ public class MainView extends JPanel {
     private JPanel searchPanel;
     private JButton addNodeButton;
     private JButton addRelationButton;
-    private SearchResults searchResults;
+    private SearchResultsPanel searchResultsPanel;
 
     protected MainView(PresentationController presentationController, MainFrame mainFrame) {
         super();
@@ -77,9 +77,9 @@ public class MainView extends JPanel {
 
     private void createUIComponents() {
         pathGenerator = new PathGenerator(presentationController, this, mainFrame.graphPath);
-        searchResults = new SearchResults(presentationController, pathGenerator);
-        relationalSearchPanel = new RelationalSearchPanel(presentationController, pathGenerator, searchResults);
-        simpleSearchPanel = new SimpleSearchPanel(presentationController, pathGenerator, searchResults);
+        searchResultsPanel = new SearchResultsPanel(presentationController);
+        relationalSearchPanel = new RelationalSearchPanel(presentationController, pathGenerator, searchResultsPanel);
+        simpleSearchPanel = new SimpleSearchPanel(presentationController, pathGenerator, searchResultsPanel);
     }
 
     public void resetPathGenerator() {
