@@ -99,9 +99,8 @@ public class SearchResultsPanel extends JPanel{
                 onClick(e.getClickCount());
             }
         });
-        //list.setBackground(new Color(255, 255, 255, 100));
+        list.setBackground(new Color(240, 240, 240));
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
-        //setMinimumSize(new Dimension(-1, 10000));
     }
 
     private void onClick(Integer nClicks) {
@@ -157,8 +156,7 @@ public class SearchResultsPanel extends JPanel{
         }
 
         @Override
-        public Component getListCellRendererComponent
-                (JList<? extends Result> list, Result result, int index, boolean isSelected, boolean hasFocus) {
+        public Component getListCellRendererComponent(JList<? extends Result> list, Result result, int index, boolean isSelected, boolean hasFocus) {
             setText(result.toString());
             boolean isMaster = result.isMaster();
             int alignment = isMaster ? LEFT : RIGHT;
