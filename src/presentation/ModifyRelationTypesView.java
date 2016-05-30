@@ -43,6 +43,13 @@ public class ModifyRelationTypesView extends JDialog {
         initialize();
     }
 
+    public ModifyRelationTypesView(PresentationController presentationController, Component parentComponent, NodeType a, NodeType b) {
+        this(presentationController, parentComponent);
+        selectNodeTypeA.setSelectedIndex(a.ordinal());
+        selectNodeTypeB.setSelectedIndex(b.ordinal());
+        onSelectNodeType();
+    }
+
     private void initialize() {
         setMinimumSize(new Dimension(minWidth, minHeight));
         setResizable(true);
