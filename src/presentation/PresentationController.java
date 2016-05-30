@@ -110,7 +110,7 @@ public class PresentationController {
         return domainController.originSearch(typeA, nodeFrom, rs, typeB);
     }
 
-    public double originDestinationSearch(NodeType typeA, int nodeFrom, ArrayList<Integer> rs, NodeType typeB, int nodeTo) {
+    public Number[] originDestinationSearch(NodeType typeA, int nodeFrom, ArrayList<Integer> rs, NodeType typeB, int nodeTo) {
         return domainController.originDestinationSearch(typeA, nodeFrom, rs, typeB, nodeTo);
     }
 

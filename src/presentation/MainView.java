@@ -27,7 +27,7 @@ public class MainView extends JPanel {
     }
 
     private void initialize() {
-        add(panel, BorderLayout.CENTER);
+        add(panel);
         addNodeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -59,7 +59,6 @@ public class MainView extends JPanel {
             addNodeButton.setEnabled(true);
             searchButton.setEnabled(true);
             simpleSearchPanel.setEnabled(true);
-            simpleSearchPanel.setNodeType(pathGenerator.from);
             searchButton.setEnabled(true);
             mainFrame.graphView.showGraph();
         } else if(pathGenerator.actualRS.size() == 1) {
