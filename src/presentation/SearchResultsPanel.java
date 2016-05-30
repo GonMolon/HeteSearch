@@ -88,6 +88,10 @@ public class SearchResultsPanel extends JPanel{
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.setCellRenderer(new ResultRenderer());
 
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.add(list);
+        add(scrollPane);
+
         list.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 /*if (e.getClickCount() == 2)*/
