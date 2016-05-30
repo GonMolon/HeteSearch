@@ -188,12 +188,8 @@ public class GraphView extends JPanel implements ViewerListener {
             Node from = graph.getNode(typeA.toString() + "_" + String.valueOf(nodeA));
             if(from == null) {
                 from = graph.getNode(typeB.toString() + "_" + String.valueOf(nodeB));
-                NodeType auxType = typeA;
-                typeA = typeB;
-                typeB = auxType;
-                int auxID = nodeA;
-                nodeA = nodeB;
-                nodeB = auxID;
+                typeB = typeA;
+                nodeB = nodeA;
             }
             if(from != null) {
                 setEdge(from, graph.getNode(typeB.toString() + "_" + String.valueOf(nodeB)), relationID, addition);
