@@ -71,7 +71,6 @@ public class GraphView extends JPanel implements ViewerListener {
                     }
                 }
         ).start();
-        generateRelationColors();
         setBackground(Color.WHITE);
         add(panel, "graph");
         add(new JLabel(
@@ -107,6 +106,7 @@ public class GraphView extends JPanel implements ViewerListener {
         lastEdgeID = 0;
         graph.addAttribute("ui.quality");
         graph.addAttribute("ui.antialias");
+        generateRelationColors();
         camera.resetView();
         fullGraph = true;
         graphVisible = true;
@@ -133,7 +133,7 @@ public class GraphView extends JPanel implements ViewerListener {
         for(NodeType type : NodeType.values()) {
             int[] ids = presentationController.getNodes(type);
             for(int i = 0; i < ids.length; ++i) {
-                addNode(type, ids[i]);
+                i_addNode(type, ids[i]);
             }
         }
         for(Node from : graph.getNodeSet()) {
@@ -215,6 +215,14 @@ public class GraphView extends JPanel implements ViewerListener {
         }
     }
 
+    private void i_addNode(NodeType type, int id) {
+        Node node = graph.addNode(type.toString() + "_" + String.valueOf(id));
+        node.addAttribute("nodetype", type);
+        node.addAttribute("originalID", id);
+        node.addAttribute("ui.style", "fill-color: " + getNodeColor(type) + ";");
+        setNodeLabel(node, presentationController.getNodeValue(type, id));
+    }
+
     public void addNode(NodeType type, int id) {
         if(presentationController.getSize() == 1) {
             fullGraph = true;
@@ -222,12 +230,9 @@ public class GraphView extends JPanel implements ViewerListener {
             ((CardLayout)getLayout()).show(this, "graph");
         }
         if(graphVisible) {
-            Node node = graph.addNode(type.toString() + "_" + String.valueOf(id));
-            node.addAttribute("nodetype", type);
-            node.addAttribute("originalID", id);
-            node.addAttribute("ui.style", "fill-color: " + getNodeColor(type) + ";");
-            setNodeLabel(node, presentationController.getNodeValue(type, id));
+            i_addNode(type, id);
         }
+        camera.resetView();
     }
 
     public void removeNode(NodeType type, int id) {
@@ -236,6 +241,7 @@ public class GraphView extends JPanel implements ViewerListener {
             if(node != null) {
                 graph.removeNode(node);
             }
+            camera.resetView();
             if(presentationController.getSize() == 0) {
                 fullGraph = false;
                 graphVisible = false;
