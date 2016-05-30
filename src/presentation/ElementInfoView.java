@@ -56,7 +56,19 @@ abstract public class ElementInfoView extends JDialog {
         onSelectType();
 
         fieldOtherNodeName.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) { onAdd(); }
+            public void actionPerformed(ActionEvent e) {
+                onAdd();
+            }
+        });
+
+        fieldOtherNodeName.addFocusListener(new FocusListener() {
+            public void focusGained(FocusEvent e) {
+                getRootPane().setDefaultButton(buttonAddRelation);
+            }
+
+            public void focusLost(FocusEvent e) {
+                getRootPane().setDefaultButton(buttonOk);
+            }
         });
 
         selectType.addActionListener(new ActionListener() {
