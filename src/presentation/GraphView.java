@@ -110,6 +110,7 @@ public class GraphView extends JPanel implements ViewerListener {
         generateRelationColors();
         camera.resetView();
         graphVisible = true;
+        lastNode = null;
         fullGraph = generateGraph();
         if(fullGraph) {
             if(presentationController.getSize() > 0) {
@@ -123,7 +124,6 @@ public class GraphView extends JPanel implements ViewerListener {
             ((CardLayout)getLayout()).show(this, "big");
             graphVisible = false;
         }
-        lastNode = null;
     }
 
     private boolean generateGraph() {
@@ -146,6 +146,7 @@ public class GraphView extends JPanel implements ViewerListener {
         if(!fullGraph) {
             refresh();
             graphVisible = true;
+            ((CardLayout)getLayout()).show(this, "graph");
             if(LEVELS > 0) {
                 addEdges(node, true);
                 Queue<Node> queue = new LinkedList<Node>();
@@ -166,6 +167,7 @@ public class GraphView extends JPanel implements ViewerListener {
                     }
                 }
             }
+            lastNode = null;
         }
         double[] pos = org.graphstream.algorithm.Toolkit.nodePosition(node);
         camera.setViewCenter(pos[0], pos[1], pos[2]);
@@ -175,6 +177,7 @@ public class GraphView extends JPanel implements ViewerListener {
         Node node = i_addNode(type, id);
         generateGraph(node);
         setEdgeLabel(node, true, null);
+        lastNode = node;
     }
 
     private boolean setEdge(Node from, NodeType toType, int toID, int relationID, boolean addition, boolean force) {
