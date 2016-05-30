@@ -17,7 +17,6 @@ public class AddElementView extends ElementInfoView {
         this(presentationController, parentComponent);
         selectType.setSelectedIndex(nodeType.ordinal());
         selectType.setEnabled(false);
-        onSelectType();
     }
 
     @Override

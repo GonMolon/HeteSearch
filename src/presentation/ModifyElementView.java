@@ -18,7 +18,6 @@ public class ModifyElementView extends ElementInfoView {
         this.type = nodeType;
         fieldName.setText(presentationController.getNodeValue(type, nodeId));
         populateListModels();
-        onSelectType();
     }
 
     private void populateListModels() {

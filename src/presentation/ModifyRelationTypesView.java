@@ -47,7 +47,6 @@ public class ModifyRelationTypesView extends JDialog {
         this(presentationController, parentComponent);
         selectNodeTypeA.setSelectedIndex(a.ordinal());
         selectNodeTypeB.setSelectedIndex(b.ordinal());
-        onSelectNodeType();
     }
 
     private void initialize() {
