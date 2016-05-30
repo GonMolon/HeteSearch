@@ -15,7 +15,7 @@ public class PresentationController {
         domainController = new DomainController();
         mainFrame = new MainFrame(this);
         mainFrame.setVisible(true);
-        domainController.addRelation(NodeType.AUTHOR, NodeType.PAPER, "TEST");
+        //domainController.addRelation(NodeType.AUTHOR, NodeType.PAPER, "TEST");
     }
 
     public void newDB() {
@@ -27,6 +27,10 @@ public class PresentationController {
     }
 
     public void importDB(String path) {
+        domainController.newDB();
+        mainFrame.dispose();
+        mainFrame = new MainFrame(this);
+        mainFrame.setVisible(true);
         domainController.importDB(path);
         mainFrame.graphView.refresh();
     }

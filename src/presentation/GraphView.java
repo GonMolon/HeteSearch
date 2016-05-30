@@ -108,18 +108,22 @@ public class GraphView extends JPanel implements ViewerListener {
         graph.addAttribute("ui.quality");
         graph.addAttribute("ui.antialias");
         camera.resetView();
+        fullGraph = true;
+        graphVisible = true;
         fullGraph = generateGraph();
         if(fullGraph) {
             if(presentationController.getSize() > 0) {
                 ((CardLayout)getLayout()).show(this, "graph");
+                graphVisible = true;
             } else {
                 ((CardLayout)getLayout()).show(this, "empty");
+                graphVisible = false;
             }
-            graphVisible = false;
         } else {
             ((CardLayout)getLayout()).show(this, "big");
-            graphVisible = true;
+            graphVisible = false;
         }
+        lastNode = null;
     }
 
     private boolean generateGraph() {
@@ -135,7 +139,6 @@ public class GraphView extends JPanel implements ViewerListener {
         for(Node from : graph.getNodeSet()) {
             addEdges(from);
         }
-        lastNode = null;
         return true;
     }
 

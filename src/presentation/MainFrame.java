@@ -63,7 +63,6 @@ public class MainFrame extends JFrame {
                         System.out.println("Importing graph");
                         try {
                             DataChooser dc = new DataChooser(importGraph, false);
-                            presentationController.newDB();
                             presentationController.importDB(dc.getDirectory());
                             System.out.println("Done");
                         } catch (DataChooserException exception) {
