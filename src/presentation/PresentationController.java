@@ -86,6 +86,10 @@ public class PresentationController {
         return domainController.getRelationName(id);
     }
 
+    public boolean isCustomRelation(int id) {
+        return domainController.isCustomRelation(id);
+    }
+
     public NodeType getNodeTypeTo(int relationId, NodeType from) {
         NodeType[] types = domainController.getNodeTypesFromRelation(relationId);
         if (types[0] == from) {

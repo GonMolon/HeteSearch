@@ -10,6 +10,7 @@ public class DomainController {
 
     private Graph graph;
     private PersistenceController persistenceController;
+    private int defaultRelations;
 
     public DomainController() {
         newDB();
@@ -117,16 +118,12 @@ public class DomainController {
         }
     }
 
-    public NodeType getNodeTypeTo(int relationId, NodeType from) {
+    public boolean isCustomRelation(int id) {
         try {
-            Relation relation = graph.getRelation(relationId);
-            if (relation.getNodeTypeA() == from) {
-                return relation.getNodeTypeB();
-            }
-            /*else*/ return relation.getNodeTypeA();
+            return !graph.getRelation(id).isDefault();
         } catch (GraphException e) {
             e.printStackTrace();
-            return null;
+            return false;
         }
     }
 
