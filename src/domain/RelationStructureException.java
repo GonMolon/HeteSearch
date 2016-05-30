@@ -23,6 +23,7 @@ public class RelationStructureException extends Exception{
         } else if(error == Error.EMPTY_STRUCTURE) {
             System.out.println("The structure cannot be empty");
         }
+        super.printStackTrace();
     }
 
     public enum Error {
