@@ -198,7 +198,7 @@ public class GraphView extends JPanel implements ViewerListener {
     }
 
     public void addEdge(int relationID, NodeType typeA, int nodeA, NodeType typeB, int nodeB) {
-        setEdge(relationID, typeA, nodeA, typeB, nodeB, true);
+         setEdge(relationID, typeA, nodeA, typeB, nodeB, true);
     }
 
     public void removeEdge(int relationID, NodeType typeA, int nodeA, NodeType typeB, int nodeB) {

@@ -188,7 +188,7 @@ public class DomainController {
             originSearch.search();
             ArrayList<Number[]> results = new ArrayList<Number[]>();
             for(GraphSearch.Result result : originSearch.getResults()) {
-                results.add(new Number[]{result.to.getId(), result.hetesim});
+                results.add(new Number[]{result.from.getId(), result.to.getId(), result.hetesim});
             }
             return results;
         } catch (Exception e) {

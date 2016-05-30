@@ -99,6 +99,9 @@ public class SearchResultsPanel extends JPanel{
                 onClick(e.getClickCount());
             }
         });
+        list.setBackground(new Color(255, 255, 255, 100));
+        scrollPane.setBorder(BorderFactory.createEmptyBorder());
+        //setMinimumSize(new Dimension(-1, 10000));
     }
 
     private void onClick(Integer nClicks) {
