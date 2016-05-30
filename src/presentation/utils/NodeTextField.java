@@ -2,15 +2,17 @@ package presentation.utils;
 
 
 import domain.NodeType;
+import javafx.event.ActionEvent;
 import presentation.PresentationController;
 import scala.Int;
 
+import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class NodeTextField extends AutoClearTextField {
+public class NodeTextField extends AutoClearTextField implements ActionListener {
 
     private PresentationController presentationController;
     private NodeType nodeType;
@@ -19,6 +21,7 @@ public class NodeTextField extends AutoClearTextField {
     public NodeTextField(PresentationController presentationController, String title) {
         super(title);
         this.presentationController = presentationController;
+        addActionListener(this);
         id = -1;
     }
 
@@ -60,5 +63,9 @@ public class NodeTextField extends AutoClearTextField {
         if(presentationController.simpleSearch(nodeType, getText()).length != 1) {
             reset();
         }
+    }
+
+    public void actionPerformed(java.awt.event.ActionEvent e) {
+        focusLost(null);
     }
 }

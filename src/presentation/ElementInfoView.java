@@ -55,40 +55,32 @@ abstract public class ElementInfoView extends JDialog {
         selectType.setModel(new DefaultComboBoxModel<>(NodeType.values()));
         onSelectType();
 
+        fieldOtherNodeName.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { onAdd(); }
+        });
+
         selectType.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onSelectType();
-            }
+            public void actionPerformed(ActionEvent e) { onSelectType(); }
         });
 
         selectRelationType.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onSelectRelationType();
-            }
+            public void actionPerformed(ActionEvent e) { onSelectRelationType(); }
         });
 
         buttonAddRelation.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onAdd();
-            }
+            public void actionPerformed(ActionEvent e) { onAdd(); }
         });
 
         buttonDeleteRelation.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onDelete();
-            }
+            public void actionPerformed(ActionEvent e) { onDelete(); }
         });
 
         buttonOk.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onOK();
-            }
+            public void actionPerformed(ActionEvent e) { onOK(); }
         });
 
         buttonCancel.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
+            public void actionPerformed(ActionEvent e) { onCancel(); }
         });
 
         buttonDeleteElement.addActionListener(new ActionListener() {
@@ -97,11 +89,8 @@ abstract public class ElementInfoView extends JDialog {
 
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                onCancel();
-            }
+            public void windowClosing(WindowEvent e) { onCancel(); }
         });
-
     }
 
     protected void createNode() {
