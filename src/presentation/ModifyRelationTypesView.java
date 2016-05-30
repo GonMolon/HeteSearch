@@ -63,6 +63,12 @@ public class ModifyRelationTypesView extends JDialog {
 
         onSelectNodeType();
 
+        listRelationTypes.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                onClickList();
+            }
+        });
+
         selectNodeTypeA.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onSelectNodeType();
@@ -105,6 +111,22 @@ public class ModifyRelationTypesView extends JDialog {
                 onCancel();
             }
         });
+    }
+
+    private void onClickList() {
+        int selectedIndex = listRelationTypes.getSelectedIndex();
+        if (selectedIndex != -1) {
+            int relationId = currentModel.getElementAt(selectedIndex).id;
+            if (!presentationController.isCustomRelation(relationId)) {
+                buttonDelete.setEnabled(false);
+            }
+            else {
+                buttonDelete.setEnabled(true);
+            }
+        }
+        else {
+            buttonDelete.setEnabled(false);
+        }
     }
 
     private void populateListModels() {
