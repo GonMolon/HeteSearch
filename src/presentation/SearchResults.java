@@ -36,7 +36,9 @@ public class SearchResults extends JTable {
     }
 
     public void setResults(Number[] results) {
-
+        ArrayList<Number[]> aux = new ArrayList<Number[]>();
+        aux.add(results);
+        setResults(aux);
     }
 
     private class ItemRender extends JPanel implements ListCellRenderer {
@@ -48,11 +50,8 @@ public class SearchResults extends JTable {
             add(label);
         }
 
-        protected DefaultListCellRenderer defaultRenderer = new DefaultListCellRenderer();
-
         @Override
         public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-            label = (JLabel) defaultRenderer.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
             if(value instanceof Integer) {
                 label.setText(String.valueOf((Integer)value));
             } else if(value instanceof Number[]) {
