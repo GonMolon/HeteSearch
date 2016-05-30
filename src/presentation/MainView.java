@@ -85,6 +85,17 @@ public class MainView extends JPanel {
         searchResultsPanel = new SearchResultsPanel(presentationController);
         relationalSearchPanel = new RelationalSearchPanel(presentationController, pathGenerator, searchResultsPanel);
         simpleSearchPanel = new SimpleSearchPanel(presentationController, pathGenerator, searchResultsPanel);
+        searchResultsPanel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SearchResultsPanel searchResultsPanel = (SearchResultsPanel)e.getSource();
+                mainFrame.graphView.generateGraph(searchResultsPanel.getSelectedType(), searchResultsPanel.getSelectedId());
+                if(e.getActionCommand() == "2") {
+                    ModifyElementView modifyElementView = new ModifyElementView(presentationController, presentationController.mainFrame, searchResultsPanel.getSelectedId(), searchResultsPanel.getSelectedType());
+                    modifyElementView.setVisible(true);
+                }
+            }
+        });
     }
 
     public void resetPathGenerator() {

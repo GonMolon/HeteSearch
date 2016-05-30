@@ -17,7 +17,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
-import java.util.HashMap;
+import java.util.*;
 
 public class GraphView extends JPanel implements ViewerListener {
 
@@ -32,6 +32,7 @@ public class GraphView extends JPanel implements ViewerListener {
     private boolean fullGraph;
     private boolean graphVisible;
     private static int MAX_NODES = 500;
+    private static int LEVELS = 3;
 
     public GraphView(PresentationController presentationController) {
         super(new CardLayout());
@@ -108,7 +109,6 @@ public class GraphView extends JPanel implements ViewerListener {
         graph.addAttribute("ui.antialias");
         generateRelationColors();
         camera.resetView();
-        fullGraph = true;
         graphVisible = true;
         fullGraph = generateGraph();
         if(fullGraph) {
@@ -137,25 +137,48 @@ public class GraphView extends JPanel implements ViewerListener {
             }
         }
         for(Node from : graph.getNodeSet()) {
-            addEdges(from);
+            addEdges(from, false);
         }
         return true;
     }
 
-    private void generateGraph(Node node, int levels) {
+    private void generateGraph(Node node) {
         if(!fullGraph) {
+            refresh();
             graphVisible = true;
-            //TODO implement this
+            if(LEVELS > 0) {
+                addEdges(node, true);
+                Queue<Node> queue = new LinkedList<Node>();
+                queue.add(node);
+                int level = 1;
+                int elementsThisLevel = 1;
+                int elementsNextLevel = 0;
+                while(!queue.isEmpty() && level < LEVELS) {
+                    for(Edge edge : queue.element().getEachEdge()) {
+                        queue.add(edge.getOpposite(queue.element()));
+                        ++elementsNextLevel;
+                    }
+                    queue.poll();
+                    if(--elementsThisLevel == 0) {
+                        elementsThisLevel = elementsNextLevel;
+                        elementsNextLevel = 0;
+                        ++level;
+                    }
+                }
+            }
         }
         double[] pos = org.graphstream.algorithm.Toolkit.nodePosition(node);
         camera.setViewCenter(pos[0], pos[1], pos[2]);
     }
 
-    public void generateGraph(NodeType type, int id, int levels) {
-        generateGraph(graph.getNode(type.toString() + "_" + String.valueOf(id)), levels);
+    public void generateGraph(NodeType type, int id) {
+        Node node = i_addNode(type, id);
+        generateGraph(node);
+        setEdgeLabel(node, true, null);
     }
 
-    private boolean setEdge(Node from, Node to, int relationID, boolean addition) {
+    private boolean setEdge(Node from, NodeType toType, int toID, int relationID, boolean addition, boolean force) {
+        Node to = graph.getNode(toType.toString() + "_" + String.valueOf(toID));
         if(to != null) {
             for(Edge edge : from.getEachEdge()) {
                 if(edge.getOpposite(from) == to) {
@@ -179,7 +202,12 @@ public class GraphView extends JPanel implements ViewerListener {
                 return true;
             }
         } else {
-            return false;
+            if(force) {
+                i_addNode(toType, toID);
+                return setEdge(from, toType, toID, relationID, addition, false);
+            } else {
+                return false;
+            }
         }
     }
 
@@ -192,7 +220,7 @@ public class GraphView extends JPanel implements ViewerListener {
                 nodeB = nodeA;
             }
             if(from != null) {
-                setEdge(from, graph.getNode(typeB.toString() + "_" + String.valueOf(nodeB)), relationID, addition);
+                setEdge(from, typeB, nodeB, relationID, addition, true);
             }
         }
     }
@@ -205,22 +233,26 @@ public class GraphView extends JPanel implements ViewerListener {
         setEdge(relationID, typeA, nodeA, typeB, nodeB, false);
     }
 
-    private void addEdges(Node from) {
+    private void addEdges(Node from, boolean force) {
         NodeType typeFrom = from.getAttribute("nodetype");
         int nodeID = from.getAttribute("originalID");
         for(int relationID : presentationController.getRelations(typeFrom)) {
             for(int nodeTo : presentationController.getEdges(relationID, typeFrom, nodeID)) {
-                setEdge(from, graph.getNode(presentationController.getNodeTypeTo(relationID, typeFrom).toString() + "_" + String.valueOf(nodeTo)), relationID, true);
+                setEdge(from, presentationController.getNodeTypeTo(relationID, typeFrom), nodeTo, relationID, true, force);
             }
         }
     }
 
-    private void i_addNode(NodeType type, int id) {
-        Node node = graph.addNode(type.toString() + "_" + String.valueOf(id));
-        node.addAttribute("nodetype", type);
-        node.addAttribute("originalID", id);
-        node.addAttribute("ui.style", "fill-color: " + getNodeColor(type) + ";");
-        setNodeLabel(node, presentationController.getNodeValue(type, id));
+    private Node i_addNode(NodeType type, int id) {
+        Node node = graph.getNode(type.toString() + "_" + String.valueOf(id));
+        if(node == null) {
+            node = graph.addNode(type.toString() + "_" + String.valueOf(id));
+            node.addAttribute("nodetype", type);
+            node.addAttribute("originalID", id);
+            node.addAttribute("ui.style", "fill-color: " + getNodeColor(type) + ";");
+            setNodeLabel(node, presentationController.getNodeValue(type, id));
+        }
+        return node;
     }
 
     public void addNode(NodeType type, int id) {
@@ -316,7 +348,7 @@ public class GraphView extends JPanel implements ViewerListener {
         setEdgeLabel(node, true, null);
         long actClick = System.currentTimeMillis();
         if(actClick-lastClick < 400) {
-            generateGraph(node, 2);
+            generateGraph(node);
             ModifyElementView modifyElementView = new ModifyElementView(presentationController, presentationController.mainFrame, node.getAttribute("originalID"), node.getAttribute("nodetype"));
             modifyElementView.setVisible(true);
         }
