@@ -33,8 +33,7 @@ public class GraphView extends JPanel implements ViewerListener {
     private HashMap<Integer, Color> relationColors;
     private boolean fullGraph;
     private boolean graphVisible;
-    private static int MAX_NODES = 5;
-    private static int LEVELS = 3;
+    private static int MAX_NODES = 250;
 
     public GraphView(PresentationController presentationController) {
         super(new CardLayout());
@@ -144,29 +143,30 @@ public class GraphView extends JPanel implements ViewerListener {
         return true;
     }
 
-    private void generateGraph(Node node) {
+    private Node generateGraph(Node node) {
         if(!fullGraph) {
+            NodeType type = node.getAttribute("nodetype");
+            int id = node.getAttribute("originalID");
             refresh();
+            node = i_addNode(type, id);
             graphVisible = true;
             ((CardLayout)getLayout()).show(this, "graph");
-            if(LEVELS > 0) {
-                Queue<Node> queue = new LinkedList<Node>();
-                queue.add(node);
-                int level = 1;
-                int elementsThisLevel = 1;
-                int elementsNextLevel = 0;
-                while(!queue.isEmpty() && level <= LEVELS) {
-                    addEdges(queue.element(), true);
-                    for(Edge edge : queue.element().getEachEdge()) {
-                        queue.add(edge.getOpposite(queue.element()));
-                        ++elementsNextLevel;
-                    }
-                    queue.poll();
-                    if(--elementsThisLevel == 0) {
-                        elementsThisLevel = elementsNextLevel;
-                        elementsNextLevel = 0;
-                        ++level;
-                    }
+            Queue<Node> queue = new LinkedList<Node>();
+            queue.add(node);
+            int level = 1;
+            int elementsThisLevel = 1;
+            int elementsNextLevel = 0;
+            while(!queue.isEmpty() && level <= (presentationController.getSize() <= MAX_NODES*2 ? 2 : 1)) {
+                addEdges(queue.element(), true);
+                for(Edge edge : queue.element().getEachEdge()) {
+                    queue.add(edge.getOpposite(queue.element()));
+                    ++elementsNextLevel;
+                }
+                queue.poll();
+                if(--elementsThisLevel == 0) {
+                    elementsThisLevel = elementsNextLevel;
+                    elementsNextLevel = 0;
+                    ++level;
                 }
             }
             lastNode = null;
@@ -175,11 +175,12 @@ public class GraphView extends JPanel implements ViewerListener {
             double[] pos = org.graphstream.algorithm.Toolkit.nodePosition(node);
             camera.setViewCenter(pos[0], pos[1], pos[2]);
         }
+        return node;
     }
 
     public void generateGraph(NodeType type, int id) {
         Node node = i_addNode(type, id);
-        generateGraph(node);
+        node = generateGraph(node);
         setEdgeLabel(node, true, null);
         lastNode = node;
     }
@@ -250,16 +251,20 @@ public class GraphView extends JPanel implements ViewerListener {
         }
     }
 
+    private void addAttributes(Node node, NodeType type, int id) {
+        node.addAttribute("nodetype", type);
+        node.addAttribute("originalID", id);
+        node.addAttribute("ui.style", "fill-color: " + getNodeColor(type) + ";");
+        setNodeLabel(node, presentationController.getNodeValue(type, id));
+    }
+
     private Node i_addNode(NodeType type, int id) {
         Node node = graph.getNode(type.toString() + "_" + String.valueOf(id));
         if(node == null) {
             node = graph.addNode(type.toString() + "_" + String.valueOf(id));
-            node.addAttribute("nodetype", type);
-            node.addAttribute("originalID", id);
-            node.addAttribute("ui.style", "fill-color: " + getNodeColor(type) + ";");
-            setNodeLabel(node, presentationController.getNodeValue(type, id));
+            addAttributes(node, type, id);
         }
-         return node;
+        return node;
     }
 
     public void addNode(NodeType type, int id) {
