@@ -144,7 +144,7 @@ public class GraphView extends JPanel implements ViewerListener {
     }
 
     private Node generateGraph(Node node) {
-        if(!fullGraph) {
+        if(!fullGraph && nodeFocushed != node) {
             NodeType type = node.getAttribute("nodetype");
             int id = node.getAttribute("originalID");
             refresh();
@@ -183,6 +183,7 @@ public class GraphView extends JPanel implements ViewerListener {
         node = generateGraph(node);
         setEdgeLabel(node, true, null);
         lastNode = node;
+        nodeFocushed = node;
     }
 
     private boolean setEdge(Node from, NodeType toType, int toID, int relationID, boolean addition, boolean force) {
@@ -353,6 +354,7 @@ public class GraphView extends JPanel implements ViewerListener {
 
     private long lastClick = 0;
     private Node lastNode = null;
+    private Node nodeFocushed = null;
 
     @Override
     public void buttonPushed(String id) {
@@ -360,9 +362,12 @@ public class GraphView extends JPanel implements ViewerListener {
         setEdgeLabel(node, true, null);
         long actClick = System.currentTimeMillis();
         if(actClick-lastClick < 400) {
-            generateGraph(node);
-            ModifyElementView modifyElementView = new ModifyElementView(presentationController, presentationController.mainFrame, node.getAttribute("originalID"), node.getAttribute("nodetype"));
-            modifyElementView.setVisible(true);
+            boolean detailedInfo = nodeFocushed == node;
+            node = generateGraph(node);
+            if(detailedInfo) {
+                ModifyElementView modifyElementView = new ModifyElementView(presentationController, presentationController.mainFrame, node.getAttribute("originalID"), node.getAttribute("nodetype"));
+                modifyElementView.setVisible(true);
+            }
         }
         lastClick = actClick;
         lastNode = node;
