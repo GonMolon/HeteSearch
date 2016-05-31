@@ -15,7 +15,6 @@ public class PresentationController {
         domainController = new DomainController();
         mainFrame = new MainFrame(this);
         mainFrame.setVisible(true);
-        //domainController.addRelation(NodeType.AUTHOR, NodeType.PAPER, "TEST");
     }
 
     public void newDB() {
