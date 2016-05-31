@@ -36,7 +36,6 @@ public class SearchResultsPanel extends JPanel{
         listModel = new DefaultListModel<>();
         this.from = type;
         for (Integer id : results) {
-            System.out.print(id);
             String name = presentationController.getNodeValue(type, id);
             Result result = new Result(id, name, Result.MASTER);
             listModel.addElement(result);
@@ -110,7 +109,6 @@ public class SearchResultsPanel extends JPanel{
             selectedId = r.id;
             selectedType = r.isMaster() ? from : to;
             ActionEvent e = new ActionEvent(this, ActionEvent.ACTION_PERFORMED, nClicks.toString());
-            System.out.println(nClicks + " clicks on " + selectedId + " " + selectedType);
             for (ActionListener l : listeners) {
                 l.actionPerformed(e);
             }

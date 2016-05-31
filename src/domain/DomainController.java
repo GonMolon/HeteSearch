@@ -10,7 +10,6 @@ public class DomainController {
 
     private Graph graph;
     private PersistenceController persistenceController;
-    private int defaultRelations;
 
     public DomainController() {
         newDB();

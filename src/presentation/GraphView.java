@@ -17,7 +17,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class GraphView extends JPanel implements ViewerListener {
 
@@ -31,7 +33,7 @@ public class GraphView extends JPanel implements ViewerListener {
     private HashMap<Integer, Color> relationColors;
     private boolean fullGraph;
     private boolean graphVisible;
-    private static int MAX_NODES = 500;
+    private static int MAX_NODES = 5;
     private static int LEVELS = 3;
 
     public GraphView(PresentationController presentationController) {
@@ -40,7 +42,7 @@ public class GraphView extends JPanel implements ViewerListener {
         graph = new MultiGraph("GraphView");
         graph.setAutoCreate(true);
         graph.setStrict(false);
-        viewer = new Viewer(graph, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
+        viewer = new Viewer(graph, Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD );
         viewer.enableAutoLayout();
         panel = viewer.addDefaultView(false);
         panel.setMouseManager(new CustomMouseManager());
@@ -148,13 +150,13 @@ public class GraphView extends JPanel implements ViewerListener {
             graphVisible = true;
             ((CardLayout)getLayout()).show(this, "graph");
             if(LEVELS > 0) {
-                addEdges(node, true);
                 Queue<Node> queue = new LinkedList<Node>();
                 queue.add(node);
                 int level = 1;
                 int elementsThisLevel = 1;
                 int elementsNextLevel = 0;
-                while(!queue.isEmpty() && level < LEVELS) {
+                while(!queue.isEmpty() && level <= LEVELS) {
+                    addEdges(queue.element(), true);
                     for(Edge edge : queue.element().getEachEdge()) {
                         queue.add(edge.getOpposite(queue.element()));
                         ++elementsNextLevel;
@@ -168,9 +170,11 @@ public class GraphView extends JPanel implements ViewerListener {
                 }
             }
             lastNode = null;
+            camera.resetView();
+        } else {
+            double[] pos = org.graphstream.algorithm.Toolkit.nodePosition(node);
+            camera.setViewCenter(pos[0], pos[1], pos[2]);
         }
-        double[] pos = org.graphstream.algorithm.Toolkit.nodePosition(node);
-        camera.setViewCenter(pos[0], pos[1], pos[2]);
     }
 
     public void generateGraph(NodeType type, int id) {
@@ -255,7 +259,7 @@ public class GraphView extends JPanel implements ViewerListener {
             node.addAttribute("ui.style", "fill-color: " + getNodeColor(type) + ";");
             setNodeLabel(node, presentationController.getNodeValue(type, id));
         }
-        return node;
+         return node;
     }
 
     public void addNode(NodeType type, int id) {
@@ -329,7 +333,7 @@ public class GraphView extends JPanel implements ViewerListener {
                 }
             }
         }
-        if(enabled && lastNode != null) {
+        if(enabled && lastNode != null && lastNode != node) {
             setEdgeLabel(lastNode, false, node);
         }
     }
