@@ -72,7 +72,7 @@ public class CommandLineInterface implements Runnable {
                 NodeType nt = parseType(s.next());
                 int id = s.nextInt();
                 if (dc.nodeExists(nt, id)) {
-                    dc.removeNode(parseType(s.next()), s.nextInt());
+                    dc.removeNode(nt, id);
                     System.out.println("Node removed.");
                 } else {
                     System.out.println("Node with id "+id+" doesn't exist.");
@@ -81,7 +81,7 @@ public class CommandLineInterface implements Runnable {
                 NodeType nt = parseType(s.next());
                 int id = s.nextInt();
                 if (dc.nodeExists(nt, id)) {
-                    dc.setNodeValue(parseType(s.next()), s.nextInt(), s.nextLine());
+                    dc.setNodeValue(nt, id, s.nextLine().substring(1));
                     System.out.println("Node value modified.");
                 } else {
                     System.out.println("Node with id "+id+" doesn't exist.");

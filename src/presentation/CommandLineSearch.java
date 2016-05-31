@@ -29,19 +29,19 @@ public class CommandLineSearch implements Runnable {
         String[] params = search.split(" ");
         NodeType origin, dest;
         ArrayList<Number[]> results;
-        origin = CommandLineInterface.parseType(params[0]);
-        dest = CommandLineInterface.parseType(params[1]);
-        ArrayList<Integer> relationStructure = parseRelationStructure(params[2]);
-        if (params.length == 3) {
+        origin = CommandLineInterface.parseType(params[1]);
+        dest = CommandLineInterface.parseType(params[2]);
+        ArrayList<Integer> relationStructure = parseRelationStructure(params[3]);
+        if (params.length == 4) {
             // FreeSearch
             results = dc.freeSearch(origin, relationStructure, dest);
-        } else if (params.length == 4) {
+        } else if (params.length == 5) {
             // OriginSearch
-            results = dc.originSearch(origin, Integer.parseInt(params[3]), relationStructure, dest);
+            results = dc.originSearch(origin, Integer.parseInt(params[4]), relationStructure, dest);
         } else {
             // OriginDestinationSearch
             results = new ArrayList<>();
-            results.add(dc.originDestinationSearch(origin, Integer.parseInt(params[3]), relationStructure, dest, Integer.parseInt(params[4])));
+            results.add(dc.originDestinationSearch(origin, Integer.parseInt(params[4]), relationStructure, dest, Integer.parseInt(params[5])));
         }
 
         System.out.println("Search done. Printing results:");
