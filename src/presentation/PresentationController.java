@@ -68,6 +68,7 @@ public class PresentationController {
     }
 
     public int addRelation(NodeType A, NodeType B, String name) {
+        name = name.replace('_', '-'); //To fix a bug in persistence. Not our fault.
         int id = domainController.addRelation(A, B, name);
         mainFrame.graphView.refresh();
         return id;
