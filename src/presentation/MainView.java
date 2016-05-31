@@ -53,6 +53,12 @@ public class MainView extends JPanel {
         });
         searchButton.addActionListener(simpleSearchPanel);
         searchButton.addActionListener(relationalSearchPanel);
+        searchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pathGenerator.reset();
+            }
+        });
     }
 
     public void update() {

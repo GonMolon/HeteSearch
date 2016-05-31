@@ -101,7 +101,7 @@ public class SearchResultsPanel extends JPanel{
                 onClick(e.getClickCount());
             }
         });
-        list.setBackground(new Color(0, 0, 0, 0));
+        list.setOpaque(false);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
 
         df = new DecimalFormat("#.####");
@@ -160,9 +160,9 @@ public class SearchResultsPanel extends JPanel{
     }
 
     private class ResultRenderer extends JLabel implements ListCellRenderer<Result> {
+
         public ResultRenderer() {
             super();
-            setOpaque(true);
         }
 
         @Override
@@ -176,9 +176,11 @@ public class SearchResultsPanel extends JPanel{
                 if (isSelected) {
                     bgColor = bgSelMasterColor;
                     fgColor = fgSelMasterColor;
+                    setOpaque(true);
+                    setBackground(bgColor);
                 }
                 else {
-                    bgColor = bgMasterColor;
+                    setOpaque(false);
                     fgColor = fgMasterColor;
                 }
             }
@@ -186,14 +188,15 @@ public class SearchResultsPanel extends JPanel{
                 if (isSelected) {
                     bgColor = bgSelSlaveColor;
                     fgColor = fgSelSlaveColor;
+                    setBackground(bgColor);
+                    setOpaque(true);
                 }
                 else {
-                    bgColor = bgSlaveColor;
+                    setOpaque(false);
                     fgColor = fgSlaveColor;
                 }
             }
             setHorizontalAlignment(alignment);
-            setBackground(bgColor);
             setForeground(fgColor);
             return this;
         }
