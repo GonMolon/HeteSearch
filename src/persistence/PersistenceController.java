@@ -143,7 +143,6 @@ public class PersistenceController {
     }
 
     public void importGraph(String path) {
-        System.out.println(path);
         File f = new File(path+"label.txt");
         if(!f.exists()) {
             try {
