@@ -64,7 +64,9 @@ public class CommandLineInterface implements Runnable {
                 cls.run();
             } else if (bgraph && command.equals("search")) {
                 NodeType nt = parseType(s.next());
-                Integer[] results = dc.simpleSearch(nt, s.nextLine().substring(1));
+                String searchstring = s.nextLine();
+                if (searchstring.length() > 0) searchstring = searchstring.substring(1);
+                Integer[] results = dc.simpleSearch(nt, searchstring);
                 System.out.println("Search results:");
                 for(int i = 0; i < results.length; ++i)
                     System.out.println(results[i] + " - " + dc.getNodeValue(nt, results[i].intValue()));
