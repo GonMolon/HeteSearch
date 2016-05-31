@@ -38,7 +38,7 @@ public class CommandLineInterface implements Runnable {
                 System.out.println("New graph created.");
             } else if (command.equals("import")) {
                 dc.newDB();
-                dc.importDB(s.nextLine());
+                dc.importDB(s.nextLine().substring(1));
                 bgraph = true;
                 System.out.println("Graph successfully imported.");
             } else if (bgraph && command.equals("export")) {
