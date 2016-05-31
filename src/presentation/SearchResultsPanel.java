@@ -5,6 +5,8 @@ import domain.NodeType;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class SearchResultsPanel extends JPanel{
@@ -25,6 +27,7 @@ public class SearchResultsPanel extends JPanel{
     private JList<Result> list;
     private DefaultListModel<Result> listModel;
     private ArrayList<ActionListener> listeners;
+    private DecimalFormat df;
 
     public SearchResultsPanel(PresentationController presentationController) {
         super();
@@ -100,6 +103,10 @@ public class SearchResultsPanel extends JPanel{
         });
         list.setBackground(new Color(240, 240, 240));
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
+
+        df = new DecimalFormat("#.####");
+        df.setRoundingMode(RoundingMode.HALF_UP);
+
     }
 
     private void onClick(Integer nClicks) {
@@ -116,7 +123,7 @@ public class SearchResultsPanel extends JPanel{
     }
 
     private class Result {
-        static private final int MAX_DISPLAYED_CHARS = 20;
+        static private final int MAX_DISPLAYED_CHARS = 50;
         static public final int MASTER = 0;
         static public final int SLAVE  = 1;
         public int resultSocialStatusAmongOtherResults;
@@ -148,7 +155,7 @@ public class SearchResultsPanel extends JPanel{
             if (isMaster()) {
                 return displayedName;
             }
-            /*else*/ return (displayedName + " " + hetesim);
+            /*else*/ return (displayedName + " " + df.format(hetesim));
         }
     }
 
