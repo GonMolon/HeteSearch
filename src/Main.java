@@ -2,7 +2,6 @@ import presentation.CommandLineInterface;
 import presentation.PresentationController;
 
 import javax.swing.*;
-import java.io.Console;
 
 public class Main {
 
