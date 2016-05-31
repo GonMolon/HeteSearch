@@ -7,8 +7,7 @@ import java.io.Console;
 public class Main {
 
     public static void main(String[] args) {
-        Console console = System.console();
-        if (console == null) {
+        if (System.console() == null) {
             javax.swing.SwingUtilities.invokeLater(
                     new Runnable() {
                         @Override
