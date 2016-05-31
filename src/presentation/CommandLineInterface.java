@@ -44,13 +44,13 @@ public class CommandLineInterface implements Runnable {
                 bgraph = true;
                 System.out.println("Graph successfully imported.");
             } else if (bgraph && command.equals("export")) {
-                dc.exportDB(s.nextLine());
+                dc.exportDB(s.nextLine().substring(1));
                 System.out.println("Graph successfully exported.");
             } else if (bgraph && command.equals("addnode")) {
-                int newid = dc.addNode(parseType(s.next()), s.nextLine());
+                int newid = dc.addNode(parseType(s.next()), s.nextLine().substring(1));
                 System.out.println("Node added with id "+newid+".");
             } else if (bgraph && command.equals("addrelation")) {
-                int newid = dc.addRelation(parseType(s.next()), parseType(s.next()), s.nextLine());
+                int newid = dc.addRelation(parseType(s.next()), parseType(s.next()), s.nextLine().substring(1));
                 System.out.println("Relation added with id "+newid+".");
             } else if (bgraph && command.equals("removerelation")) {
                 dc.removeRelation(s.nextInt());
@@ -64,7 +64,9 @@ public class CommandLineInterface implements Runnable {
                 cls.run();
             } else if (bgraph && command.equals("search")) {
                 NodeType nt = parseType(s.next());
-                Integer[] results = dc.simpleSearch(nt, s.nextLine());
+                String searchstring = s.nextLine();
+                if (searchstring.length() > 0) searchstring = searchstring.substring(1);
+                Integer[] results = dc.simpleSearch(nt, searchstring);
                 System.out.println("Search results:");
                 for(int i = 0; i < results.length; ++i)
                     System.out.println(results[i] + " - " + dc.getNodeValue(nt, results[i].intValue()));
@@ -72,7 +74,7 @@ public class CommandLineInterface implements Runnable {
                 NodeType nt = parseType(s.next());
                 int id = s.nextInt();
                 if (dc.nodeExists(nt, id)) {
-                    dc.removeNode(parseType(s.next()), s.nextInt());
+                    dc.removeNode(nt, id);
                     System.out.println("Node removed.");
                 } else {
                     System.out.println("Node with id "+id+" doesn't exist.");
@@ -81,7 +83,7 @@ public class CommandLineInterface implements Runnable {
                 NodeType nt = parseType(s.next());
                 int id = s.nextInt();
                 if (dc.nodeExists(nt, id)) {
-                    dc.setNodeValue(parseType(s.next()), s.nextInt(), s.nextLine());
+                    dc.setNodeValue(nt, id, s.nextLine().substring(1));
                     System.out.println("Node value modified.");
                 } else {
                     System.out.println("Node with id "+id+" doesn't exist.");
