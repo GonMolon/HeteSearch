@@ -29,7 +29,9 @@ public class MainView extends JPanel {
     }
 
     private void initialize() {
+        setLayout(new GridLayout(1, 1));
         add(panel);
+        //add(searchResultsPanel);
         addNodeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

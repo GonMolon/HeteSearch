@@ -101,7 +101,7 @@ public class SearchResultsPanel extends JPanel{
                 onClick(e.getClickCount());
             }
         });
-        list.setBackground(new Color(240, 240, 240));
+        list.setBackground(new Color(0, 0, 0, 0));
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
 
         df = new DecimalFormat("#.####");
