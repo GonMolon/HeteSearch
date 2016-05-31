@@ -116,6 +116,7 @@ public class SearchResultsPanel extends JPanel{
     }
 
     private class Result {
+        static private final int MAX_DISPLAYED_CHARS = 20;
         static public final int MASTER = 0;
         static public final int SLAVE  = 1;
         public int resultSocialStatusAmongOtherResults;
@@ -140,10 +141,14 @@ public class SearchResultsPanel extends JPanel{
 
         @Override
         public String toString() {
-            if (isMaster()) {
-                return name;
+            String displayedName = name;
+            if (displayedName.length() > MAX_DISPLAYED_CHARS) {
+                displayedName = displayedName.substring(0, MAX_DISPLAYED_CHARS) + "...";
             }
-            /*else*/ return (name + " " + hetesim);
+            if (isMaster()) {
+                return displayedName;
+            }
+            /*else*/ return (displayedName + " " + hetesim);
         }
     }
 
