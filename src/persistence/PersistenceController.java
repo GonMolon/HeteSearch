@@ -16,29 +16,19 @@ public class PersistenceController {
 
     public PersistenceController(Graph graph) {
         this.graph = graph;
-        try {
-            graph.addNode(graph.createNode(LABEL, "Database"), 0);
-            graph.addNode(graph.createNode(LABEL, "Data Mining"), 1);
-            graph.addNode(graph.createNode(LABEL, "AI"), 2);
-            graph.addNode(graph.createNode(LABEL, "Information Retrieval"), 3);
-        } catch (GraphException e) {
-            e.printStackTrace();
-        }
     }
 
     public void exportNodes(String path) {
         path = handlePath(path);
         for (NodeType n : NodeType.values()) {
-            if (n != LABEL) {
-                String filepath = path + n.toString().toLowerCase() + ".txt";
-                List<String> strings = new ArrayList<>();
-                Container<Node>.ContainerIterator it = graph.getNodeIterator(n);
-                while (it.hasNext()) {
-                    NodeSerializer serializer = new NodeSerializer(it.next());
-                    strings.add(serializer.getData());
-                }
-                writeFile(filepath, strings, true);
+            String filepath = path + n.toString().toLowerCase() + ".txt";
+            List<String> strings = new ArrayList<>();
+            Container<Node>.ContainerIterator it = graph.getNodeIterator(n);
+            while (it.hasNext()) {
+                NodeSerializer serializer = new NodeSerializer(it.next());
+                strings.add(serializer.getData());
             }
+            writeFile(filepath, strings, true);
         }
     }
 
@@ -153,6 +143,17 @@ public class PersistenceController {
     }
 
     public void importGraph(String path) {
+        System.out.println(path);
+        File f = new File(path+"label.txt");
+        if(!f.exists()) {
+            try {
+                graph.addNode(graph.createNode(LABEL, "Database"), 0);
+                graph.addNode(graph.createNode(LABEL, "Data Mining"), 1);
+                graph.addNode(graph.createNode(LABEL, "AI"), 2);
+                graph.addNode(graph.createNode(LABEL, "Information Retrieval"), 3);
+            } catch (GraphException e) {
+            }
+        }
         importNodes(path);
         importEdges(path);
     }
@@ -162,5 +163,4 @@ public class PersistenceController {
         exportNodes(path);
         exportEdges(path);
     }
-
 }

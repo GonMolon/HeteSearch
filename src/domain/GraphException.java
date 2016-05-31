@@ -31,7 +31,6 @@ public class GraphException extends Exception {
         } else if(error == Error.RELATION_DEFAULT) {
             System.out.println("A default relation type cannot be deleted!");
         }
-        super.printStackTrace();
     }
 
     public enum Error {
