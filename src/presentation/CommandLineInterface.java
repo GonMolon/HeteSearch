@@ -28,7 +28,9 @@ public class CommandLineInterface implements Runnable {
     }
 
     public void run() {
+        System.out.println("HeteSearch 1.0. Copyright (c) 2016");
         String command;
+        System.out.print("HS> ");
         command = s.next();
 
         while (!command.equals("exit")) {
@@ -98,6 +100,7 @@ public class CommandLineInterface implements Runnable {
                 System.out.println ("Unknown command. Please read the documentation included for more information.");
                 s.nextLine();
             }
+            System.out.print("HS> ");
             command = s.next();
         }
     }
