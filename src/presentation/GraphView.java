@@ -275,7 +275,7 @@ public class GraphView extends JPanel implements ViewerListener {
             ((CardLayout)getLayout()).show(this, "graph");
         }
         if(graphVisible) {
-            i_addNode(type, id);
+            nodeFocushed = i_addNode(type, id);
         }
         camera.resetView();
     }
@@ -364,6 +364,7 @@ public class GraphView extends JPanel implements ViewerListener {
         if(actClick-lastClick < 400) {
             boolean detailedInfo = nodeFocushed == node;
             node = generateGraph(node);
+            nodeFocushed = node;
             if(detailedInfo) {
                 ModifyElementView modifyElementView = new ModifyElementView(presentationController, presentationController.mainFrame, node.getAttribute("originalID"), node.getAttribute("nodetype"));
                 modifyElementView.setVisible(true);
