@@ -10,11 +10,9 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class SearchResultsPanel extends JPanel{
-    private static final Color bgMasterColor    = Color.LIGHT_GRAY;
     private static final Color fgMasterColor    = Color.BLACK;
     private static final Color bgSelMasterColor = Color.BLUE;
     private static final Color fgSelMasterColor = Color.WHITE;
-    private static final Color bgSlaveColor     = Color.WHITE;
     private static final Color fgSlaveColor     = Color.BLACK;
     private static final Color bgSelSlaveColor  = Color.BLUE;
     private static final Color fgSelSlaveColor  = Color.WHITE;
@@ -174,27 +172,26 @@ public class SearchResultsPanel extends JPanel{
             Color fgColor;
             if (isMaster) {
                 if (isSelected) {
-                    bgColor = bgSelMasterColor;
                     fgColor = fgSelMasterColor;
                     setOpaque(true);
-                    setBackground(bgColor);
+                    setBackground(bgSelMasterColor);
                 }
                 else {
                     setOpaque(false);
                     fgColor = fgMasterColor;
                 }
-            }
-            else {
+                setFont(new Font(getFont().getName(), Font.BOLD, getFont().getSize()));
+            } else {
                 if (isSelected) {
-                    bgColor = bgSelSlaveColor;
                     fgColor = fgSelSlaveColor;
-                    setBackground(bgColor);
+                    setBackground(bgSelSlaveColor);
                     setOpaque(true);
                 }
                 else {
                     setOpaque(false);
                     fgColor = fgSlaveColor;
                 }
+                setFont(new Font(getFont().getName(), Font.PLAIN, getFont().getSize()));
             }
             setHorizontalAlignment(alignment);
             setForeground(fgColor);
