@@ -20,7 +20,6 @@ public class GraphPath {
     private int lastIdNode;
     private int lastIdRelation;
     private int lastX;
-    private float lastY;
     private static int X_GAP = 100;
     private static int Y_GAP = 200;
 
@@ -56,7 +55,6 @@ public class GraphPath {
         lastIdRelation = 0;
         lastIdNode = 0;
         lastX = 0;
-        lastY = 0;
     }
 
     public JPanel getPanel() {

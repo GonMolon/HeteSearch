@@ -1,7 +1,6 @@
 package presentation;
 
 import domain.NodeType;
-import org.graphstream.graph.Graph;
 import presentation.utils.InstanceSelectionDialog;
 import presentation.utils.RoundButton;
 
