@@ -50,7 +50,7 @@ public class CommandLineInterface implements Runnable {
                 int newid = dc.addNode(parseType(s.next()), s.nextLine().substring(1));
                 System.out.println("Node added with id "+newid+".");
             } else if (bgraph && command.equals("addrelation")) {
-                int newid = dc.addRelation(parseType(s.next()), parseType(s.next()), s.nextLine().substring(1));
+                int newid = dc.addRelation(parseType(s.next()), parseType(s.next()), s.nextLine().substring(1).replace("_", "-"));
                 System.out.println("Relation added with id "+newid+".");
             } else if (bgraph && command.equals("removerelation")) {
                 dc.removeRelation(s.nextInt());
